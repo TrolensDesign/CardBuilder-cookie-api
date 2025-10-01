@@ -788,12 +788,103 @@
             }
         }
 
-        /* Mobile Optimizations */
+        /* Mobile Optimizations - Completely Redesigned */
         @media (max-width: 768px) {
             .trolens-header {
-                padding: 8px 16px;
+                padding: 12px 16px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .trolens-brand {
+                font-size: 16px;
+            }
+            
+            .trolens-tagline {
+                font-size: 12px;
+            }
+            
+            .version-badge {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            
+            .container {
+                display: flex;
                 flex-direction: column;
+                height: calc(100vh - 60px);
+            }
+            
+            .left-panel {
+                order: 1;
+                max-height: 120px;
+                padding: 8px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                display: flex;
+                flex-direction: row;
                 gap: 8px;
+            }
+            
+            .left-panel .element-group {
+                min-width: 200px;
+                flex-shrink: 0;
+            }
+            
+            .canvas-container {
+                order: 2;
+                flex: 1;
+                min-height: 300px;
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .canvas {
+                max-width: 100%;
+                max-height: 100%;
+                margin: auto;
+            }
+            
+            .right-panel {
+                order: 3;
+                max-height: 200px;
+                padding: 8px;
+                overflow-y: auto;
+            }
+            
+            .quick-actions {
+                padding: 8px 12px;
+                flex-wrap: wrap;
+                gap: 6px;
+                justify-content: center;
+            }
+            
+            .quick-actions-buttons {
+                gap: 6px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .quick-action-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+                min-width: 60px;
+            }
+            
+            .quick-action-btn span {
+                font-size: 12px;
+            }
+        }
+
+        /* Small Mobile Devices - Optimized for Phones */
+        @media (max-width: 480px) {
+            .trolens-header {
+                padding: 8px 12px;
+                flex-direction: column;
+                gap: 4px;
+                text-align: center;
             }
             
             .trolens-brand {
@@ -801,99 +892,66 @@
             }
             
             .trolens-tagline {
-                font-size: 12px;
+                font-size: 11px;
             }
             
             .version-badge {
-                font-size: 10px;
-                padding: 2px 8px;
+                font-size: 9px;
+                padding: 2px 6px;
             }
             
             .container {
-                grid-template-rows: auto 1fr auto;
-                height: 100vh;
+                height: calc(100vh - 80px);
             }
             
-            .left-panel, .right-panel {
-                max-height: 180px;
-                padding: 8px;
+            .left-panel {
+                max-height: 100px;
+                padding: 6px;
+                gap: 6px;
+            }
+            
+            .left-panel .element-group {
+                min-width: 180px;
+            }
+            
+            .element-btn {
+                padding: 10px 8px;
+                font-size: 10px;
+                min-height: 50px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            
+            .element-icon {
+                font-size: 18px;
             }
             
             .canvas-container {
                 min-height: 250px;
-                padding: 10px;
-            }
-            
-            .canvas {
-                max-width: 100%;
-                max-height: 100%;
-            }
-            
-            .quick-actions {
-                padding: 6px 12px;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-            
-            .quick-actions-buttons {
-                gap: 4px;
-            }
-            
-            .quick-action-btn {
-                padding: 3px 6px;
-                font-size: 9px;
-            }
-            
-            .quick-action-btn span {
-                font-size: 10px;
-            }
-        }
-
-        /* Small Mobile Devices */
-        @media (max-width: 480px) {
-            .trolens-header {
-                padding: 6px 12px;
-            }
-            
-            .trolens-brand {
-                font-size: 12px;
-            }
-            
-            .trolens-tagline {
-                font-size: 10px;
-            }
-            
-            .version-badge {
-                font-size: 9px;
-                padding: 1px 6px;
-            }
-            
-            .left-panel, .right-panel {
-                max-height: 150px;
                 padding: 6px;
             }
             
-            .canvas-container {
-                min-height: 200px;
-                padding: 8px;
+            .canvas {
+                max-width: 90%;
+                max-height: 90%;
             }
             
-            .element-btn {
-                padding: 8px;
-                font-size: 11px;
-            }
-            
-            .element-icon {
-                font-size: 16px;
+            .right-panel {
+                max-height: 180px;
+                padding: 6px;
             }
             
             .property-group h3 {
-                font-size: 12px;
+                font-size: 13px;
+                margin-bottom: 8px;
             }
             
             .property-row {
                 flex-direction: column;
-                gap: 4px;
+                gap: 6px;
+                margin-bottom: 8px;
             }
             
             .property-row > div {
@@ -901,17 +959,69 @@
             }
             
             input, select, textarea {
-                font-size: 14px;
-                padding: 6px 8px;
+                font-size: 16px;
+                padding: 8px 10px;
+                min-height: 44px;
+                border-radius: 6px;
             }
             
             .quick-actions {
-                padding: 4px 8px;
+                padding: 6px 8px;
+                gap: 4px;
             }
             
             .quick-action-btn {
-                padding: 2px 4px;
-                font-size: 8px;
+                padding: 8px 6px;
+                font-size: 9px;
+                min-width: 50px;
+                min-height: 36px;
+            }
+            
+            .quick-action-btn span {
+                font-size: 11px;
+            }
+        }
+
+        /* Mobile Navigation Tabs */
+        .mobile-nav {
+            display: none;
+            background: #2a2a3a;
+            border-bottom: 1px solid #3a3a4a;
+            padding: 8px;
+        }
+        
+        .mobile-nav-tabs {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .mobile-nav-tab {
+            flex: 1;
+            padding: 8px 12px;
+            background: #3a3a4a;
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .mobile-nav-tab.active {
+            background: #ff6b35;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-nav {
+                display: block;
+            }
+            
+            .left-panel, .right-panel {
+                display: none;
+            }
+            
+            .left-panel.mobile-active, .right-panel.mobile-active {
+                display: block;
             }
         }
 
@@ -937,17 +1047,18 @@
             
             /* Larger touch targets */
             .element-btn {
-                min-height: 44px;
-                min-width: 44px;
+                min-height: 50px;
+                min-width: 50px;
             }
             
             .quick-action-btn {
-                min-height: 36px;
-                min-width: 36px;
+                min-height: 40px;
+                min-width: 40px;
             }
             
             input, select, textarea {
-                min-height: 44px;
+                min-height: 48px;
+                font-size: 16px; /* Prevents zoom on iOS */
             }
         }
 
@@ -985,9 +1096,18 @@
         <div class="version-badge">v3.0</div>
     </div>
     
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-tabs">
+            <button class="mobile-nav-tab active" onclick="showMobilePanel('elements')">Elements</button>
+            <button class="mobile-nav-tab" onclick="showMobilePanel('canvas')">Canvas</button>
+            <button class="mobile-nav-tab" onclick="showMobilePanel('properties')">Properties</button>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Left Panel - Elements -->
-        <div class="left-panel">
+        <div class="left-panel mobile-active" id="elements-panel">
             <div class="panel-title">Elements</div>
             
             <div class="element-group">
@@ -1081,7 +1201,7 @@
                     </button>
                 </div>
             </div>
-            <div class="canvas-container">
+            <div class="canvas-container" id="canvas-panel">
                 <div class="canvas" id="canvas">
                     <div class="canvas-resize-handle" id="canvas-resize-handle"></div>
                 </div>
@@ -1089,7 +1209,7 @@
         </div>
 
         <!-- Right Panel - Properties -->
-        <div class="right-panel">
+        <div class="right-panel" id="properties-panel">
             <div class="panel-title">Properties</div>
             
             <div id="card-properties">
@@ -2277,6 +2397,31 @@
         function isMobileDevice() {
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
                    (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+        }
+        
+        // Mobile navigation
+        function showMobilePanel(panel) {
+            // Hide all panels
+            document.getElementById('elements-panel').classList.remove('mobile-active');
+            document.getElementById('canvas-panel').classList.remove('mobile-active');
+            document.getElementById('properties-panel').classList.remove('mobile-active');
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.mobile-nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected panel
+            if (panel === 'elements') {
+                document.getElementById('elements-panel').classList.add('mobile-active');
+                document.querySelector('.mobile-nav-tab[onclick="showMobilePanel(\'elements\')"]').classList.add('active');
+            } else if (panel === 'canvas') {
+                document.getElementById('canvas-panel').classList.add('mobile-active');
+                document.querySelector('.mobile-nav-tab[onclick="showMobilePanel(\'canvas\')"]').classList.add('active');
+            } else if (panel === 'properties') {
+                document.getElementById('properties-panel').classList.add('mobile-active');
+                document.querySelector('.mobile-nav-tab[onclick="showMobilePanel(\'properties\')"]').classList.add('active');
+            }
         }
         
         // Adjust canvas zoom for mobile
