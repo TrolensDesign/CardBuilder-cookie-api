@@ -742,7 +742,7 @@
             text-decoration: underline;
         }
 
-        /* Responsive */
+        /* Mobile-First Responsive Design */
         @media (max-width: 1200px) {
             .container {
                 grid-template-columns: 200px 1fr 240px;
@@ -753,10 +753,16 @@
             .container {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr auto;
+                height: 100vh;
             }
             
             .left-panel, .right-panel {
-                max-height: 150px;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            
+            .canvas-container {
+                min-height: 300px;
             }
             
             .trolens-header {
@@ -779,6 +785,184 @@
             .modal-content {
                 width: 95%;
                 max-height: 90vh;
+            }
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .trolens-header {
+                padding: 8px 16px;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .trolens-brand {
+                font-size: 14px;
+            }
+            
+            .trolens-tagline {
+                font-size: 12px;
+            }
+            
+            .version-badge {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            
+            .container {
+                grid-template-rows: auto 1fr auto;
+                height: 100vh;
+            }
+            
+            .left-panel, .right-panel {
+                max-height: 180px;
+                padding: 8px;
+            }
+            
+            .canvas-container {
+                min-height: 250px;
+                padding: 10px;
+            }
+            
+            .canvas {
+                max-width: 100%;
+                max-height: 100%;
+            }
+            
+            .quick-actions {
+                padding: 6px 12px;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            
+            .quick-actions-buttons {
+                gap: 4px;
+            }
+            
+            .quick-action-btn {
+                padding: 3px 6px;
+                font-size: 9px;
+            }
+            
+            .quick-action-btn span {
+                font-size: 10px;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .trolens-header {
+                padding: 6px 12px;
+            }
+            
+            .trolens-brand {
+                font-size: 12px;
+            }
+            
+            .trolens-tagline {
+                font-size: 10px;
+            }
+            
+            .version-badge {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
+            
+            .left-panel, .right-panel {
+                max-height: 150px;
+                padding: 6px;
+            }
+            
+            .canvas-container {
+                min-height: 200px;
+                padding: 8px;
+            }
+            
+            .element-btn {
+                padding: 8px;
+                font-size: 11px;
+            }
+            
+            .element-icon {
+                font-size: 16px;
+            }
+            
+            .property-group h3 {
+                font-size: 12px;
+            }
+            
+            .property-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .property-row > div {
+                width: 100%;
+            }
+            
+            input, select, textarea {
+                font-size: 14px;
+                padding: 6px 8px;
+            }
+            
+            .quick-actions {
+                padding: 4px 8px;
+            }
+            
+            .quick-action-btn {
+                padding: 2px 4px;
+                font-size: 8px;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .element-btn:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .quick-action-btn:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .quick-action-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .element-btn:active {
+                transform: scale(0.95);
+            }
+            
+            /* Larger touch targets */
+            .element-btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .quick-action-btn {
+                min-height: 36px;
+                min-width: 36px;
+            }
+            
+            input, select, textarea {
+                min-height: 44px;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .container {
+                grid-template-rows: auto 1fr auto;
+            }
+            
+            .left-panel, .right-panel {
+                max-height: 120px;
+            }
+            
+            .canvas-container {
+                min-height: 200px;
             }
         }
     </style>
@@ -2088,25 +2272,44 @@
         // Add window blur listener to clean up drag listeners when user switches tabs
         window.addEventListener('blur', cleanupDragListeners);
         window.addEventListener('beforeunload', cleanupDragListeners);
+        
+        // Mobile touch optimizations
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+        }
+        
+        // Adjust canvas zoom for mobile
+        if (isMobileDevice()) {
+            const canvasZoom = document.getElementById('canvas-zoom');
+            if (canvasZoom) {
+                canvasZoom.value = '0.5'; // Default to 50% zoom on mobile
+                updateCanvas();
+            }
+        }
 
         // Start drag
         function startDrag(id, e) {
             const element = elements.find(el => el.id === id);
             if (!element) return;
             
-            const startX = e.clientX;
-            const startY = e.clientY;
+            // Handle both mouse and touch events
+            const startX = e.clientX || (e.touches && e.touches[0].clientX);
+            const startY = e.clientY || (e.touches && e.touches[0].clientY);
             const startElementX = element.x;
             const startElementY = element.y;
             const zoom = parseFloat(document.getElementById('canvas-zoom').value);
             
-            // Prevent default to avoid text selection
+            // Prevent default to avoid text selection and scrolling
             e.preventDefault();
             
             function onMouseMove(e) {
                 e.preventDefault();
-                const deltaX = (e.clientX - startX) / zoom;
-                const deltaY = (e.clientY - startY) / zoom;
+                // Handle both mouse and touch events
+                const currentX = e.clientX || (e.touches && e.touches[0].clientX);
+                const currentY = e.clientY || (e.touches && e.touches[0].clientY);
+                const deltaX = (currentX - startX) / zoom;
+                const deltaY = (currentY - startY) / zoom;
                 element.x = startElementX + deltaX;
                 element.y = startElementY + deltaY;
                 updateCanvas();
@@ -2122,6 +2325,11 @@
                 // Also remove any potential touch events
                 document.removeEventListener('touchmove', onMouseMove);
                 document.removeEventListener('touchend', onMouseUp);
+                
+                // Restore scrolling on mobile
+                if (isMobileDevice()) {
+                    document.body.style.overflow = '';
+                }
             }
             
             // Add event listeners with passive: false to allow preventDefault
@@ -2131,6 +2339,11 @@
             // Also handle touch events for mobile
             document.addEventListener('touchmove', onMouseMove, { passive: false });
             document.addEventListener('touchend', onMouseUp, { passive: false });
+            
+            // Prevent scrolling on mobile during drag
+            if (isMobileDevice()) {
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         // Start resize
