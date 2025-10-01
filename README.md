@@ -19,7 +19,7 @@ Professional drag-and-drop card builder for Cookie API with visual interface.
 
 ### 🚀 Live Demo
 
-**[Try Cookie API Card Builder →](https://trolensdesign.github.io/DiscordStuffs/cookie-apiCardbuilder/cookie-apiCardbuilder.html)**
+**[Try Cookie API Card Builder →](https://trolensdesign.github.io/DiscordStuffs/cookie-apiCardbuilder/)**
 
 ### 🎯 Supported Elements
 
@@ -28,6 +28,7 @@ Professional drag-and-drop card builder for Cookie API with visual interface.
 - **Discord Profiles** - Avatar display with user ID integration
 - **Roblox Profiles** - Username-based avatar system
 - **Progress Bars** - Customizable values, colors, and styling
+- **Shapes** - Basic geometric shapes with color and border radius
 
 ### 🛠️ Technical Features
 
