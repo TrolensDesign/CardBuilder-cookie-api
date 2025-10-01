@@ -19,7 +19,7 @@ Professional drag-and-drop card builder for Cookie API with visual interface.
 
 ### 🚀 Live Demo
 
-**[Try Cookie API Card Builder →](https://trolensdesign.github.io/DiscordStuffs/cookie-apiCardbuilder/)**
+**[Try Cookie API Card Builder →](https://trolensdesign.github.io/DiscordStuffs/cookie-apiCardbuilder/cookie-apiCardbuilder.html)**
 
 ### 🎯 Supported Elements
 
