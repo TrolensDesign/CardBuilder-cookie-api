@@ -1,0 +1,36 @@
+{
+  "name": "cookie-api-card-builder",
+  "version": "3.0.0",
+  "description": "A modular, responsive web application for creating Discord cards using the Cookie API",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": [
+    "discord",
+    "card-builder",
+    "cookie-api",
+    "javascript",
+    "html",
+    "css",
+    "responsive"
+  ],
+  "author": "Trolens",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/cookie-card-builder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/cookie-card-builder/issues"
+  },
+  "homepage": "https://yourusername.github.io/cookie-card-builder",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+

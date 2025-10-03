@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie API Card Builder - Modern Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Oleo+Script:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+    <!-- Modern Header -->
+    <header class="modern-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">🍪</div>
+                <div class="logo-text">
+                    <h1>Cookie Card Builder</h1>
+                    <p>Create stunning Discord cards</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="export-btn" onclick="showExportModal()">
+                    <span>📤</span> Export
+                </button>
+                <button class="help-btn" onclick="showHelpModal()">
+                    <span>❓</span> Help
+                </button>
+            </div>
+        </div>
+        <div class="header-footer">
+            <div class="designed-by">
+                <span>Designed by</span>
+                <div class="author-info">
+                    <img src="https://cdn.discordapp.com/avatars/1011787830567120898/51b35a89cc0046bd8720770163fe680f.png" alt="Trolens Avatar" class="author-avatar">
+                    <span class="author-name">Trolens</span>
+                </div>
+                <span class="version">v1.0.0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar - Tools -->
+        <aside class="tools-sidebar">
+            <div class="sidebar-section">
+                <h3>🎨 Elements</h3>
+                
+                <!-- Basic Elements -->
+                <div class="element-category">
+                    <h4>📝 Basic</h4>
+                    <div class="element-grid two-columns">
+                        <button class="element-card" onclick="addElement('text')" data-type="text">
+                            <div class="element-icon">📝</div>
+                            <span>Text</span>
+                            <div class="element-badge" id="quota-text">100</div>
+                        </button>
+                        <button class="element-card" onclick="addElement('image')" data-type="image">
+                            <div class="element-icon">🖼️</div>
+                            <span>Image</span>
+                            <div class="element-badge" id="quota-image">10</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Profile Elements -->
+                <div class="element-category">
+                    <h4>👤 Profiles</h4>
+                    <div class="element-grid two-columns">
+                        <button class="element-card" onclick="addElement('discord_profile')" data-type="discord_profile">
+                            <div class="element-icon">💬</div>
+                            <span>Discord</span>
+                            <div class="element-badge" id="quota-discord_profile">10</div>
+                        </button>
+                        <button class="element-card" onclick="addElement('roblox_profile')" data-type="roblox_profile">
+                            <div class="element-icon">🎮</div>
+                            <span>Roblox</span>
+                            <div class="element-badge" id="quota-roblox_profile">10</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Elements -->
+                <div class="element-category">
+                    <h4>⚡ Advanced</h4>
+                    <div class="element-grid single-column">
+                        <button class="element-card" onclick="addElement('progressbar')" data-type="progressbar">
+                            <div class="element-icon">📊</div>
+                            <span>Progress</span>
+                            <div class="element-badge" id="quota-progressbar">1</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="sidebar-section">
+                <h3>📋 Templates</h3>
+                <div class="templates-grid">
+                    <button class="template-card" onclick="loadTemplate('level')">
+                        <div class="template-preview">📈</div>
+                        <span>Level Up</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('achievement')">
+                        <div class="template-preview">🏆</div>
+                        <span>Achievement</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('profile')">
+                        <div class="template-preview">👤</div>
+                        <span>Profile</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('discord_card')">
+                        <div class="template-preview">💬</div>
+                        <span>Discord Card</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('gaming_profile')">
+                        <div class="template-preview">🎮</div>
+                        <span>Gaming Profile</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('progress_card')">
+                        <div class="template-preview">📊</div>
+                        <span>Progress Card</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('achievement_unlock')">
+                        <div class="template-preview">🔓</div>
+                        <span>Achievement Unlock</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('level_up')">
+                        <div class="template-preview">⬆️</div>
+                        <span>Level Up!</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('cyberpunk_card')">
+                        <div class="template-preview">🤖</div>
+                        <span>Cyberpunk</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('glassmorphism_card')">
+                        <div class="template-preview">💎</div>
+                        <span>Glass</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('retro_wave_card')">
+                        <div class="template-preview">🌊</div>
+                        <span>Retro Wave</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('glassmorphism_advanced')">
+                        <div class="template-preview">🔮</div>
+                        <span>Glass 3D</span>
+                    </button>
+                </div>
+                
+                <!-- Clear Canvas Button -->
+                <div class="clear-canvas-section">
+                    <button class="clear-canvas-btn" onclick="clearCanvas()">
+                        <span>🧹</span>
+                        <span>Clear Canvas</span>
+                    </button>
+                </div>
+                
+                <!-- Export Section -->
+                <div class="export-section">
+                    <h4>📤 Export Card</h4>
+                    
+                    <!-- JSON Mode Selector -->
+                    <div class="json-mode-selector">
+                        <label class="json-mode-toggle">
+                            <input type="radio" name="jsonMode" value="normal" checked>
+                            <span class="toggle-label">Normal JSON</span>
+                        </label>
+                        <label class="json-mode-toggle">
+                            <input type="radio" name="jsonMode" value="variables">
+                            <span class="toggle-label">JSON with Variables</span>
+                        </label>
+                    </div>
+                    
+                    <!-- JSON Output -->
+                    <div class="json-output-container">
+                        <textarea id="json-output" readonly placeholder="Your card JSON will appear here..."></textarea>
+                    </div>
+                    
+                    <!-- Export Buttons -->
+                    <div class="export-buttons">
+                        <button onclick="copyJSON()" class="export-btn copy-btn">📋 Copy</button>
+                        <button onclick="downloadJSON()" class="export-btn download-btn">💾 Download</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Canvas Area -->
+        <main class="canvas-area">
+            <div class="canvas-header">
+                <div class="canvas-controls">
+                    <div class="control-group">
+                        <label>Canvas Size</label>
+                        <div class="size-inputs">
+                            <input type="number" id="card-width" value="800" min="200" max="1200" placeholder="Width">
+                            <span>×</span>
+                            <input type="number" id="card-height" value="400" min="100" max="800" placeholder="Height">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Zoom</label>
+                        <select id="canvas-zoom" class="zoom-select">
+                            <option value="0.25">25%</option>
+                            <option value="0.5">50%</option>
+                            <option value="0.75" selected>75%</option>
+                            <option value="1">100%</option>
+                            <option value="1.25">125%</option>
+                            <option value="1.5">150%</option>
+                            <option value="2.0">200%</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <button class="reset-btn" onclick="resetCanvas()">
+                            <span>🔄</span> Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Actions Row - Two Columns -->
+                <div class="actions-row">
+                    <!-- Quick Actions Column -->
+                    <div class="quick-actions-section">
+                        <h4>⚡ Quick Actions</h4>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action" onclick="centerElement()" title="Center Element">
+                                <span>🎯</span>
+                                <span>Center</span>
+                            </button>
+                            <button class="quick-action" onclick="alignElement('top')" title="Align Top">
+                                <span>⬆️</span>
+                                <span>Top</span>
+                            </button>
+                            <button class="quick-action" onclick="alignElement('bottom')" title="Align Bottom">
+                                <span>⬇️</span>
+                                <span>Bottom</span>
+                            </button>
+                            <button class="quick-action" onclick="alignElement('left')" title="Align Left">
+                                <span>⬅️</span>
+                                <span>Left</span>
+                            </button>
+                            <button class="quick-action" onclick="alignElement('right')" title="Align Right">
+                                <span>➡️</span>
+                                <span>Right</span>
+                            </button>
+                            <button class="quick-action" onclick="fitToCanvas()" title="Fit to Canvas">
+                                <span>📐</span>
+                                <span>Fit</span>
+                            </button>
+                            <button class="quick-action" id="snap-guides-toggle" onclick="toggleSnapGuides()" title="Toggle Snap Guides">
+                                <span>🧲</span>
+                                <span>Snap: On</span>
+                            </button>
+                            <button class="quick-action" onclick="testRedCanvasCenter()" title="Show Canvas Center Lines">
+                                <span>🎯</span>
+                                <span>Show Center</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Properties Column -->
+                    <div class="card-properties-section">
+                        <div class="card-properties-header">
+                            <h4>🖼️ Card Properties</h4>
+                            <div class="card-property">
+                                <label>Type</label>
+                                <select id="bg-type">
+                                    <option value="color">Color</option>
+                                    <option value="image">Image</option>
+                                </select>
+                            </div>
+                            <div class="card-property" id="color-property">
+                                <label>Color</label>
+                                <input type="color" id="bg-color" value="#1a1a2e">
+                            </div>
+                            <div class="card-property">
+                                <label>Transparent</label>
+                                <div class="switch-container">
+                                    <input type="checkbox" id="bg-transparent" class="switch-input">
+                                    <label for="bg-transparent" class="switch-label">
+                                        <span class="switch-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="card-property" id="image-url-property" style="display: none;">
+                                <label>Image URL</label>
+                                <input type="url" id="bg-image" placeholder="https://example.com/image.jpg">
+                            </div>
+                        </div>
+                        <div class="card-properties-content">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <div class="canvas" id="canvas">
+                    <div class="canvas-resize-handle" id="canvas-resize-handle"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Properties Panel -->
+        <aside class="properties-panel">
+            <div class="panel-header">
+                <h3>⚙️ Properties</h3>
+                <div class="panel-tabs">
+                    <button class="tab-btn active" onclick="switchTab('element')">Element</button>
+                    <button class="tab-btn" onclick="switchTab('layers')">Layers</button>
+                </div>
+            </div>
+
+
+            <!-- Element Properties -->
+            <div class="tab-content active" id="element-tab">
+                <!-- Canvas Status (shown when no element selected) -->
+                <div class="canvas-status" id="canvas-status">
+                    <div class="status-icon">🎨</div>
+                    <div class="status-text">Canvas is empty</div>
+                    <div class="status-hint">Add elements to start building</div>
+                </div>
+                
+                <!-- All Properties Sections (hidden when no element selected) -->
+                <div id="properties-sections">
+                <!-- Position & Size -->
+                <div class="property-section" id="position-size-section">
+                    <div class="section-header">
+                        <h4>Position & Size</h4>
+                        <div class="variable-mode-toggle">
+                            <label>
+                                <input type="checkbox" id="position-variable-mode" class="switch-input">
+                                <span class="switch-label">
+                                    <span class="switch-slider"></span>
+                                </span>
+                                <span class="toggle-label">Variable Mode</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="property-grid" id="normal-position-fields">
+                        <div class="property-item">
+                            <label>X</label>
+                            <input type="number" id="prop-x" step="0.1" min="1">
+                        </div>
+                        <div class="property-item">
+                            <label>Y</label>
+                            <input type="number" id="prop-y" step="0.1" min="1">
+                        </div>
+                        <div class="property-item">
+                            <label>Opacity</label>
+                            <input type="number" id="prop-opacity" value="100" min="0" max="100">
+                        </div>
+                        <div class="property-item">
+                            <label>Layer</label>
+                            <input type="number" id="prop-layer" value="1" min="1" max="10">
+                        </div>
+                    </div>
+                    <div class="property-grid" id="variable-position-fields" style="display: none;">
+                        <div class="property-item">
+                            <label>X Variable</label>
+                            <input type="text" id="prop-x-variable" placeholder="{position_x}" class="variable-input">
+                        </div>
+                        <div class="property-item">
+                            <label>Y Variable</label>
+                            <input type="text" id="prop-y-variable" placeholder="{position_y}" class="variable-input">
+                        </div>
+                        <div class="property-item">
+                            <label>Opacity Variable</label>
+                            <input type="text" id="prop-opacity-variable" placeholder="{opacity}" class="variable-input">
+                        </div>
+                        <div class="property-item">
+                            <label>Layer Variable</label>
+                            <input type="text" id="prop-layer-variable" placeholder="{layer}" class="variable-input">
+                        </div>
+                    </div>
+                    <div class="property-grid" id="normal-size-fields">
+                        <div class="property-item" id="width-item">
+                            <label>Width</label>
+                            <input type="number" id="prop-width" step="0.1">
+                        </div>
+                        <div class="property-item" id="auto-width-item">
+                            <label>Auto Width</label>
+                            <div class="switch-container">
+                                <input type="checkbox" id="prop-profile-auto-width" class="switch-input">
+                                <label for="prop-profile-auto-width" class="switch-label">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="property-item" id="height-item">
+                            <label>Height</label>
+                            <input type="number" id="prop-height" step="0.1">
+                        </div>
+                    </div>
+                    <div class="property-grid" id="variable-size-fields" style="display: none;">
+                        <div class="property-item">
+                            <label>Width Variable</label>
+                            <input type="text" id="prop-width-variable" placeholder="{width}" class="variable-input">
+                        </div>
+                        <div class="property-item">
+                            <label>Height Variable</label>
+                            <input type="text" id="prop-height-variable" placeholder="{height}" class="variable-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-section" id="text-properties" style="display: none;">
+                    <div class="section-header">
+                        <h4>Text Settings</h4>
+                        <div class="variable-mode-toggle">
+                            <label>
+                                <input type="checkbox" id="text-variable-mode" class="switch-input">
+                                <span class="switch-label">
+                                    <span class="switch-slider"></span>
+                                </span>
+                                <span class="toggle-label">Variable Mode</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="property-row">
+                        <textarea id="prop-text" rows="3" placeholder="Enter text..."></textarea>
+                    </div>
+                    <div class="property-grid" id="normal-text-fields">
+                        <div class="property-item">
+                            <label>Size</label>
+                            <input type="number" id="prop-font-size" value="16">
+                        </div>
+                        <div class="property-item">
+                            <label>Color</label>
+                            <div class="color-input-group">
+                                <input type="color" id="prop-text-color" value="#ffffff">
+                                <input type="text" id="prop-text-color-hex" placeholder="#ffffff" class="color-hex-input">
+                            </div>
+                        </div>
+                        <div class="property-item">
+                            <label>Font</label>
+                            <div class="font-autocomplete-container">
+                                <input type="text" id="prop-font-family" placeholder="Inter" class="font-input" autocomplete="off">
+                                <div class="font-dropdown" id="font-dropdown" style="display: none;">
+                                    <div class="font-search">
+                                        <input type="text" id="font-search" placeholder="Search fonts..." class="font-search-input">
+                                    </div>
+                                    <div class="font-list" id="font-list">
+                                        <!-- Fonts will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="font-info">
+                                <span class="font-info-text">
+                                    <a href="https://fonts.google.com" target="_blank" class="font-link">Google Fonts</a> • 
+                                    <span id="font-count">Loading...</span> fonts available
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="property-grid" id="variable-text-fields" style="display: none;">
+                        <div class="property-item">
+                            <label>Size Variable</label>
+                            <input type="text" id="prop-font-size-variable" placeholder="{font_size}" class="variable-input">
+                        </div>
+                        <div class="property-item">
+                            <label>Color Variable</label>
+                            <input type="text" id="prop-text-color-variable" placeholder="{role_color}" class="variable-input">
+                        </div>
+                        <div class="property-item">
+                            <label>Font Variable</label>
+                            <input type="text" id="prop-font-family-variable" placeholder="{font_family}" class="variable-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-section" id="progress-properties" style="display: none;">
+                    <div class="section-header">
+                        <h4>Progress Bar Settings</h4>
+                        <div class="variable-mode-toggle">
+                            <label>
+                                <input type="checkbox" id="progress-variable-mode" class="switch-input">
+                                <span class="switch-label">
+                                    <span class="switch-slider"></span>
+                                </span>
+                                <span class="toggle-label">Variable Mode</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="normal-progress-fields">
+                        <div class="property-grid">
+                            <div class="property-item">
+                                <label>Value</label>
+                                <input type="number" id="prop-progress-value" value="60" min="0" max="100">
+                            </div>
+                            <div class="property-item">
+                                <label>Max</label>
+                                <input type="number" id="prop-progress-max" value="100" min="1">
+                            </div>
+                        </div>
+                        <div class="property-grid">
+                            <div class="property-item">
+                                <label>Progress Color</label>
+                                <div class="color-input-group">
+                                    <input type="color" id="prop-progress-color" value="#10b981">
+                                    <input type="text" id="prop-progress-color-hex" placeholder="#10b981" class="color-hex-input">
+                                </div>
+                            </div>
+                            <div class="property-item">
+                                <label>Background Color</label>
+                                <div class="color-input-group">
+                                    <input type="color" id="prop-progress-bg-color" value="#334155">
+                                    <input type="text" id="prop-progress-bg-color-hex" placeholder="#334155" class="color-hex-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="property-row">
+                            <label>Border Radius</label>
+                            <div class="slider-input-container">
+                                <input type="range" id="prop-progress-border-radius" value="1" min="1" max="100" class="range-slider">
+                                <input type="number" id="prop-progress-border-radius-input" value="1" min="1" max="100" class="slider-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="variable-progress-fields" style="display: none;">
+                        <div class="property-grid">
+                            <div class="property-item">
+                                <label>Value Variable</label>
+                                <input type="text" id="prop-progress-value-variable" placeholder="{progress_value}" class="variable-input">
+                            </div>
+                            <div class="property-item">
+                                <label>Max Variable</label>
+                                <input type="text" id="prop-progress-max-variable" placeholder="{progress_max}" class="variable-input">
+                            </div>
+                        </div>
+                        <div class="property-grid">
+                            <div class="property-item">
+                                <label>Progress Color Variable</label>
+                                <input type="text" id="prop-progress-color-variable" placeholder="{progress_color}" class="variable-input">
+                            </div>
+                            <div class="property-item">
+                                <label>Background Color Variable</label>
+                                <input type="text" id="prop-progress-bg-color-variable" placeholder="{bg_color}" class="variable-input">
+                            </div>
+                        </div>
+                        <div class="property-row">
+                            <label>Border Radius Variable</label>
+                            <input type="text" id="prop-progress-border-radius-variable" placeholder="{border_radius}" class="variable-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-section" id="image-properties" style="display: none;">
+                    <div class="section-header">
+                        <h4>Image Settings</h4>
+                        <div class="variable-mode-toggle">
+                            <label>
+                                <input type="checkbox" id="image-variable-mode" class="switch-input">
+                                <span class="switch-label">
+                                    <span class="switch-slider"></span>
+                                </span>
+                                <span class="toggle-label">Variable Mode</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="normal-image-fields">
+                        <div class="property-row">
+                            <label>Image URL</label>
+                            <input type="url" id="prop-image-url" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="property-row">
+                            <label>Border Radius</label>
+                            <div class="slider-input-container">
+                                <input type="range" id="prop-image-radius" value="1" min="1" max="100" class="range-slider">
+                                <input type="number" id="prop-image-radius-input" value="1" min="1" max="100" class="slider-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="variable-image-fields" style="display: none;">
+                        <div class="property-row">
+                            <label>Image URL Variable</label>
+                            <input type="text" id="prop-image-url-variable" placeholder="{user_avatar}" class="variable-input">
+                        </div>
+                        <div class="property-grid">
+                            <div class="property-item">
+                                <label>Border Radius Variable</label>
+                                <input type="text" id="prop-image-radius-variable" placeholder="{image_radius}" class="variable-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="property-section" id="profile-properties" style="display: none;">
+                    <div class="section-header">
+                        <h4>Discord Profile Settings</h4>
+                        <div class="variable-mode-toggle">
+                            <label>
+                                <input type="checkbox" id="profile-variable-mode" class="switch-input">
+                                <span class="switch-label">
+                                    <span class="switch-slider"></span>
+                                </span>
+                                <span class="toggle-label">Variable Mode</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="normal-profile-fields">
+                        <div class="property-row">
+                            <label id="prop-name-label">Discord ID</label>
+                            <input type="text" id="prop-name" placeholder="1011787830567120898">
+                        </div>
+                        <div class="property-row">
+                            <label>Border Radius</label>
+                            <div class="slider-input-container">
+                                <input type="range" id="prop-subtitle-slider" value="1" min="1" max="100" class="range-slider">
+                                <input type="number" id="prop-subtitle" value="1" min="1" max="100" class="slider-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="variable-profile-fields" style="display: none;">
+                        <div class="property-row">
+                            <label>Discord ID Variable</label>
+                            <input type="text" id="prop-name-variable" placeholder="{user_id}" class="variable-input">
+                        </div>
+                        <div class="property-row">
+                            <label>Border Radius Variable</label>
+                            <input type="text" id="prop-subtitle-variable" placeholder="{avatar_radius}" class="variable-input">
+                        </div>
+                    </div>
+                </div>
+
+                </div> <!-- End properties-sections -->
+            </div>
+
+            <!-- Layers Panel -->
+            <div class="tab-content" id="layers-tab">
+                <div class="layers-list" id="layers-list">
+                    <div class="no-layers">No elements added yet</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="help-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>❓ Help & Guide</h2>
+                <button class="modal-close" onclick="closeHelpModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-sections">
+                    <div class="help-section">
+                        <h3>🚀 Getting Started</h3>
+                        <ol>
+                            <li>Choose a template or start from scratch</li>
+                            <li>Add elements from the left sidebar</li>
+                            <li>Customize properties in the right panel</li>
+                            <li>Export your card when ready</li>
+                        </ol>
+                    </div>
+                    <div class="help-section">
+                        <h3>⌨️ Keyboard Shortcuts</h3>
+                        <ul>
+                            <li><kbd>Backspace</kbd> or <kbd>Delete</kbd> - Delete selected element</li>
+                            <li><kbd>Escape</kbd> - Deselect element or close modals</li>
+                        </ul>
+                    </div>
+                    <div class="help-section">
+                        <h3>🎨 Tips & Tricks</h3>
+                        <ul>
+                            <li>Hold <kbd>Shift</kbd> while dragging for precise movement</li>
+                            <li>Double-click elements to edit quickly</li>
+                            <li>Use templates for faster card creation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="mobile-nav-btn" onclick="openMobilePanel('tools')">
+            <span class="nav-icon">➕</span>
+            <span class="nav-label">Add</span>
+        </button>
+        <button class="mobile-nav-btn" onclick="openMobilePanel('canvas')">
+            <span class="nav-icon">🎨</span>
+            <span class="nav-label">Canvas</span>
+        </button>
+        <button class="mobile-nav-btn" onclick="openMobilePanel('properties')">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Edit</span>
+        </button>
+        <button class="mobile-nav-btn" onclick="exportCard()">
+            <span class="nav-icon">💾</span>
+            <span class="nav-label">Export</span>
+        </button>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/elements.js"></script>
+    <script src="js/properties.js"></script>
+      <script src="js/mobile.js"></script>
+  </body>
+  </html>
+</html>
