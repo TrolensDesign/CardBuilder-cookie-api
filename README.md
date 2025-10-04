@@ -2,6 +2,12 @@
 
 A modular, responsive web application for creating Discord cards using the Cookie API. Built with vanilla HTML, CSS, and JavaScript for easy hosting on GitHub Pages.
 
+## 🚀 Quick Access
+
+**🌐 Live Demo**: [https://trolensdesign.github.io/CardBuilder-cookie-api](https://trolensdesign.github.io/CardBuilder-cookie-api)  
+**📁 Repository**: [https://github.com/TrolensDesign/CardBuilder-cookie-api](https://github.com/TrolensDesign/CardBuilder-cookie-api)  
+**🍪 Cookie API**: [https://cookie-api.com](https://cookie-api.com)
+
 ## Features
 
 - **Visual Card Builder**: Drag-and-drop interface for creating Discord cards
@@ -40,10 +46,13 @@ cookie-card-builder/
 
 ### GitHub Pages Hosting
 
+The app is already deployed and available at: **[https://trolensdesign.github.io/CardBuilder-cookie-api](https://trolensdesign.github.io/CardBuilder-cookie-api)**
+
+To deploy your own version:
 1. Fork this repository
 2. Go to Settings > Pages
 3. Select "Deploy from a branch" and choose "main"
-4. Your app will be available at `https://yourusername.github.io/cookie-card-builder`
+4. Your app will be available at `https://yourusername.github.io/CardBuilder-cookie-api`
 
 ## Usage
 
