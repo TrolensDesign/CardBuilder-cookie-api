@@ -329,36 +329,28 @@ function renderRobloxProfileElement(element, zoom) {
             width: 100%;
             height: 100%;
             border-radius: ${borderRadiusPx}px;
-            background: #00a2ff;
+            background: linear-gradient(135deg, #00a2ff, #0066cc);
             display: none;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
             font-size: 12px;
-        ">R</div>`;
+        ">🎮</div>`;
     } else {
-        return `<img src="https://static.wikia.nocookie.net/logopedia/images/d/d6/Roblox_app_icon_2022.svg/revision/latest/scale-to-width-down/250?cb=20220319140506" 
-            style="
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: ${borderRadiusPx}px;
-            " 
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-        >
-        <div style="
+        return `<div style="
             width: 100%;
             height: 100%;
             border-radius: ${borderRadiusPx}px;
-            background: #00a2ff;
-            display: none;
+            background: linear-gradient(135deg, #00a2ff, #0066cc);
+            display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 12px;
-        ">R</div>`;
+            font-size: 16px;
+            text-align: center;
+        ">🎮<br><span style="font-size: 10px;">Roblox</span></div>`;
     }
 }
 
