@@ -44,7 +44,7 @@
     border: 2px solid transparent;
     transition: all 0.2s ease;
     border-radius: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .canvas-element[data-type="text"] {
@@ -70,28 +70,27 @@
 
 .canvas-element .resize-handle {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     background: var(--accent-color);
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.2s ease;
-    border: 2px solid white;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .canvas-element.selected .resize-handle {
     opacity: 1;
 }
 
-.resize-handle.nw { top: -4px; left: -4px; cursor: nw-resize; }
-.resize-handle.ne { top: -4px; right: -4px; cursor: ne-resize; }
-.resize-handle.sw { bottom: -4px; left: -4px; cursor: sw-resize; }
-.resize-handle.se { bottom: -4px; right: -4px; cursor: se-resize; }
+.resize-handle.nw { top: -6px; left: -6px; cursor: nw-resize; }
+.resize-handle.ne { top: -6px; right: -6px; cursor: ne-resize; }
+.resize-handle.sw { bottom: -6px; left: -6px; cursor: sw-resize; }
+.resize-handle.se { bottom: -6px; right: -6px; cursor: se-resize; }
 
 /* Layers Panel */
 .layers-list {
-    max-height: 300px;
+    flex: 1;
     overflow-y: auto;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -264,9 +263,9 @@
 .modal-content {
     background: var(--bg-primary);
     border-radius: var(--radius-xl);
-    max-width: 600px;
+    max-width: 900px;
     max-height: 80vh;
-    width: 90%;
+    width: 95%;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-color);
@@ -316,6 +315,123 @@
     padding: 1.5rem;
     max-height: 60vh;
     overflow-y: auto;
+}
+
+/* Help Content Styles */
+.help-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.help-section {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.help-section h3 {
+    color: var(--accent-color);
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.help-section ol, .help-section ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.help-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.help-section li strong {
+    color: var(--accent-color);
+}
+
+.help-section kbd {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-family: monospace;
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+}
+
+/* Help Content Lists */
+.element-list, .action-list, .control-list, .property-list, 
+.mobile-list, .shortcut-list, .tip-list, .troubleshoot-list, 
+.integration-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.help-section .element-item, 
+.help-section .action-item, 
+.help-section .control-item, 
+.help-section .property-item, 
+.help-section .mobile-item, 
+.help-section .shortcut-item, 
+.help-section .tip-item, 
+.help-section .troubleshoot-item, 
+.help-section .integration-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 107, 53, 0.1);
+    border-radius: 6px;
+    padding: 0.75rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+}
+
+
+.help-section .element-item strong, 
+.help-section .action-item strong, 
+.help-section .control-item strong, 
+.help-section .property-item strong, 
+.help-section .mobile-item strong, 
+.help-section .tip-item strong, 
+.help-section .troubleshoot-item strong, 
+.help-section .integration-item strong {
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.shortcut-item kbd {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    margin-right: 0.5rem;
+}
+
+.integration-item code {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-primary);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    display: block;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    border: 1px solid var(--border-color);
+}
+
+.integration-item a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.help-section .integration-item a:hover {
+    text-decoration: underline;
 }
 
 /* Export Options */

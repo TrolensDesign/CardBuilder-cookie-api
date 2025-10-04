@@ -112,7 +112,24 @@ On mobile devices, use the bottom navigation bar to access:
 
 This project is open source and available under the MIT License.
 
+## Changelog
+
+### v3.1.0 (Latest)
+- **🎨 UI/UX Improvements**: Simplified header, added "Designed by Trolens" signature, optimized layout spacing
+- **📱 Mobile Enhancements**: Compact header design, improved responsive layout for Card Properties/Quick Actions
+- **📖 Help System**: Complete user guide with API integration instructions, element limits, and usage tips
+- **🔧 Technical Fixes**: Fixed image JSON output, improved image scaling preview, enhanced resize handles
+- **⌨️ Axis Lock**: Added visual indicator (yellow line) for axis locking with dynamic direction change
+- **🎯 Precision Tools**: Reduced snap threshold to 5px, improved element positioning accuracy
+
+### v3.0.0
+- Initial release with modular architecture
+- Drag-and-drop card builder interface
+- Multiple element types support
+- Mobile responsive design
+- JSON export functionality
+
 ## Credits
 
-Designed by Trolens - Cookie API Card Builder v3.0
+Designed by Trolens - Cookie API Card Builder v3.1.0
 

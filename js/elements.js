@@ -21,7 +21,7 @@ function addElement(type) {
         y: 50,
         width: getDefaultWidth(type),
         height: getDefaultHeight(type),
-        widthAuto: type === 'roblox_profile' || type === 'text',
+        widthAuto: type === 'roblox_profile' || type === 'text' || type === 'discord_profile',
         heightAuto: type === 'text', // Text elements auto-adjust height
         opacity: 100,
         layer: elements.length > 0 ? Math.max(...elements.map(e => e.layer || 0), 0) + 1 : 1,
@@ -202,25 +202,30 @@ function renderImageElement(element, zoom) {
     if (element.imageUrl && element.imageUrl.trim() !== '') {
         const borderRadius = element.borderRadius || 1;
         const borderRadiusPx = (borderRadius / 100) * (Math.min(element.width, element.height) * zoom / 2);
-        return `<img src="${element.imageUrl}" style="width: 100%; height: 100%; object-fit: cover; border-radius: ${borderRadiusPx}px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-        <div style="
-            width: 100%;
-            height: 100%;
-            background: #f0f0f0;
-            border: 2px dashed #ccc;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 12px;
-            text-align: center;
-            padding: 8px;
-            box-sizing: border-box;
-            border-radius: ${borderRadiusPx}px;
-        ">
-            <div style="font-size: ${(element.width * zoom < 80) || (element.height * zoom < 80) ? '16px' : '24px'}; ${(element.width * zoom < 80) || (element.height * zoom < 80) ? '' : 'margin-bottom: 8px;'}">🖼️</div>
-            ${(element.width * zoom < 80) || (element.height * zoom < 80) ? '' : '<div>Image failed to load</div>'}
+        return `<div style="position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: ${borderRadiusPx}px;">
+            <img src="${element.imageUrl}" style="width: 100%; height: 100%; object-fit: fill; border-radius: ${borderRadiusPx}px; display: block; box-sizing: border-box;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #f0f0f0;
+                border: 2px dashed #ccc;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #666;
+                font-size: 12px;
+                text-align: center;
+                padding: 8px;
+                box-sizing: border-box;
+                border-radius: ${borderRadiusPx}px;
+            ">
+                <div style="font-size: ${(element.width * zoom < 80) || (element.height * zoom < 80) ? '16px' : '24px'}; ${(element.width * zoom < 80) || (element.height * zoom < 80) ? '' : 'margin-bottom: 8px;'}">🖼️</div>
+                ${(element.width * zoom < 80) || (element.height * zoom < 80) ? '' : '<div>Image failed to load</div>'}
+            </div>
         </div>`;
     } else {
         const borderRadius = element.borderRadius || 1;
@@ -533,13 +538,22 @@ function startDrag(id, e) {
         const deltaX = (currentX - startX) / zoom;
         const deltaY = (currentY - startY) / zoom;
         
-        // Determine axis lock based on initial movement
-        if (isShiftPressed && axisLock === null) {
-            // Determine which axis to lock based on initial movement
+        // Determine axis lock based on current movement (dynamic)
+        if (isShiftPressed) {
+            // Always recalculate axis lock based on current movement
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 axisLock = 'y'; // Lock Y axis, allow X movement
             } else {
                 axisLock = 'x'; // Lock X axis, allow Y movement
+            }
+        }
+        
+        // Show axis lock indicator when Shift is pressed (even before axis is determined)
+        if (isShiftPressed) {
+            if (elementsToMove.length === 1) {
+                showAxisLockIndicator(axisLock, elementsToMove[0].id, deltaX, deltaY);
+            } else if (elementsToMove.length > 1) {
+                showAxisLockIndicator(axisLock, elementsToMove[0].id, deltaX, deltaY);
             }
         }
         
@@ -568,12 +582,12 @@ function startDrag(id, e) {
                         // Lock X axis - keep original X position
                         newX = elStartX;
                         // Show visual feedback for Y-axis movement
-                        showAxisLockIndicator('y');
+                        showAxisLockIndicator('y', el.id, deltaX, deltaY);
                     } else if (axisLock === 'y') {
                         // Lock Y axis - keep original Y position
                         newY = elStartY;
                         // Show visual feedback for X-axis movement
-                        showAxisLockIndicator('x');
+                        showAxisLockIndicator('x', el.id, deltaX, deltaY);
                     }
                 }
                     
@@ -604,8 +618,12 @@ function startDrag(id, e) {
         
         // Hide axis lock indicator
         const indicator = document.getElementById('axis-lock-indicator');
+        const lineIndicator = document.getElementById('axis-lock-line');
         if (indicator) {
             indicator.style.display = 'none';
+        }
+        if (lineIndicator) {
+            lineIndicator.style.display = 'none';
         }
         
         if (isMobileDevice()) {
@@ -860,16 +878,16 @@ function applyGroupSnapGuides(elementsToMove, initialPositions, deltaX, deltaY, 
     if (isShiftPressed && axisLock) {
         if (axisLock === 'x') {
             snappedDeltaX = 0;
-            showAxisLockIndicator('y');
+            showAxisLockIndicator('y', elementsToMove[0].id, deltaX, deltaY);
         } else if (axisLock === 'y') {
             snappedDeltaY = 0;
-            showAxisLockIndicator('x');
+            showAxisLockIndicator('x', elementsToMove[0].id, deltaX, deltaY);
         }
     }
     
     // Calculate guides for the group
     const guides = calculateGroupSnapGuides(elementsToMove);
-    const snapThreshold = 10;
+    const snapThreshold = 5;
     
     // Check horizontal snaps (Y position)
     guides.horizontal.forEach(guide => {
@@ -1067,7 +1085,7 @@ function calculateSnapGuides(element, excludeId = null) {
 }
 
 // Find closest snap guide
-function findClosestSnapGuide(position, guides, snapThreshold = 10) {
+function findClosestSnapGuide(position, guides, snapThreshold = 5) {
     let closestGuide = null;
     let closestDistance = snapThreshold;
     
@@ -1087,7 +1105,7 @@ function applySnapGuides(element, newX, newY) {
     if (!snapGuidesEnabled) return { x: newX, y: newY };
     
     const guides = calculateSnapGuides(element);
-    const snapThreshold = 10; // pixels
+    const snapThreshold = 5; // pixels
     
     // Get actual element dimensions for proper snapping
     const elementWidth = getElementActualWidth(element);
@@ -1163,47 +1181,114 @@ function applySnapGuides(element, newX, newY) {
     return { x: snappedX, y: snappedY };
 }
 
-// Show axis lock indicator
-function showAxisLockIndicator(lockedAxis) {
+// Show axis lock indicator with visual line
+function showAxisLockIndicator(lockedAxis, elementId, deltaX = 0, deltaY = 0) {
     const canvas = document.getElementById('canvas');
     let indicator = document.getElementById('axis-lock-indicator');
+    let lineIndicator = document.getElementById('axis-lock-line');
     
-    if (!indicator) {
-        indicator = document.createElement('div');
-        indicator.id = 'axis-lock-indicator';
-        indicator.className = 'axis-lock-indicator';
-        canvas.appendChild(indicator);
-    }
+    // Remove existing indicators
+    if (indicator) indicator.remove();
+    if (lineIndicator) lineIndicator.remove();
     
-    // Position indicator in top-right corner of canvas
+    // Create text indicator
+    indicator = document.createElement('div');
+    indicator.id = 'axis-lock-indicator';
+    indicator.className = 'axis-lock-indicator';
+    canvas.appendChild(indicator);
+    
+    // Create line indicator
+    lineIndicator = document.createElement('div');
+    lineIndicator.id = 'axis-lock-line';
+    lineIndicator.className = 'axis-lock-line';
+    
+    // Add to body instead of canvas to avoid positioning issues
+    document.body.appendChild(lineIndicator);
+    
+    const element = elements.find(e => e.id === elementId);
+    if (!element) return;
+    
     const zoom = parseFloat(document.getElementById('canvas-zoom').value);
-    const canvasWidth = canvas.offsetWidth;
+    const elementCenterX = element.x + (getElementActualWidth(element) / 2);
+    const elementCenterY = element.y + (getElementActualHeight(element) / 2);
     
+    // Position text indicator in top-right corner
     indicator.style.position = 'absolute';
     indicator.style.top = '10px';
     indicator.style.right = '10px';
-    indicator.style.zIndex = '2000';
-    indicator.style.padding = '4px 8px';
-    indicator.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    indicator.style.color = '#ffffff';
+    indicator.style.background = 'rgba(0, 0, 0, 0.8)';
+    indicator.style.color = 'white';
+    indicator.style.padding = '8px 12px';
     indicator.style.borderRadius = '4px';
     indicator.style.fontSize = '12px';
     indicator.style.fontWeight = 'bold';
     indicator.style.display = 'block';
+    indicator.style.zIndex = '10000';
+    
+    // Style line indicator
+    lineIndicator.style.position = 'absolute';
+    lineIndicator.style.background = 'rgba(255, 215, 0, 0.8)';
+    lineIndicator.style.boxShadow = '0 0 6px rgba(255, 215, 0, 0.5)';
+    lineIndicator.style.zIndex = '999999';
+    lineIndicator.style.pointerEvents = 'none';
+    lineIndicator.style.display = 'block';
+    lineIndicator.style.border = 'none';
+    lineIndicator.style.outline = 'none';
+    
+    // Force visibility
+    lineIndicator.style.visibility = 'visible';
+    lineIndicator.style.opacity = '0.9';
     
     if (lockedAxis === 'x') {
+        // X-axis locked - show horizontal line from element center
         indicator.textContent = 'X-axis locked (Y movement only)';
         indicator.style.borderLeft = '3px solid #ff6b35';
+        
+        // Get canvas position relative to viewport
+        const canvasRect = canvas.getBoundingClientRect();
+        
+        lineIndicator.style.left = `${canvasRect.left}px`;
+        lineIndicator.style.width = `${canvasRect.width}px`;
+        lineIndicator.style.top = `${canvasRect.top + elementCenterY * zoom}px`;
+        lineIndicator.style.height = '3px';
+        
     } else if (lockedAxis === 'y') {
+        // Y-axis locked - show vertical line from element center
         indicator.textContent = 'Y-axis locked (X movement only)';
         indicator.style.borderLeft = '3px solid #34a853';
+        
+        // Get canvas position relative to viewport
+        const canvasRect = canvas.getBoundingClientRect();
+        
+        lineIndicator.style.top = `${canvasRect.top}px`;
+        lineIndicator.style.height = `${canvasRect.height}px`;
+        lineIndicator.style.left = `${canvasRect.left + elementCenterX * zoom}px`;
+        lineIndicator.style.width = '3px';
+        
+    } else {
+        // Show diagonal line showing drag direction
+        indicator.textContent = 'Shift: Axis lock active';
+        indicator.style.borderLeft = '3px solid #ffd700';
+        
+        // Calculate line direction and length
+        const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY) * zoom;
+        const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        
+        lineIndicator.style.left = `${elementCenterX * zoom}px`;
+        lineIndicator.style.top = `${elementCenterY * zoom}px`;
+        lineIndicator.style.width = `${Math.max(length, 100)}px`;
+        lineIndicator.style.height = '3px';
+        lineIndicator.style.transformOrigin = '0 50%';
+        lineIndicator.style.transform = `rotate(${angle}deg)`;
+        
     }
     
-    // Auto-hide after 2 seconds
+    // Auto-hide after 3 seconds
     clearTimeout(indicator.hideTimeout);
     indicator.hideTimeout = setTimeout(() => {
-        indicator.style.display = 'none';
-    }, 2000);
+        if (indicator) indicator.style.display = 'none';
+        if (lineIndicator) lineIndicator.style.display = 'none';
+    }, 3000);
 }
 
 // Show snap guide line

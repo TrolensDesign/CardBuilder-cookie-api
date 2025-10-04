@@ -21,7 +21,7 @@
     .quick-actions {
         padding: 0.25rem;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         grid-template-rows: repeat(2, 1fr);
         gap: 0.2rem;
         max-width: 140px;
@@ -190,7 +190,7 @@
     .quick-actions {
         padding: 0.5rem;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         grid-template-rows: repeat(2, 1fr);
         gap: 0.3rem;
         max-width: 160px;
@@ -239,6 +239,32 @@
     .quick-actions .quick-action:nth-child(7),
     .quick-actions .quick-action:nth-child(8) {
         display: none;
+    }
+    
+    /* Card Properties Grid - Single Column on Mobile */
+    .card-properties-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    /* Actions Row - Single Column on Mobile */
+    .actions-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    /* Reorder sections for mobile - Card Properties first, then Quick Actions */
+    .actions-row {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .card-properties-section {
+        order: 1;
+    }
+    
+    .quick-actions-section {
+        order: 2;
     }
     
     .header-content {
@@ -298,7 +324,7 @@
     .quick-actions {
         padding: 0.2rem;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         grid-template-rows: repeat(2, 1fr);
         gap: 0.15rem;
         max-width: 120px;
@@ -349,30 +375,150 @@
         display: none;
     }
     
+    /* Card Properties Grid - Single Column on Tablet */
+    .card-properties-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    /* Actions Row - Single Column on Tablet */
+    .actions-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .card-properties-section {
+        order: 1;
+    }
+    
+    .quick-actions-section {
+        order: 2;
+    }
+    
     .modern-header {
-        padding: 1rem;
+        padding: 0.25rem;
+    }
+    
+    .header-content {
+        flex-direction: row;
+        gap: 0.25rem;
+        padding: 0.25rem;
     }
     
     .logo-section {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 0.25rem;
+        align-items: center;
+        flex: 1;
+    }
+    
+    .logo-icon {
+        font-size: 1rem;
+    }
+    
+    .logo-text {
+        display: flex;
+        align-items: center;
         gap: 0.5rem;
+        flex: 1;
     }
     
     .logo-text h1 {
-        font-size: 1.25rem;
+        font-size: 0.9rem;
+        margin: 0;
     }
     
-    .logo-text p {
-        font-size: 0.75rem;
+    .header-center {
+        display: none;
+    }
+    
+    .logo-text .troelns-box {
+        font-size: 8px;
+        padding: 2px 4px;
+        margin: 0;
+        display: inline-block;
+    }
+    
+    .logo-text .troelns-box img {
+        width: 12px !important;
+        height: 12px !important;
     }
     
     .header-actions {
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
     
-    .export-btn, .help-btn {
-        padding: 0.5rem;
-        font-size: 0.75rem;
+    .help-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    .help-btn span {
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 360px) {
+    .modern-header {
+        padding: 0.125rem;
+    }
+    
+    .header-content {
+        padding: 0.125rem;
+        gap: 0.125rem;
+    }
+    
+    .logo-text h1 {
+        font-size: 0.8rem;
+    }
+    
+    .logo-icon {
+        font-size: 0.8rem;
+    }
+    
+    .help-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.6rem;
+    }
+    
+    .help-btn span {
+        font-size: 0.7rem;
+    }
+    
+    .logo-text .troelns-box {
+        display: inline-block;
+        font-size: 7px;
+        padding: 1px 3px;
+    }
+    
+    .logo-text .troelns-box img {
+        width: 10px !important;
+        height: 10px !important;
+    }
+    
+    /* Card Properties Grid - Single Column on Extra Small Mobile */
+    .card-properties-grid {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+    
+    /* Actions Row - Single Column on Extra Small Mobile */
+    .actions-row {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .card-properties-section {
+        order: 1;
+    }
+    
+    .quick-actions-section {
+        order: 2;
     }
     
     .canvas-header {
@@ -414,10 +560,6 @@
         padding: 0.75rem;
     }
     
-    .reset-btn {
-        width: 100%;
-        justify-content: center;
-    }
     
     .canvas-container {
         padding: 0.5rem;

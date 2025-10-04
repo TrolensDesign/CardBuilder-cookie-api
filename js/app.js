@@ -1461,14 +1461,22 @@ function updateJSON() {
                         }
                     };
                 } else if (element.type === 'image') {
-                    base.url = variablesMode && element.imageUrlVariable ? element.imageUrlVariable : element.imageUrl;
-                    base.border_radius = variablesMode && element.borderRadiusVariable ? element.borderRadiusVariable : String(element.borderRadius || 1);
-                    base.transparency = variablesMode && element.opacityVariable ? element.opacityVariable : String(element.opacity);
-                    base.layer = variablesMode && element.layerVariable ? element.layerVariable : String(element.layer);
-                    base.position.x = variablesMode && element.xVariable ? element.xVariable : Number(element.x);
-                    base.position.y = variablesMode && element.yVariable ? element.yVariable : Number(element.y);
-                    base.size.width = variablesMode && element.widthVariable ? element.widthVariable : Number(element.width);
-                    base.size.height = variablesMode && element.heightVariable ? element.heightVariable : Number(element.height);
+                    return {
+                        id: String(element.id),
+                        type: element.type,
+                        url: variablesMode && element.imageUrlVariable ? element.imageUrlVariable : element.imageUrl,
+                        transparency: variablesMode && element.opacityVariable ? element.opacityVariable : String(element.opacity),
+                        layer: variablesMode && element.layerVariable ? element.layerVariable : String(element.layer),
+                        border_radius: variablesMode && element.borderRadiusVariable ? element.borderRadiusVariable : String(element.borderRadius || 1),
+                        position: {
+                            x: variablesMode && element.xVariable ? element.xVariable : Number(element.x),
+                            y: variablesMode && element.yVariable ? element.yVariable : Number(element.y)
+                        },
+                        size: {
+                            width: element.widthAuto || element.width === 'auto' ? 'auto' : (variablesMode && element.widthVariable ? element.widthVariable : Number(element.width)),
+                            height: element.heightAuto || element.height === 'auto' ? 'auto' : (variablesMode && element.heightVariable ? element.heightVariable : Number(element.height))
+                        }
+                    };
                 } else if (element.type === 'discord_profile') {
                     return {
                         id: String(element.id),
@@ -1595,14 +1603,22 @@ function generateJSON() {
                     }
                 };
             } else if (element.type === 'image') {
-                base.url = element.imageUrlVariable || element.imageUrl;
-                base.border_radius = element.borderRadiusVariable || String(element.borderRadius || 1);
-                base.transparency = element.opacityVariable || String(element.opacity);
-                base.layer = element.layerVariable || String(element.layer);
-                base.position.x = element.xVariable || Number(element.x);
-                base.position.y = element.yVariable || Number(element.y);
-                base.size.width = element.widthVariable || Number(element.width);
-                base.size.height = element.heightVariable || Number(element.height);
+                return {
+                    id: String(element.id),
+                    type: element.type,
+                    url: element.imageUrlVariable || element.imageUrl,
+                    transparency: element.opacityVariable || String(element.opacity),
+                    layer: element.layerVariable || String(element.layer),
+                    border_radius: element.borderRadiusVariable || String(element.borderRadius || 1),
+                    position: {
+                        x: element.xVariable || Number(element.x),
+                        y: element.yVariable || Number(element.y)
+                    },
+                    size: {
+                        width: element.widthAuto || element.width === 'auto' ? 'auto' : (element.widthVariable || Number(element.width)),
+                        height: element.heightAuto || element.height === 'auto' ? 'auto' : (element.heightVariable || Number(element.height))
+                    }
+                };
             } else if (element.type === 'discord_profile') {
                 return {
                     id: String(element.id),

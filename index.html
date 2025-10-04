@@ -19,26 +19,32 @@
                 <div class="logo-icon">🍪</div>
                 <div class="logo-text">
                     <h1>Cookie Card Builder</h1>
-                    <p>Create stunning Discord cards</p>
+                    <div class="troelns-box">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span>Designed by:</span>
+                            <span style="display: flex; align-items: center; gap: 4px;">
+                                <img src="https://cdn.discordapp.com/avatars/1011787830567120898/51b35a89cc0046bd8720770163fe680f.png" width="20" height="20" style="border-radius: 50%;" />
+                                <span class="animated-gradient">Trolens</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="troelns-box">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span>Designed by:</span>
+                        <span style="display: flex; align-items: center; gap: 4px;">
+                            <img src="https://cdn.discordapp.com/avatars/1011787830567120898/51b35a89cc0046bd8720770163fe680f.png" width="20" height="20" style="border-radius: 50%;" />
+                            <span class="animated-gradient">Trolens</span>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="header-actions">
-                <button class="export-btn" onclick="showExportModal()">
-                    <span>📤</span> Export
-                </button>
                 <button class="help-btn" onclick="showHelpModal()">
                     <span>❓</span> Help
                 </button>
-            </div>
-        </div>
-        <div class="header-footer">
-            <div class="designed-by">
-                <span>Designed by</span>
-                <div class="author-info">
-                    <img src="https://cdn.discordapp.com/avatars/1011787830567120898/51b35a89cc0046bd8720770163fe680f.png" alt="Trolens Avatar" class="author-avatar">
-                    <span class="author-name">Trolens</span>
-                </div>
-                <span class="version">v1.0.0</span>
             </div>
         </div>
     </header>
@@ -212,11 +218,6 @@
                             <option value="1.5">150%</option>
                             <option value="2.0">200%</option>
                         </select>
-                    </div>
-                    <div class="control-group">
-                        <button class="reset-btn" onclick="resetCanvas()">
-                            <span>🔄</span> Reset
-                        </button>
                     </div>
                 </div>
                 
@@ -650,26 +651,412 @@
                     <div class="help-section">
                         <h3>🚀 Getting Started</h3>
                         <ol>
-                            <li>Choose a template or start from scratch</li>
-                            <li>Add elements from the left sidebar</li>
-                            <li>Customize properties in the right panel</li>
-                            <li>Export your card when ready</li>
+                            <li><strong>Choose a template</strong> from the left sidebar or start from scratch</li>
+                            <li><strong>Add elements</strong> by clicking on element buttons (Text, Image, Discord Profile, etc.)</li>
+                            <li><strong>Customize properties</strong> in the right panel when an element is selected</li>
+                            <li><strong>Export your card</strong> using the Export button or mobile navigation</li>
                         </ol>
                     </div>
+
+                    <div class="help-section">
+                        <h3>🎨 Available Elements</h3>
+                        <div class="element-list">
+                            <div class="element-item">
+                                <strong>📝 Text</strong> - Add custom text with font, size, and color options<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 100 text elements per card</span>
+                            </div>
+                            <div class="element-item">
+                                <strong>🖼️ Image</strong> - Add images by URL with resizing and positioning<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 10 images per card</span>
+                            </div>
+                            <div class="element-item">
+                                <strong>👤 Discord Profile</strong> - Display Discord user info (avatar, name, subtitle)<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 10 Discord profiles per card</span>
+                            </div>
+                            <div class="element-item">
+                                <strong>🎮 Roblox Profile</strong> - Display Roblox user info (avatar, name, subtitle)<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 10 Roblox profiles per card</span>
+                            </div>
+                            <div class="element-item">
+                                <strong>📊 Progress Bar</strong> - Show progress with customizable value and color<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 1 progress bar per card</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>⚡ Quick Actions</h3>
+                        <div class="action-list">
+                            <div class="action-item">
+                                <strong>🎯 Center</strong> - Center selected element on canvas
+                            </div>
+                            <div class="action-item">
+                                <strong>⬆️ Top / ⬇️ Bottom / ⬅️ Left / ➡️ Right</strong> - Align element to edges
+                            </div>
+                            <div class="action-item">
+                                <strong>📐 Fit</strong> - Resize element to fit canvas
+                            </div>
+                            <div class="action-item">
+                                <strong>🧲 Snap</strong> - Enable/disable grid snapping for precise positioning
+                            </div>
+                            <div class="action-item">
+                                <strong>🎯 Show Center</strong> - Toggle center crosshair visibility
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>🖼️ Canvas Controls</h3>
+                        <div class="control-list">
+                            <div class="control-item">
+                                <strong>Canvas Size</strong> - Set width and height (default: 800x400)<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limits: Width 100-1200px, Height 100-1200px</span>
+                            </div>
+                            <div class="control-item">
+                                <strong>Zoom</strong> - Adjust canvas zoom level (50% to 200%)
+                            </div>
+                            <div class="control-item">
+                                <strong>Background Type</strong> - Choose between Color or Image background
+                            </div>
+                            <div class="control-item">
+                                <strong>Transparent</strong> - Make background transparent for overlays
+                            </div>
+                            <div class="control-item">
+                                <strong>Clear Canvas</strong> - Remove all elements from canvas
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>🎯 Element Properties</h3>
+                        <div class="property-list">
+                            <div class="property-item">
+                                <strong>Position</strong> - Set X and Y coordinates (or use variable positioning)
+                            </div>
+                            <div class="property-item">
+                                <strong>Size</strong> - Adjust width and height
+                            </div>
+                            <div class="property-item">
+                                <strong>Layer</strong> - Control stacking order (higher = on top)
+                            </div>
+                            <div class="property-item">
+                                <strong>Transparency</strong> - Set opacity (0-100%)
+                            </div>
+                            <div class="property-item">
+                                <strong>Text Properties</strong> - Font, size, color, and content
+                            </div>
+                            <div class="property-item">
+                                <strong>Image URL</strong> - Set image source
+                            </div>
+                            <div class="property-item">
+                                <strong>Profile Data</strong> - Avatar, name, and subtitle for profiles
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>📱 Mobile Usage</h3>
+                        <div class="mobile-list">
+                            <div class="mobile-item">
+                                <strong>Bottom Navigation</strong> - Use Add, Canvas, Edit, Export buttons
+                            </div>
+                            <div class="mobile-item">
+                                <strong>Touch & Drag</strong> - Move elements by touching and dragging
+                            </div>
+                            <div class="mobile-item">
+                                <strong>Pinch to Zoom</strong> - Zoom canvas with pinch gestures
+                            </div>
+                            <div class="mobile-item">
+                                <strong>Responsive Layout</strong> - Interface adapts to screen size
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="help-section">
                         <h3>⌨️ Keyboard Shortcuts</h3>
-                        <ul>
-                            <li><kbd>Backspace</kbd> or <kbd>Delete</kbd> - Delete selected element</li>
-                            <li><kbd>Escape</kbd> - Deselect element or close modals</li>
-                        </ul>
+                        <div class="shortcut-list">
+                            <div class="shortcut-item">
+                                <kbd>Backspace</kbd> or <kbd>Delete</kbd> - Delete selected element
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Escape</kbd> - Deselect element or close modals
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Shift</kbd> + Drag - Axis lock with dynamic direction change<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Hold Shift and drag to lock movement to one axis. Change direction during drag to switch between X and Y axis lock. Yellow line shows current lock direction.</span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="help-section">
                         <h3>🎨 Tips & Tricks</h3>
-                        <ul>
-                            <li>Hold <kbd>Shift</kbd> while dragging for precise movement</li>
-                            <li>Double-click elements to edit quickly</li>
-                            <li>Use templates for faster card creation</li>
-                        </ul>
+                        <div class="tip-list">
+                            <div class="tip-item">
+                                <strong>Layer Management</strong> - Use the Layers tab to see all elements and their order
+                            </div>
+                            <div class="tip-item">
+                                <strong>Variable Positioning</strong> - Enable for dynamic positioning based on canvas size
+                            </div>
+                            <div class="tip-item">
+                                <strong>Templates</strong> - Start with pre-made templates for faster creation
+                            </div>
+                            <div class="tip-item">
+                                <strong>Export Options</strong> - Copy JSON or download file for Discord bot integration
+                            </div>
+                            <div class="tip-item">
+                                <strong>Real-time Preview</strong> - See changes instantly as you edit
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>🤖 Discord Bot Integration</h3>
+                        <div class="integration-list">
+                            <div class="integration-item">
+                                <strong>📋 Step 1: Get Cookie API Access</strong><br>
+                                • Visit <a href="https://cookie-api.com" target="_blank" style="color: var(--accent-color);">Cookie API</a> and sign up<br>
+                                • Create an API key in your dashboard<br>
+                                • Copy your API key for bot configuration
+                            </div>
+                            <div class="integration-item">
+                                <strong>🔧 Step 2: API Configuration</strong><br>
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 6px; margin-top: 0.5rem; border-left: 3px solid var(--accent-color);">
+                                    <div style="margin-bottom: 0.75rem;">
+                                        <strong style="color: var(--accent-color);">URL:</strong><br>
+                                        <div style="display: flex; align-items: flex-end; gap: 0.75rem; margin-top: 0.25rem;">
+                                            <span style="background: var(--accent-color); color: white; padding: 0.25rem 0.5rem; border-radius: 3px; font-weight: 600; font-size: 0.9rem;">POST</span>
+                                            <code style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.9rem; flex: 1;">https://api.cookie-api.com/api/cards/card-builder/build</code>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 0.75rem;">
+                                        <strong style="color: var(--accent-color);">HTTP Headers:</strong><br>
+                                        <div style="background: rgba(0,0,0,0.1); padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem;">
+                                            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 0.5rem; align-items: center;">
+                                                <div>
+                                                    <strong style="color: var(--text-muted); font-size: 0.8rem;">Key</strong><br>
+                                                    <code style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.9rem;">Authorization</code>
+                                                </div>
+                                                <div>
+                                                    <strong style="color: var(--text-muted); font-size: 0.8rem;">Value</strong><br>
+                                                    <code style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.9rem;">YourApiKey</code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="integration-item">
+                                <strong>🤖 Step 3: Bot Integration</strong><br>
+                                • Use HTTP Request or API Call block in your bot platform<br>
+                                • Send POST request with your exported JSON as body<br>
+                                • Include Authorization header with your API key<br>
+                                • The API will return the generated card image
+                            </div>
+                            <div class="integration-item">
+                                <strong>📝 Example Request</strong><br>
+                                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 6px; margin-top: 0.5rem; border-left: 3px solid var(--accent-color);">
+                                    <div style="margin-bottom: 0.75rem;">
+                                        <strong style="color: var(--accent-color);">URL:</strong><br>
+                                        <div style="display: flex; align-items: flex-end; gap: 0.75rem; margin-top: 0.25rem;">
+                                            <span style="background: var(--accent-color); color: white; padding: 0.25rem 0.5rem; border-radius: 3px; font-weight: 600; font-size: 0.9rem;">POST</span>
+                                            <code style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.9rem; flex: 1;">https://api.cookie-api.com/api/cards/card-builder/build</code>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 0.75rem;">
+                                        <strong style="color: var(--accent-color);">HTTP Headers:</strong><br>
+                                        <div style="background: rgba(0,0,0,0.1); padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem;">
+                                            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 0.5rem; align-items: center;">
+                                                <div>
+                                                    <strong style="color: var(--text-muted); font-size: 0.8rem;">Key</strong><br>
+                                                    <code style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.9rem;">Authorization</code>
+                                                </div>
+                                                <div>
+                                                    <strong style="color: var(--text-muted); font-size: 0.8rem;">Value</strong><br>
+                                                    <code style="background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.9rem;">Abc123Def456Ghi789Jkl012Mno345Pqr678Stu901Vwx234Yz</code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <strong style="color: var(--accent-color);">Request Body:</strong><br>
+                                        <code style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 3px; font-size: 0.75rem; display: block; margin-top: 0.25rem; line-height: 1.3; white-space: pre-wrap; overflow-x: auto;">{
+  "card": {
+    "width": "801",
+    "height": "401",
+    "bg": "#1a1a2e",
+    "bg_type": "color"
+  },
+  "elements": [
+    {
+      "id": "1",
+      "type": "image",
+      "url": "https://img.freepik.com/premium-vector/black-background-with-square-glass-frame-black-3d-spheres-glass-morphism-style_206325-2814.jpg",
+      "transparency": "100",
+      "layer": "1",
+      "border_radius": "1",
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "size": {
+        "width": 808,
+        "height": 484
+      }
+    },
+    {
+      "id": "4",
+      "type": "discord_profile",
+      "user_id": "1011787830567120898",
+      "transparency": "100",
+      "layer": "4",
+      "border_radius": "40",
+      "position": {
+        "x": 254.66666666666666,
+        "y": 155.33333333333334
+      },
+      "size": {
+        "width": 80,
+        "height": 80
+      }
+    },
+    {
+      "id": "5",
+      "type": "text",
+      "text": "Trolens is the GOAT",
+      "text_size": "20",
+      "font": "Inter",
+      "color": "#ffffff",
+      "transparency": "100",
+      "layer": "5",
+      "position": {
+        "x": 354.66666666666663,
+        "y": 175.33333333333334
+      },
+      "size": {
+        "width": 199,
+        "height": 28
+      }
+    },
+    {
+      "id": "7",
+      "type": "progressbar",
+      "layer": "7",
+      "transparency": "32",
+      "position": {
+        "x": 251.66666666666663,
+        "y": 273.66666666666663
+      },
+      "size": {
+        "width": 294,
+        "height": 34.666666666666664
+      },
+      "value": 88,
+      "max": 100,
+      "color": "#d71919",
+      "bg_color": "#292828",
+      "border_radius": 100
+    },
+    {
+      "id": "9",
+      "type": "text",
+      "text": "Max Level Beast",
+      "text_size": "16",
+      "font": "Inter",
+      "color": "#305a55",
+      "transparency": "100",
+      "layer": "8",
+      "position": {
+        "x": 256.66666666666663,
+        "y": 246.4
+      },
+      "size": {
+        "width": 131,
+        "height": 23.2
+      }
+    },
+    {
+      "id": "10",
+      "type": "text",
+      "text": "90%",
+      "text_size": "16",
+      "font": "Inter",
+      "color": "#ffffff",
+      "transparency": "100",
+      "layer": "9",
+      "position": {
+        "x": 380,
+        "y": 278.4
+      },
+      "size": {
+        "width": 44,
+        "height": 23.2
+      }
+    }
+  ]
+}</code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="integration-item">
+                                <strong>✅ API Response</strong><br>
+                                <strong>Success Response (Status: 200):</strong><br>
+                                <code style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; display: block; margin-top: 0.5rem; font-size: 0.85rem;">
+                                    {<br>
+                                    &nbsp;&nbsp;"message": "Card successfully created!",<br>
+                                    &nbsp;&nbsp;"success": true,<br>
+                                    &nbsp;&nbsp;"url": "<span style="color: #ffd700; font-weight: bold;">https://cards.cookie-api.com/card-builder/094866000341562/f140a163-4cd5-4b83-a06c-a28ff57ac03d.png</span>"<br>
+                                    }
+                                </code>
+                                <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255, 215, 0, 0.1); border-radius: 4px; font-size: 0.85rem;">
+                                    <strong>💡 Tip:</strong> Copy the highlighted URL and use it as an <strong>Image URL</strong> in your Discord bot's image elements!
+                                </div>
+                                <strong>Error Response (Status: 400/500):</strong><br>
+                                <code style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; display: block; margin-top: 0.5rem; font-size: 0.85rem;">
+                                    {<br>
+                                    &nbsp;&nbsp;"response": {<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;"success": false,<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;"errors": [<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "d8bcdd98-09f7-40ea-a558-7736a833c17b",<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"code": 100310,<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"message": "Missing position/size parameters at element '8'"<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;],<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;"messages": []<br>
+                                    &nbsp;&nbsp;},<br>
+                                    &nbsp;&nbsp;"status": 400,<br>
+                                    &nbsp;&nbsp;"statusText": "Bad Request"<br>
+                                    }
+                                </code>
+                                <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255, 107, 53, 0.1); border-radius: 4px; font-size: 0.85rem;">
+                                    <strong>Note:</strong> This error shouldn't occur when using our builder as it properly validates and sets all position/size parameters automatically.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>🔧 Troubleshooting</h3>
+                        <div class="troubleshoot-list">
+                            <div class="troubleshoot-item">
+                                <strong>Element not visible?</strong> - Check layer order and transparency
+                            </div>
+                            <div class="troubleshoot-item">
+                                <strong>Can't select element?</strong> - Make sure it's not behind another element
+                            </div>
+                            <div class="troubleshoot-item">
+                                <strong>Image not loading?</strong> - Verify URL is accessible and image format is supported
+                            </div>
+                            <div class="troubleshoot-item">
+                                <strong>Export not working?</strong> - Ensure you have elements on canvas
+                            </div>
+                            <div class="troubleshoot-item">
+                                <strong>API not responding?</strong> - Check your API key and request format
+                            </div>
+                            <div class="troubleshoot-item">
+                                <strong>Card generation failed?</strong> - Verify all element URLs are accessible
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
