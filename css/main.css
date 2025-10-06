@@ -575,6 +575,12 @@ body {
     gap: 0.5rem;
     overflow: hidden;
     min-width: 0;
+    max-height: 200px; /* Show only first 4 templates (2 rows) */
+    transition: max-height 0.3s ease;
+}
+
+.templates-grid.expanded {
+    max-height: none; /* Show all templates when expanded */
 }
 
 .template-card {
@@ -613,6 +619,44 @@ body {
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
+}
+
+/* Templates More Button */
+.templates-more-section {
+    margin-top: 0.75rem;
+    display: flex;
+    justify-content: center;
+}
+
+.templates-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.templates-more-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    transform: translateY(-1px);
+}
+
+.templates-more-icon {
+    transition: transform 0.3s ease;
+    font-size: 0.75rem;
+}
+
+.templates-more-btn.expanded .templates-more-icon {
+    transform: rotate(180deg);
 }
 
 /* Snap Guides */

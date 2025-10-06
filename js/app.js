@@ -1724,6 +1724,7 @@ function switchTab(tab) {
 // Make functions globally available
 window.switchTab = switchTab;
 window.updateLayersPanel = updateLayersPanel;
+window.toggleTemplatesExpanded = toggleTemplatesExpanded;
 
 // Template Management
 function loadTemplate(templateName) {
@@ -1863,6 +1864,28 @@ function clearCanvas() {
         updateTemplateButtons(); // Update template button states
         
         showToast('Canvas cleared! 🧹', 'success');
+    }
+}
+
+// Toggle templates expanded state
+function toggleTemplatesExpanded() {
+    const templatesGrid = document.getElementById('templates-grid');
+    const moreBtn = document.getElementById('templates-more-btn');
+    const moreText = moreBtn.querySelector('.templates-more-text');
+    const moreIcon = moreBtn.querySelector('.templates-more-icon');
+    
+    if (templatesGrid.classList.contains('expanded')) {
+        // Collapse
+        templatesGrid.classList.remove('expanded');
+        moreText.textContent = 'Show More';
+        moreIcon.textContent = '▼';
+        moreBtn.classList.remove('expanded');
+    } else {
+        // Expand
+        templatesGrid.classList.add('expanded');
+        moreText.textContent = 'Show Less';
+        moreIcon.textContent = '▲';
+        moreBtn.classList.add('expanded');
     }
 }
 
@@ -2792,6 +2815,25 @@ function updateNewsItemBadges() {
 
 // News data
 const NEWS_DATA = {
+    'collapsible-templates': {
+        title: '📋 Collapsible Templates Section',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>📋 Collapsible Templates Section</h3>
+                <p>We've made the templates section much more compact and user-friendly:</p>
+                <ul>
+                    <li><strong>Space Saving:</strong> Templates section now shows only 4 templates initially (2 rows)</li>
+                    <li><strong>Show More Button:</strong> Click "Show More" to expand and see all templates</li>
+                    <li><strong>Smooth Animation:</strong> Smooth expand/collapse transition with rotating arrow icon</li>
+                    <li><strong>Better Layout:</strong> Sidebar no longer takes up too much space</li>
+                    <li><strong>Improved UX:</strong> Users can quickly access common templates without scrolling</li>
+                </ul>
+                <p>Now the sidebar is much cleaner and templates are easier to navigate!</p>
+            </div>
+        `
+    },
     'zoom-fixes': {
         title: '🔧 Zoom System Fixes & Improvements',
         date: 'October 2025',
