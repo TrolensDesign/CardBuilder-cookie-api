@@ -6,7 +6,8 @@
     <title>Cookie API Card Builder - Modern Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Oleo+Script:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Oleo+Script:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/mobile.css">
@@ -42,8 +43,13 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button class="help-btn" onclick="showHelpModal()">
+                <button class="news-btn" onclick="showNewsModal()" id="news-btn">
+                    <span>📰</span> News
+                    <span class="news-badge" id="news-badge" style="display: none;">!</span>
+                </button>
+                <button class="help-btn" onclick="showHelpModal()" id="help-btn">
                     <span>❓</span> Help
+                    <span class="help-badge" id="help-badge" style="display: none;">!</span>
                 </button>
             </div>
         </div>
@@ -63,12 +69,12 @@
                         <button class="element-card" onclick="addElement('text')" data-type="text">
                             <div class="element-icon">📝</div>
                             <span>Text</span>
-                            <div class="element-badge" id="quota-text">100</div>
+                            <div class="element-badge" id="quota-text">0/100</div>
                         </button>
                         <button class="element-card" onclick="addElement('image')" data-type="image">
                             <div class="element-icon">🖼️</div>
                             <span>Image</span>
-                            <div class="element-badge" id="quota-image">10</div>
+                            <div class="element-badge" id="quota-image">0/10</div>
                         </button>
                     </div>
                 </div>
@@ -80,12 +86,12 @@
                         <button class="element-card" onclick="addElement('discord_profile')" data-type="discord_profile">
                             <div class="element-icon">💬</div>
                             <span>Discord</span>
-                            <div class="element-badge" id="quota-discord_profile">10</div>
+                            <div class="element-badge" id="quota-discord_profile">0/10</div>
                         </button>
                         <button class="element-card" onclick="addElement('roblox_profile')" data-type="roblox_profile">
                             <div class="element-icon">🎮</div>
                             <span>Roblox</span>
-                            <div class="element-badge" id="quota-roblox_profile">10</div>
+                            <div class="element-badge" id="quota-roblox_profile">0/10</div>
                         </button>
                     </div>
                 </div>
@@ -97,7 +103,7 @@
                         <button class="element-card" onclick="addElement('progressbar')" data-type="progressbar">
                             <div class="element-icon">📊</div>
                             <span>Progress</span>
-                            <div class="element-badge" id="quota-progressbar">1</div>
+                            <div class="element-badge" id="quota-progressbar">0/20</div>
                         </button>
                     </div>
                 </div>
@@ -105,7 +111,7 @@
 
 
             <div class="sidebar-section">
-                <h3>📋 Templates</h3>
+                <h3>📋 Templates <span class="templates-badge" id="templates-badge" style="display: none;">!</span></h3>
                 <div class="templates-grid">
                     <button class="template-card" onclick="loadTemplate('level')">
                         <div class="template-preview">📈</div>
@@ -154,6 +160,22 @@
                     <button class="template-card" onclick="loadTemplate('glassmorphism_advanced')">
                         <div class="template-preview">🔮</div>
                         <span>Glass 3D</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('gaming_stats')">
+                        <div class="template-preview">📊</div>
+                        <span>Gaming Stats</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('achievement_progress')">
+                        <div class="template-preview">🏆</div>
+                        <span>Achievement Progress</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('professional_skills')">
+                        <div class="template-preview">💼</div>
+                        <span>Professional Skills</span>
+                    </button>
+                    <button class="template-card" onclick="loadTemplate('character_stats')">
+                        <div class="template-preview">⚔️</div>
+                        <span>Character Stats</span>
                     </button>
                 </div>
                 
@@ -209,15 +231,29 @@
                     </div>
                     <div class="control-group">
                         <label>Zoom</label>
-                        <select id="canvas-zoom" class="zoom-select">
-                            <option value="0.25">25%</option>
-                            <option value="0.5">50%</option>
-                            <option value="0.75" selected>75%</option>
-                            <option value="1">100%</option>
-                            <option value="1.25">125%</option>
-                            <option value="1.5">150%</option>
-                            <option value="2.0">200%</option>
-                        </select>
+                        <div class="zoom-controls">
+                            <button id="zoom-out" class="zoom-btn" title="Zoom Out">
+                                <i data-lucide="zoom-out"></i>
+                            </button>
+                            <select id="canvas-zoom" class="zoom-select">
+                                <option value="0.25">25%</option>
+                                <option value="0.5">50%</option>
+                                <option value="0.75" selected>75%</option>
+                                <option value="1">100%</option>
+                                <option value="1.25">125%</option>
+                                <option value="1.5">150%</option>
+                                <option value="2.0">200%</option>
+                                <option value="3.0">300%</option>
+                                <option value="4.0">400%</option>
+                                <option value="5.0">500%</option>
+                            </select>
+                            <button id="zoom-in" class="zoom-btn" title="Zoom In">
+                                <i data-lucide="zoom-in"></i>
+                            </button>
+                            <button id="zoom-fit" class="zoom-btn" title="Fit to Screen">
+                                <i data-lucide="fullscreen"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -226,46 +262,79 @@
                     <!-- Quick Actions Column -->
                     <div class="quick-actions-section">
                         <h4>⚡ Quick Actions</h4>
-                        <div class="quick-actions-grid">
-                            <button class="quick-action" onclick="centerElement()" title="Center Element">
-                                <span>🎯</span>
-                                <span>Center</span>
-                            </button>
-                            <button class="quick-action" onclick="alignElement('top')" title="Align Top">
-                                <span>⬆️</span>
-                                <span>Top</span>
-                            </button>
-                            <button class="quick-action" onclick="alignElement('bottom')" title="Align Bottom">
-                                <span>⬇️</span>
-                                <span>Bottom</span>
-                            </button>
-                            <button class="quick-action" onclick="alignElement('left')" title="Align Left">
-                                <span>⬅️</span>
-                                <span>Left</span>
-                            </button>
-                            <button class="quick-action" onclick="alignElement('right')" title="Align Right">
-                                <span>➡️</span>
-                                <span>Right</span>
-                            </button>
-                            <button class="quick-action" onclick="fitToCanvas()" title="Fit to Canvas">
-                                <span>📐</span>
-                                <span>Fit</span>
-                            </button>
-                            <button class="quick-action" id="snap-guides-toggle" onclick="toggleSnapGuides()" title="Toggle Snap Guides">
-                                <span>🧲</span>
-                                <span>Snap: On</span>
-                            </button>
-                            <button class="quick-action" onclick="testRedCanvasCenter()" title="Show Canvas Center Lines">
-                                <span>🎯</span>
-                                <span>Show Center</span>
-                            </button>
+                        <div class="quick-actions-toolbar">
+                            <!-- Alignment Tools -->
+                            <div class="toolbar-group">
+                                <div class="toolbar-label">Align</div>
+                                <div class="toolbar-buttons">
+                                    <button class="toolbar-btn" onclick="alignElement('left')" title="Align Left">
+                                        <i data-lucide="align-horizontal-justify-start"></i>
+                                    </button>
+                                    <button class="toolbar-btn" onclick="alignElement('center')" title="Align Center Horizontally">
+                                        <i data-lucide="align-center-vertical"></i>
+                                    </button>
+                                    <button class="toolbar-btn" onclick="alignElement('right')" title="Align Right">
+                                        <i data-lucide="align-horizontal-justify-end"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="toolbar-group">
+                                <div class="toolbar-label">Vertical</div>
+                                <div class="toolbar-buttons">
+                                    <button class="toolbar-btn" onclick="alignElement('top')" title="Align Top">
+                                        <i data-lucide="align-vertical-justify-start"></i>
+                                    </button>
+                                    <button class="toolbar-btn" onclick="alignElement('middle')" title="Align Center Vertically">
+                                        <i data-lucide="align-center-horizontal"></i>
+                                    </button>
+                                    <button class="toolbar-btn" onclick="alignElement('bottom')" title="Align Bottom">
+                                        <i data-lucide="align-vertical-justify-end"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Center & Fit Tools -->
+                            <div class="toolbar-group">
+                                <div class="toolbar-label">Tools</div>
+                                <div class="toolbar-buttons">
+                                    <button class="toolbar-btn" onclick="centerElement()" title="Center Element">
+                                        <i data-lucide="crosshair"></i>
+                                    </button>
+                                    <button class="toolbar-btn" onclick="fitToCanvas()" title="Fit to Canvas">
+                                        <i data-lucide="fullscreen"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Toggle Tools -->
+                            <div class="toolbar-group">
+                                <div class="toolbar-label">Toggle</div>
+                                <div class="toolbar-buttons">
+                                    <button class="toolbar-btn" id="snap-guides-toggle" onclick="toggleSnapGuides()" title="Toggle Snap Guides">
+                                        <i data-lucide="magnet"></i>
+                                    </button>
+                                    <button class="toolbar-btn" onclick="testRedCanvasCenter()" title="Show Center Crosshair">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Card Properties Column -->
                     <div class="card-properties-section">
-                        <div class="card-properties-header">
-                            <h4>🖼️ Card Properties</h4>
+                        <h4>🖼️ Card Properties</h4>
+                        <div class="card-properties-grid">
+                            <div class="card-property">
+                                <label>Transparent</label>
+                                <div class="switch-container">
+                                    <input type="checkbox" id="bg-transparent" class="switch-input">
+                                    <label for="bg-transparent" class="switch-label">
+                                        <span class="switch-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
                             <div class="card-property">
                                 <label>Type</label>
                                 <select id="bg-type">
@@ -277,29 +346,21 @@
                                 <label>Color</label>
                                 <input type="color" id="bg-color" value="#1a1a2e">
                             </div>
-                            <div class="card-property">
-                                <label>Transparent</label>
-                                <div class="switch-container">
-                                    <input type="checkbox" id="bg-transparent" class="switch-input">
-                                    <label for="bg-transparent" class="switch-label">
-                                        <span class="switch-slider"></span>
-                                    </label>
-                                </div>
-                            </div>
                             <div class="card-property" id="image-url-property" style="display: none;">
                                 <label>Image URL</label>
                                 <input type="url" id="bg-image" placeholder="https://example.com/image.jpg">
                             </div>
-                        </div>
-                        <div class="card-properties-content">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="canvas-container">
-                <div class="canvas" id="canvas">
-                    <div class="canvas-resize-handle" id="canvas-resize-handle"></div>
+                <div class="canvas-viewport" id="canvas-viewport">
+                    <div class="canvas" id="canvas">
+                        <div class="canvas-resize-handle" id="canvas-resize-handle"></div>
+                    </div>
+                    <div class="zoom-display" id="zoom-display">75%</div>
                 </div>
             </div>
         </main>
@@ -639,16 +700,190 @@
     </div>
 
 
+    <!-- News Modal -->
+    <div class="modal-overlay" id="news-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📰 Latest News & Updates</h2>
+                <button class="modal-close" onclick="closeNewsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="news-list">
+                    <div class="news-list-item" onclick="showNewsDetail('zoom-fixes')">
+                        <div class="news-item-icon">🔧</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Zoom System Fixes & Improvements <span class="news-item-badge" id="news-item-badge-zoom-fixes" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Fixed zoom system issues! All zoom levels (25%-500%) now work correctly, scroll wheel zoom synchronized with dropdown, and improved fit-to-screen with proper padding.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('drag-select-system')">
+                        <div class="news-item-icon">🖱️</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Professional Drag & Select System <span class="news-item-badge" id="news-item-badge-drag-select-system" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Complete selection system like professional graphic design software! Shift+Drag for multi-select, Shift+Click for adding elements, and smart detection with zoom/pan.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('zoom-pan-system')">
+                        <div class="news-item-icon">🔍</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Professional Zoom & Pan System <span class="news-item-badge" id="news-item-badge-zoom-pan-system" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Complete zoom and pan system like professional graphic design software! Deep zoom, pan & drag, zoom controls, and live zoom display.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('canvas-image-handling')">
+                        <div class="news-item-icon">🖼️</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Smart Canvas Image Handling <span class="news-item-badge" id="news-item-badge-canvas-image-handling" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Canvas automatically resizes to match background image dimensions with proportional scaling and perfect fit!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('mobile-development-status')">
+                        <div class="news-item-icon">📱</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Mobile Development Status Update <span class="news-item-badge" id="news-item-badge-mobile-development-status" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Transparent update about mobile development status - currently under development with limited functionality.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('new-templates')">
+                        <div class="news-item-icon">🎮</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">New Multi-Progress Templates <span class="news-item-badge" id="news-item-badge-new-templates" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">4 new templates with 5-6 progress bars each! Gaming Stats, Achievement Progress, Professional Skills, Character Stats + auto-selection!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('progress-bars-limit')">
+                        <div class="news-item-icon">📊</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Increased Progress Bar Limit <span class="news-item-badge" id="news-item-badge-progress-bars-limit" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Cookie API increased progress bar limit from 1 to 20 per card - much more creative freedom!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('help-improvements')">
+                        <div class="news-item-icon">❓</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Enhanced Help System <span class="news-item-badge" id="news-item-badge-help-improvements" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Completely redesigned help section with sidebar navigation and better organization!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('cyberpunk')">
+                        <div class="news-item-icon">🎨</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">New Cyberpunk Template <span class="news-item-badge" id="news-item-badge-cyberpunk" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Added a stunning cyberpunk template with Rajdhani font for that authentic futuristic look!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('properties')">
+                        <div class="news-item-icon">⚡</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Improved Card Properties <span class="news-item-badge" id="news-item-badge-properties" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Card properties now have a cleaner layout with labels on top and controls below.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('ui')">
+                        <div class="news-item-icon">🔧</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Enhanced UI Layout <span class="news-item-badge" id="news-item-badge-ui" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Fixed the card properties layout to be more intuitive and consistent.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('coming-soon')">
+                        <div class="news-item-icon">🚀</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">New Features Coming Soon <span class="news-item-badge" id="news-item-badge-coming-soon" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">Coming Soon</div>
+                            <div class="news-item-preview">We're working on exciting new features including more templates and advanced customization!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Detail Modal -->
+    <div class="modal-overlay" id="news-detail-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <button class="back-btn" onclick="backToNewsList()" title="Back to News List">
+                        <span>←</span> Back
+                    </button>
+                    <h2 id="news-detail-title">📰 News Detail</h2>
+                </div>
+                <button class="modal-close" onclick="closeNewsDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="news-detail-content" id="news-detail-content">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Help Modal -->
     <div class="modal-overlay" id="help-modal" style="display: none;">
-        <div class="modal-content">
+        <div class="modal-content help-modal-content">
             <div class="modal-header">
                 <h2>❓ Help & Guide</h2>
                 <button class="modal-close" onclick="closeHelpModal()">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="help-sections">
-                    <div class="help-section">
+            <div class="help-modal-body">
+                <div class="help-sidebar">
+                    <h3>Quick Navigation</h3>
+                    <nav class="help-nav">
+                        <a href="#getting-started" class="help-nav-link" onclick="scrollToHelpSection('getting-started')">
+                            <span>🚀</span> Getting Started
+                        </a>
+                        <a href="#elements" class="help-nav-link" onclick="scrollToHelpSection('elements')">
+                            <span>🎨</span> Elements
+                        </a>
+                        <a href="#quick-actions" class="help-nav-link" onclick="scrollToHelpSection('quick-actions')">
+                            <span>⚡</span> Quick Actions
+                        </a>
+                        <a href="#canvas-controls" class="help-nav-link" onclick="scrollToHelpSection('canvas-controls')">
+                            <span>🖼️</span> Canvas Controls
+                        </a>
+                        <a href="#properties" class="help-nav-link" onclick="scrollToHelpSection('properties')">
+                            <span>🎯</span> Properties
+                        </a>
+                        <a href="#mobile" class="help-nav-link" onclick="scrollToHelpSection('mobile')">
+                            <span>📱</span> Mobile Usage
+                        </a>
+                        <a href="#shortcuts" class="help-nav-link" onclick="scrollToHelpSection('shortcuts')">
+                            <span>⌨️</span> Shortcuts
+                        </a>
+                        <a href="#discord-bot-integration" class="help-nav-link" onclick="scrollToHelpSection('discord-bot-integration')">
+                            <span>🤖</span> Bot Config
+                        </a>
+                        <a href="#troubleshooting" class="help-nav-link" onclick="scrollToHelpSection('troubleshooting')">
+                            <span>🔧</span> Troubleshooting
+                        </a>
+                    </nav>
+                </div>
+                <div class="help-content">
+                    <div class="help-sections">
+                    <div class="help-section" id="getting-started">
                         <h3>🚀 Getting Started</h3>
                         <ol>
                             <li><strong>Choose a template</strong> from the left sidebar or start from scratch</li>
@@ -658,33 +893,33 @@
                         </ol>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="elements">
                         <h3>🎨 Available Elements</h3>
                         <div class="element-list">
                             <div class="element-item">
                                 <strong>📝 Text</strong> - Add custom text with font, size, and color options<br>
-                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 100 text elements per card</span>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Supports all fonts, but font variants (BOLD, italic) not supported by cookie-api. Limit: 100 text elements per card</span>
                             </div>
                             <div class="element-item">
                                 <strong>🖼️ Image</strong> - Add images by URL with resizing and positioning<br>
-                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 10 images per card</span>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">GIFs not supported. Limit: 10 images per card</span>
                             </div>
                             <div class="element-item">
-                                <strong>👤 Discord Profile</strong> - Display Discord user info (avatar, name, subtitle)<br>
+                                <strong>👤 Discord Profile</strong> - Display Discord user avatar dynamically by user ID<br>
                                 <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 10 Discord profiles per card</span>
                             </div>
                             <div class="element-item">
-                                <strong>🎮 Roblox Profile</strong> - Display Roblox user info (avatar, name, subtitle)<br>
+                                <strong>🎮 Roblox Profile</strong> - Display Roblox user avatar dynamically by username<br>
                                 <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 10 Roblox profiles per card</span>
                             </div>
                             <div class="element-item">
                                 <strong>📊 Progress Bar</strong> - Show progress with customizable value and color<br>
-                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 1 progress bar per card</span>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Limit: 20 progress bars per card</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="quick-actions">
                         <h3>⚡ Quick Actions</h3>
                         <div class="action-list">
                             <div class="action-item">
@@ -705,7 +940,7 @@
                         </div>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="canvas-controls">
                         <h3>🖼️ Canvas Controls</h3>
                         <div class="control-list">
                             <div class="control-item">
@@ -713,7 +948,12 @@
                                 <span style="color: var(--text-muted); font-size: 0.85rem;">Limits: Width 100-1200px, Height 100-1200px</span>
                             </div>
                             <div class="control-item">
-                                <strong>Zoom</strong> - Adjust canvas zoom level (50% to 200%)
+                                <strong>Zoom & Pan</strong> - Professional zoom system (25% to 500%) with pan controls<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Left click + drag: Pan canvas | Middle mouse: Pan canvas | Scroll wheel: Zoom | Zoom buttons: +/- | Fit to screen: Fullscreen icon</span>
+                            </div>
+                            <div class="control-item">
+                                <strong>Element Selection</strong> - Professional selection system<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Shift + Drag: Multi-select box | Shift + Click: Add to selection | Ctrl/Cmd + Click: Toggle selection</span>
                             </div>
                             <div class="control-item">
                                 <strong>Background Type</strong> - Choose between Color or Image background
@@ -727,7 +967,7 @@
                         </div>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="properties">
                         <h3>🎯 Element Properties</h3>
                         <div class="property-list">
                             <div class="property-item">
@@ -754,8 +994,17 @@
                         </div>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="mobile">
                         <h3>📱 Mobile Usage</h3>
+                        <div class="mobile-warning">
+                            <div class="warning-box">
+                                <strong>⚠️ WARNING: Mobile version is currently under development</strong><br>
+                                <span style="color: var(--text-muted); font-size: 0.9rem;">
+                                    The mobile interface is not fully functional yet. Some features may not work correctly on mobile devices. 
+                                    We recommend using the desktop version for the best experience.
+                                </span>
+                            </div>
+                        </div>
                         <div class="mobile-list">
                             <div class="mobile-item">
                                 <strong>Bottom Navigation</strong> - Use Add, Canvas, Edit, Export buttons
@@ -772,44 +1021,36 @@
                         </div>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="shortcuts">
                         <h3>⌨️ Keyboard Shortcuts</h3>
                         <div class="shortcut-list">
                             <div class="shortcut-item">
-                                <kbd>Backspace</kbd> or <kbd>Delete</kbd> - Delete selected element
+                                <kbd>Backspace</kbd> or <kbd>Delete</kbd> - Delete selected element(s)
                             </div>
                             <div class="shortcut-item">
                                 <kbd>Escape</kbd> - Deselect element or close modals
                             </div>
                             <div class="shortcut-item">
-                                <kbd>Shift</kbd> + Drag - Axis lock with dynamic direction change<br>
-                                <span style="color: var(--text-muted); font-size: 0.85rem;">Hold Shift and drag to lock movement to one axis. Change direction during drag to switch between X and Y axis lock. Yellow line shows current lock direction.</span>
+                                <kbd>Shift</kbd> + <kbd>Drag</kbd> - Multi-select elements with selection box<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Hold Shift and drag to create a selection box around multiple elements</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Shift</kbd> + <kbd>Click</kbd> - Add/remove elements from selection<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Hold Shift and click to add or remove individual elements from your selection</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Click</kbd> - Toggle element in/out of selection<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Hold Ctrl (Windows) or Cmd (Mac) and click to toggle individual elements</span>
+                            </div>
+                            <div class="shortcut-item">
+                                <kbd>Shift</kbd> + <kbd>Drag</kbd> (on element) - Axis lock with dynamic direction change<br>
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Hold Shift and drag an element to lock movement to one axis. Change direction during drag to switch between X and Y axis lock. Yellow line shows current lock direction.</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="help-section">
-                        <h3>🎨 Tips & Tricks</h3>
-                        <div class="tip-list">
-                            <div class="tip-item">
-                                <strong>Layer Management</strong> - Use the Layers tab to see all elements and their order
-                            </div>
-                            <div class="tip-item">
-                                <strong>Variable Positioning</strong> - Enable for dynamic positioning based on canvas size
-                            </div>
-                            <div class="tip-item">
-                                <strong>Templates</strong> - Start with pre-made templates for faster creation
-                            </div>
-                            <div class="tip-item">
-                                <strong>Export Options</strong> - Copy JSON or download file for Discord bot integration
-                            </div>
-                            <div class="tip-item">
-                                <strong>Real-time Preview</strong> - See changes instantly as you edit
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="discord-bot-integration">
                         <h3>🤖 Discord Bot Integration</h3>
                         <div class="integration-list">
                             <div class="integration-item">
@@ -1035,7 +1276,7 @@
                         </div>
                     </div>
 
-                    <div class="help-section">
+                    <div class="help-section" id="troubleshooting">
                         <h3>🔧 Troubleshooting</h3>
                         <div class="troubleshoot-list">
                             <div class="troubleshoot-item">
@@ -1057,6 +1298,7 @@
                                 <strong>Card generation failed?</strong> - Verify all element URLs are accessible
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

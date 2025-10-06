@@ -58,6 +58,23 @@ function updateElementProperties() {
     addPropertyListeners();
 }
 
+// Hide all property sections
+function hideAllPropertySections() {
+    const sections = [
+        'text-properties',
+        'image-properties', 
+        'profile-properties',
+        'progress-properties'
+    ];
+    
+    sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.style.display = 'none';
+        }
+    });
+}
+
 // Update properties panel for multi-selection
 function updateMultiSelectProperties() {
     // Hide all property sections

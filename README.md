@@ -13,10 +13,14 @@ A modular, responsive web application for creating Discord cards using the Cooki
 - **Visual Card Builder**: Drag-and-drop interface for creating Discord cards
 - **Multiple Element Types**: Text, images, Discord profiles, Roblox profiles, progress bars, and shapes
 - **Real-time Preview**: See your card as you build it
+- **Professional Zoom & Pan**: Deep zoom (25%-500%) with pan controls like graphic design software
+- **Multi-Selection System**: Shift+Drag for multi-select, professional selection tools
+- **Smart Templates**: Pre-built templates with auto-selection for easy customization
 - **Mobile Responsive**: Optimized for desktop, tablet, and mobile devices
 - **JSON Export**: Generate JSON configuration for Discord bots
 - **Layer Management**: Organize elements with layer controls
-- **Quick Actions**: Center, align, and fit elements with one click
+- **Quick Actions**: Professional toolbar with align, center, and fit tools
+- **News System**: Stay updated with latest features and improvements
 
 ## File Structure
 
@@ -73,12 +77,36 @@ To deploy your own version:
 - **Progress Bar**: Create progress indicators
 - **Shape**: Add geometric shapes
 
+### Professional Features
+
+#### Zoom & Pan System
+- **Deep Zoom**: Zoom from 25% to 500% for precise editing
+- **Pan Controls**: Left click + drag or middle mouse to pan around the canvas
+- **Scroll Wheel**: Smooth zoom in/out with mouse wheel
+- **Zoom Controls**: Dedicated zoom buttons and dropdown selector
+- **Fit to Screen**: Instantly fit your entire card in view
+
+#### Multi-Selection System
+- **Shift + Drag**: Create selection box to select multiple elements
+- **Shift + Click**: Add individual elements to selection
+- **Ctrl/Cmd + Click**: Toggle element selection
+- **Bulk Operations**: Move, delete, or modify multiple elements at once
+
+#### Smart Templates
+- **Gaming Stats Dashboard**: Multi-progress bar template for gaming profiles
+- **Achievement Progress**: Progress tracking template
+- **Professional Skills**: Skills showcase template
+- **Character Stats**: RPG-style character template
+- **Auto-Selection**: All non-image elements are automatically selected for easy repositioning
+
 ### Mobile Usage
 
 On mobile devices, use the bottom navigation bar to access:
 - **Elements**: Add new elements to your card
 - **Properties**: Modify selected element properties
 - **Canvas**: View and interact with your card
+
+**⚠️ Note**: Mobile usage is currently under development and may not be fully functional.
 
 ## API Integration
 
@@ -100,7 +128,7 @@ On mobile devices, use the bottom navigation bar to access:
 - **Image**: 10 images
 - **Discord Profile**: 10 Discord profiles
 - **Roblox Profile**: 10 Roblox profiles
-- **Progress Bar**: 1 progress bar
+- **Progress Bar**: 20 progress bars
 
 ## Browser Support
 
@@ -123,7 +151,18 @@ This project is open source and available under the MIT License.
 
 ## Changelog
 
-### v3.1.0 (Latest)
+### v3.2.0 (Latest)
+- **🔍 Professional Zoom & Pan System**: Deep zoom (25%-500%) with pan controls, scroll wheel zoom, and fit-to-screen
+- **🖱️ Multi-Selection System**: Shift+Drag for multi-select, Shift+Click for adding elements, professional selection tools
+- **🎨 Smart Templates**: 4 new multi-progress bar templates with auto-selection for easy customization
+- **⚡ Professional Quick Actions**: Compact toolbar with Lucide Icons, align center functions, and visual snap state
+- **📰 News System**: Stay updated with latest features, improvements, and announcements
+- **🔧 Zoom System Fixes**: Fixed all zoom levels, scroll wheel synchronization, and improved fit-to-screen
+- **📱 Enhanced Help System**: Sidebar navigation, detailed sections for all features, and mobile usage warnings
+- **🎯 Improved Limits**: Progress bars increased from 1 to 20, better template validation
+- **🖼️ Canvas Image Handling**: Auto-resize canvas to image dimensions, proportional resizing, and smart background handling
+
+### v3.1.0
 - **🎨 UI/UX Improvements**: Simplified header, added "Designed by Trolens" signature, optimized layout spacing
 - **📱 Mobile Enhancements**: Compact header design, improved responsive layout for Card Properties/Quick Actions
 - **📖 Help System**: Complete user guide with API integration instructions, element limits, and usage tips
@@ -140,5 +179,5 @@ This project is open source and available under the MIT License.
 
 ## Credits
 
-Designed by Trolens - Cookie API Card Builder v3.1.0
+Designed by Trolens - Cookie API Card Builder v3.2.0
 

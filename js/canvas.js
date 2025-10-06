@@ -47,9 +47,31 @@ function initCanvasResize() {
         const deltaX = e.clientX - startX;
         const deltaY = e.clientY - startY;
         
-        // Calculate new dimensions with better constraints
-        const newWidth = Math.max(200, Math.min(1200, startWidth + deltaX));
-        const newHeight = Math.max(100, Math.min(800, startHeight + deltaY));
+        let newWidth, newHeight;
+        
+        // Check if we have image background and should maintain aspect ratio
+        if (cardElement.bg_type === 'image' && cardElement.bg_image) {
+            // For image backgrounds, maintain aspect ratio
+            const aspectRatio = startWidth / startHeight;
+            const deltaSize = (deltaX + deltaY) / 2; // Average of X and Y movement
+            
+            newWidth = Math.max(200, Math.min(1200, startWidth + deltaSize));
+            newHeight = Math.max(100, Math.min(800, newWidth / aspectRatio));
+            
+            // Ensure height is within bounds
+            if (newHeight > 800) {
+                newHeight = 800;
+                newWidth = newHeight * aspectRatio;
+            }
+            if (newHeight < 100) {
+                newHeight = 100;
+                newWidth = newHeight * aspectRatio;
+            }
+        } else {
+            // For color backgrounds, allow free resizing
+            newWidth = Math.max(200, Math.min(1200, startWidth + deltaX));
+            newHeight = Math.max(100, Math.min(800, startHeight + deltaY));
+        }
         
         // Update inputs, cardElement, and canvas
         const newWidthRounded = Math.round(newWidth);
@@ -147,8 +169,6 @@ function initCanvasResize() {
             updateCanvas();
             updateJSON();
             
-            // Show zoom feedback with special styling
-            showZoomFeedback(closestZoom);
         }
     });
 }
@@ -214,6 +234,12 @@ function alignElement(direction) {
             break;
         case 'right':
             element.x = canvasWidth - elementWidth;
+            break;
+        case 'center':
+            element.x = (canvasWidth - elementWidth) / 2;
+            break;
+        case 'middle':
+            element.y = (canvasHeight - elementHeight) / 2;
             break;
     }
     
@@ -446,22 +472,6 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Show zoom feedback with special styling
-function showZoomFeedback(zoom) {
-    const toast = document.createElement('div');
-    toast.className = 'toast zoom-feedback';
-    toast.innerHTML = `
-        <span>🔍</span>
-        <span>Zoom: ${Math.round(zoom * 100)}%</span>
-    `;
-    
-    document.body.appendChild(toast);
-    
-    // Auto remove after 1.5 seconds
-    setTimeout(() => {
-        toast.remove();
-    }, 1500);
-}
 
 // Touch device optimizations
 function isMobileDevice() {
@@ -479,7 +489,7 @@ function autoAdjustZoom() {
     const maxWidth = containerRect.width - 40; // 40px padding
     const maxHeight = containerRect.height - 40;
     
-    const currentZoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const currentZoom = canvasViewport ? canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
     const canvasWidth = cardElement.width * currentZoom;
     const canvasHeight = cardElement.height * currentZoom;
     
@@ -511,7 +521,7 @@ function adjustZoomForCanvasSize() {
     const maxWidth = containerRect.width - 40; // 40px padding
     const maxHeight = containerRect.height - 40;
     
-    const currentZoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const currentZoom = canvasViewport ? canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
     const canvasWidth = cardElement.width * currentZoom;
     const canvasHeight = cardElement.height * currentZoom;
     
@@ -528,7 +538,7 @@ function adjustZoomForCanvasSize() {
         );
         
         // Only update if zoom actually changed
-        const currentZoom = parseFloat(document.getElementById('canvas-zoom').value);
+        const currentZoom = canvasViewport ? canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
         if (Math.abs(closestZoom - currentZoom) > 0.01) {
             document.getElementById('canvas-zoom').value = Math.max(0.25, closestZoom);
             updateCanvas();

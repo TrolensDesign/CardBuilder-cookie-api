@@ -21,13 +21,16 @@ const cardElement = {
     bg_transparent: false
 };
 
+// Make cardElement globally accessible
+window.cardElement = cardElement;
+
 // Limits
 const LIMITS = {
     text: 100,
     image: 10,
     discord_profile: 10,
     roblox_profile: 10,
-    progressbar: 1
+    progressbar: 20
 };
 
 // Templates
@@ -43,7 +46,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 30,
                 fontSize: 24,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -70,7 +73,7 @@ const TEMPLATES = {
                 width: 250,
                 height: 25,
                 fontSize: 20,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#f59e0b',
             },
             {
@@ -81,7 +84,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 16,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             }
         ]
@@ -106,7 +109,7 @@ const TEMPLATES = {
                 width: 150,
                 height: 25,
                 fontSize: 18,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -117,7 +120,7 @@ const TEMPLATES = {
                 width: 100,
                 height: 20,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#94a3b8',
             }
         ]
@@ -142,7 +145,7 @@ const TEMPLATES = {
                 width: 180,
                 height: 25,
                 fontSize: 20,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -153,7 +156,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 20,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#94a3b8',
             },
             {
@@ -190,7 +193,7 @@ const TEMPLATES = {
                 width: 150,
                 height: 25,
                 fontSize: 18,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -201,7 +204,7 @@ const TEMPLATES = {
                 width: 100,
                 height: 20,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#00a2ff',
             },
             {
@@ -229,7 +232,7 @@ const TEMPLATES = {
                 width: 300,
                 height: 30,
                 fontSize: 22,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -252,7 +255,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#10b981',
             }
         ]
@@ -268,7 +271,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 24,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#fbbf24',
             },
             {
@@ -279,7 +282,7 @@ const TEMPLATES = {
                 width: 300,
                 height: 30,
                 fontSize: 18,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -290,7 +293,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#94a3b8',
             }
         ]
@@ -306,7 +309,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 26,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#10b981',
             },
             {
@@ -317,7 +320,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 20,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -340,7 +343,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#10b981',
             }
         ]
@@ -356,7 +359,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 28,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#00ffff',
             },
             {
@@ -367,7 +370,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 16,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ff00ff',
             },
             {
@@ -387,7 +390,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 32,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -398,7 +401,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#00ffff',
             },
             {
@@ -421,7 +424,7 @@ const TEMPLATES = {
                 width: 250,
                 height: 20,
                 fontSize: 12,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#00ff00',
             }
         ]
@@ -437,7 +440,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 24,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -448,7 +451,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 16,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -468,7 +471,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 20,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -479,7 +482,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -507,7 +510,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 26,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ff0080',
             },
             {
@@ -518,7 +521,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#00ffff',
             },
             {
@@ -538,7 +541,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 18,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ff0080',
             },
             {
@@ -549,7 +552,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#00ffff',
             },
             {
@@ -572,7 +575,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 12,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ff0080',
             }
         ]
@@ -589,7 +592,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 24,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -600,7 +603,7 @@ const TEMPLATES = {
                 width: 350,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -620,7 +623,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 20,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -631,7 +634,7 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 14,
-                fontFamily: 'Inter',
+                fontFamily: 'Rajdhani',
                 textColor: '#ffffff',
             },
             {
@@ -654,8 +657,588 @@ const TEMPLATES = {
                 width: 200,
                 height: 25,
                 fontSize: 12,
+                fontFamily: 'Rajdhani',
+                textColor: '#ffffff',
+            }
+        ]
+    },
+    gaming_stats: {
+        name: 'Gaming Stats Dashboard',
+        background: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=400&fit=crop',
+        elements: [
+            {
+                type: 'text',
+                text: 'GAMING STATS',
+                x: 50,
+                y: 30,
+                width: 300,
+                height: 30,
+                fontSize: 24,
                 fontFamily: 'Inter',
                 textColor: '#ffffff',
+                textAlign: 'left',
+                fontWeight: 'bold'
+            },
+            {
+                type: 'text',
+                text: 'HP',
+                x: 50,
+                y: 70,
+                width: 50,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ff4444',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 110,
+                y: 70,
+                width: 200,
+                height: 15,
+                progressValue: 85,
+                progressMax: 100,
+                progressColor: '#ff4444',
+                progressBgColor: '#333333',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Mana',
+                x: 50,
+                y: 100,
+                width: 50,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#4444ff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 110,
+                y: 100,
+                width: 200,
+                height: 15,
+                progressValue: 60,
+                progressMax: 100,
+                progressColor: '#4444ff',
+                progressBgColor: '#333333',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'XP',
+                x: 50,
+                y: 130,
+                width: 50,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#44ff44',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 110,
+                y: 130,
+                width: 200,
+                height: 15,
+                progressValue: 75,
+                progressMax: 100,
+                progressColor: '#44ff44',
+                progressBgColor: '#333333',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Stamina',
+                x: 50,
+                y: 160,
+                width: 50,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffff44',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 110,
+                y: 160,
+                width: 200,
+                height: 15,
+                progressValue: 90,
+                progressMax: 100,
+                progressColor: '#ffff44',
+                progressBgColor: '#333333',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Skills',
+                x: 50,
+                y: 190,
+                width: 50,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ff44ff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 110,
+                y: 190,
+                width: 200,
+                height: 15,
+                progressValue: 45,
+                progressMax: 100,
+                progressColor: '#ff44ff',
+                progressBgColor: '#333333',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Reputation',
+                x: 50,
+                y: 220,
+                width: 50,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#44ffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 110,
+                y: 220,
+                width: 200,
+                height: 15,
+                progressValue: 70,
+                progressMax: 100,
+                progressColor: '#44ffff',
+                progressBgColor: '#333333',
+                progressBorderRadius: 8
+            }
+        ]
+    },
+    achievement_progress: {
+        name: 'Achievement Progress',
+        background: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=400&fit=crop',
+        elements: [
+            {
+                type: 'text',
+                text: 'ACHIEVEMENTS',
+                x: 50,
+                y: 30,
+                width: 300,
+                height: 30,
+                fontSize: 24,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left',
+                fontWeight: 'bold'
+            },
+            {
+                type: 'text',
+                text: 'Quests',
+                x: 50,
+                y: 70,
+                width: 80,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 140,
+                y: 70,
+                width: 150,
+                height: 15,
+                progressValue: 12,
+                progressMax: 20,
+                progressColor: '#10b981',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Bosses',
+                x: 50,
+                y: 100,
+                width: 80,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 140,
+                y: 100,
+                width: 150,
+                height: 15,
+                progressValue: 8,
+                progressMax: 15,
+                progressColor: '#ef4444',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Items',
+                x: 50,
+                y: 130,
+                width: 80,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 140,
+                y: 130,
+                width: 150,
+                height: 15,
+                progressValue: 156,
+                progressMax: 200,
+                progressColor: '#3b82f6',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Levels',
+                x: 50,
+                y: 160,
+                width: 80,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 140,
+                y: 160,
+                width: 150,
+                height: 15,
+                progressValue: 45,
+                progressMax: 50,
+                progressColor: '#f59e0b',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Achievements',
+                x: 50,
+                y: 190,
+                width: 80,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 140,
+                y: 190,
+                width: 150,
+                height: 15,
+                progressValue: 23,
+                progressMax: 30,
+                progressColor: '#8b5cf6',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            }
+        ]
+    },
+    professional_skills: {
+        name: 'Professional Skills',
+        background: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop',
+        elements: [
+            {
+                type: 'text',
+                text: 'PROFESSIONAL SKILLS',
+                x: 50,
+                y: 30,
+                width: 300,
+                height: 30,
+                fontSize: 24,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left',
+                fontWeight: 'bold'
+            },
+            {
+                type: 'text',
+                text: 'Programming',
+                x: 50,
+                y: 70,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 70,
+                width: 200,
+                height: 15,
+                progressValue: 85,
+                progressMax: 100,
+                progressColor: '#10b981',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Design',
+                x: 50,
+                y: 100,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 100,
+                width: 200,
+                height: 15,
+                progressValue: 70,
+                progressMax: 100,
+                progressColor: '#3b82f6',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Marketing',
+                x: 50,
+                y: 130,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 130,
+                width: 200,
+                height: 15,
+                progressValue: 60,
+                progressMax: 100,
+                progressColor: '#f59e0b',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Leadership',
+                x: 50,
+                y: 160,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 160,
+                width: 200,
+                height: 15,
+                progressValue: 80,
+                progressMax: 100,
+                progressColor: '#8b5cf6',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Communication',
+                x: 50,
+                y: 190,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 190,
+                width: 200,
+                height: 15,
+                progressValue: 75,
+                progressMax: 100,
+                progressColor: '#ef4444',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            }
+        ]
+    },
+    character_stats: {
+        name: 'Character Stats',
+        background: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=400&fit=crop',
+        elements: [
+            {
+                type: 'text',
+                text: 'CHARACTER STATS',
+                x: 50,
+                y: 30,
+                width: 300,
+                height: 30,
+                fontSize: 24,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left',
+                fontWeight: 'bold'
+            },
+            {
+                type: 'text',
+                text: 'Strength',
+                x: 50,
+                y: 70,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 70,
+                width: 200,
+                height: 15,
+                progressValue: 90,
+                progressMax: 100,
+                progressColor: '#ef4444',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Agility',
+                x: 50,
+                y: 100,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 100,
+                width: 200,
+                height: 15,
+                progressValue: 75,
+                progressMax: 100,
+                progressColor: '#10b981',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Intelligence',
+                x: 50,
+                y: 130,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 130,
+                width: 200,
+                height: 15,
+                progressValue: 85,
+                progressMax: 100,
+                progressColor: '#3b82f6',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Charisma',
+                x: 50,
+                y: 160,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 160,
+                width: 200,
+                height: 15,
+                progressValue: 70,
+                progressMax: 100,
+                progressColor: '#f59e0b',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
+            },
+            {
+                type: 'text',
+                text: 'Luck',
+                x: 50,
+                y: 190,
+                width: 100,
+                height: 20,
+                fontSize: 14,
+                fontFamily: 'Inter',
+                textColor: '#ffffff',
+                textAlign: 'left'
+            },
+            {
+                type: 'progressbar',
+                x: 160,
+                y: 190,
+                width: 200,
+                height: 15,
+                progressValue: 65,
+                progressMax: 100,
+                progressColor: '#8b5cf6',
+                progressBgColor: '#374151',
+                progressBorderRadius: 8
             }
         ]
     }
@@ -665,6 +1248,11 @@ const TEMPLATES = {
 document.addEventListener('DOMContentLoaded', function() {
     // Initializing Modern Cookie API Card Builder
     
+    // Initialize Lucide Icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+    
     // Load Google Fonts dynamically
     if (typeof loadGoogleFonts === 'function') {
         loadGoogleFonts();
@@ -673,12 +1261,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set dark theme as default
     setTheme('dark');
     
-    // Initialize snap guides
-    const snapToggle = document.getElementById('snap-guides-toggle');
-    if (snapToggle) {
-        snapToggle.innerHTML = snapGuidesEnabled ? '<span>🧲</span><span>Snap: On</span>' : '<span>🧲</span><span>Snap: Off</span>';
-        snapToggle.classList.toggle('active', snapGuidesEnabled);
+    // Initialize badge system
+    updateAllBadges();
+    
+    // Initialize snap button state
+    const snapButton = document.getElementById('snap-guides-toggle');
+    if (snapButton && snapGuidesEnabled) {
+        snapButton.classList.add('active');
     }
+    
+    // Initialize quotas
+    updateQuotas();
+    
     
     // Set default zoom to 75%
     const zoomSelect = document.getElementById('canvas-zoom');
@@ -734,7 +1328,19 @@ function setupEventListeners() {
     
     // Card property listeners
     document.getElementById('card-width').addEventListener('input', function() {
-        cardElement.width = parseInt(this.value);
+        const newWidth = parseInt(this.value);
+        cardElement.width = newWidth;
+        
+        // For image backgrounds, calculate proportional height
+        if (cardElement.bg_type === 'image' && originalImageDimensions) {
+            const newHeight = calculateProportionalHeight(newWidth);
+            cardElement.height = newHeight;
+            
+            // Update height input field
+            const heightInput = document.getElementById('card-height');
+            if (heightInput) heightInput.value = newHeight;
+        }
+        
         updateCanvas();
         
         // Auto-adjust zoom if canvas is too big
@@ -742,7 +1348,19 @@ function setupEventListeners() {
     });
     
     document.getElementById('card-height').addEventListener('input', function() {
-        cardElement.height = parseInt(this.value);
+        const newHeight = parseInt(this.value);
+        cardElement.height = newHeight;
+        
+        // For image backgrounds, calculate proportional width
+        if (cardElement.bg_type === 'image' && originalImageDimensions) {
+            const newWidth = Math.round(newHeight * originalImageDimensions.aspectRatio);
+            cardElement.width = newWidth;
+            
+            // Update width input field
+            const widthInput = document.getElementById('card-width');
+            if (widthInput) widthInput.value = newWidth;
+        }
+        
         updateCanvas();
         
         // Auto-adjust zoom if canvas is too big
@@ -752,15 +1370,54 @@ function setupEventListeners() {
     const zoomSelect = document.getElementById('canvas-zoom');
     if (zoomSelect) {
         zoomSelect.addEventListener('change', function() {
-            updateCanvas();
-            updateJSON();
+            canvasViewport.zoom = parseFloat(this.value);
+            updateCanvasViewport();
         });
     }
+    
+    // Zoom button event listeners
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const zoomFitBtn = document.getElementById('zoom-fit');
+    
+    if (zoomInBtn) {
+        zoomInBtn.addEventListener('click', function() {
+            zoomIn();
+        });
+    }
+    
+    if (zoomOutBtn) {
+        zoomOutBtn.addEventListener('click', function() {
+            zoomOut();
+        });
+    }
+    
+    if (zoomFitBtn) {
+        zoomFitBtn.addEventListener('click', function() {
+            zoomToFit();
+        });
+    }
+    
+    // Initialize canvas viewport system
+    initCanvasPan();
+    
+    // Initialize zoom display
+    updateZoomDisplay();
     
     document.getElementById('bg-type').addEventListener('change', function() {
         cardElement.bg_type = this.value;
         handleBackgroundTypeChange();
         handleTypeChange();
+        
+        // Reset original dimensions when changing away from image
+        if (this.value !== 'image') {
+            originalImageDimensions = null;
+        }
+        
+        // Auto-resize canvas to image dimensions if switching to image type
+        if (this.value === 'image' && cardElement.bg_image && cardElement.bg_image.trim() !== '') {
+            autoResizeCanvasToImage(cardElement.bg_image);
+        }
     });
     
     document.getElementById('bg-color').addEventListener('input', function() {
@@ -770,7 +1427,16 @@ function setupEventListeners() {
     
     document.getElementById('bg-image').addEventListener('input', function() {
         cardElement.bg_image = this.value;
-        updateCanvas();
+        
+        // Reset original dimensions when changing image
+        originalImageDimensions = null;
+        
+        // Auto-resize canvas to image dimensions if image is provided
+        if (cardElement.bg_type === 'image' && this.value.trim() !== '') {
+            autoResizeCanvasToImage(this.value);
+        } else {
+            updateCanvas();
+        }
     });
     
     document.getElementById('bg-transparent').addEventListener('change', function() {
@@ -1067,13 +1733,25 @@ function loadTemplate(templateName) {
         return;
     }
     
-    // Check if template contains progressbar and if canvas already has one
-    const templateHasProgressbar = template.elements.some(el => el.type === 'progressbar');
-    const canvasHasProgressbar = elements.some(el => el.type === 'progressbar');
+    // Mark templates as read when any template is used
+    markTemplatesAsRead();
     
-    if (templateHasProgressbar && canvasHasProgressbar) {
-        showToast('Canvas already has a progress bar! Only one progress bar is allowed.', 'warning');
-        return;
+    // Check if template would exceed any limits
+    const elementTypes = ['text', 'image', 'discord_profile', 'roblox_profile', 'progressbar'];
+    
+    for (const elementType of elementTypes) {
+        const canvasCount = elements.filter(el => el.type === elementType).length;
+        const templateCount = template.elements.filter(el => el.type === elementType).length;
+        const totalCount = canvasCount + templateCount;
+        
+        if (totalCount > LIMITS[elementType]) {
+            const elementName = elementType === 'discord_profile' ? 'Discord profiles' :
+                              elementType === 'roblox_profile' ? 'Roblox profiles' :
+                              elementType === 'progressbar' ? 'progress bars' :
+                              elementType + 's';
+            showToast(`Template would exceed ${elementName} limit! Maximum ${LIMITS[elementType]} ${elementName} allowed.`, 'warning');
+            return;
+        }
     }
     
     // Don't clear existing elements - just add template elements
@@ -1119,23 +1797,40 @@ function loadTemplate(templateName) {
     updateTemplateButtons(); // Update template button states
     
     const addedCount = elements.length - existingElementsCount;
-    showToast(`Added ${template.name} template! (+${addedCount} elements)`, 'success');
+    
+    // Auto-select all added elements except images (backgrounds)
+    const addedElements = elements.slice(existingElementsCount);
+    const nonImageElements = addedElements.filter(el => el.type !== 'image');
+    
+    if (nonImageElements.length > 0) {
+        // Select all non-image elements for easy repositioning
+        selectedElements = nonImageElements.map(el => el.id);
+        selectedElement = selectedElements[0]; // Set primary selection
+        updateCanvas();
+        updateElementProperties();
+        showToast(`Added ${template.name} template! (+${addedCount} elements) - All elements selected for easy repositioning!`, 'success');
+    } else {
+        showToast(`Added ${template.name} template! (+${addedCount} elements)`, 'success');
+    }
 }
 
 // Update template button states based on progressbar availability
 function updateTemplateButtons() {
-    const canvasHasProgressbar = elements.some(el => el.type === 'progressbar');
+    const canvasProgressbarCount = elements.filter(el => el.type === 'progressbar').length;
     
     // Templates that contain progressbar
-    const progressbarTemplates = ['level', 'achievement', 'progress_card', 'level_up', 'discord_card', 'gaming_profile', 'cyberpunk_card', 'glassmorphism_card', 'retro_wave_card', 'glassmorphism_advanced'];
+    const progressbarTemplates = ['level', 'achievement', 'progress_card', 'level_up', 'discord_card', 'gaming_profile', 'cyberpunk_card', 'glassmorphism_card', 'retro_wave_card', 'glassmorphism_advanced', 'gaming_stats', 'achievement_progress', 'professional_skills', 'character_stats'];
     
     progressbarTemplates.forEach(templateName => {
         const button = document.querySelector(`[onclick="loadTemplate('${templateName}')"]`);
         if (button) {
-            if (canvasHasProgressbar) {
+            const template = TEMPLATES[templateName];
+            const templateProgressbarCount = template ? template.elements.filter(el => el.type === 'progressbar').length : 0;
+            
+            if (canvasProgressbarCount + templateProgressbarCount > LIMITS.progressbar) {
                 button.disabled = true;
                 button.style.opacity = '0.5';
-                button.title = 'Disabled: Canvas already has a progress bar';
+                button.title = `Disabled: Would exceed progress bar limit (${LIMITS.progressbar} max)`;
             } else {
                 button.disabled = false;
                 button.style.opacity = '1';
@@ -1241,6 +1936,277 @@ function handleTransparencyToggle() {
     updateJSON();
 }
 
+// Store original image dimensions for proportional resizing
+let originalImageDimensions = null;
+
+// Canvas viewport system
+let canvasViewport = {
+    zoom: 0.75,
+    panX: 0,
+    panY: 0,
+    isPanning: false,
+    startX: 0,
+    startY: 0
+};
+
+// Make canvasViewport globally accessible
+window.canvasViewport = canvasViewport;
+
+// Toast management
+let currentToast = null;
+let toastTimeout = null;
+
+// Auto-resize canvas to match image dimensions
+function autoResizeCanvasToImage(imageUrl) {
+    const img = new Image();
+    img.onload = function() {
+        // Get natural dimensions of the image
+        const imageWidth = img.naturalWidth;
+        const imageHeight = img.naturalHeight;
+        
+        // Store original dimensions for proportional resizing
+        originalImageDimensions = {
+            width: imageWidth,
+            height: imageHeight,
+            aspectRatio: imageWidth / imageHeight
+        };
+        
+        // Update canvas dimensions to match image
+        cardElement.width = imageWidth;
+        cardElement.height = imageHeight;
+        
+        // Update input fields
+        const widthInput = document.getElementById('card-width');
+        const heightInput = document.getElementById('card-height');
+        if (widthInput) widthInput.value = imageWidth;
+        if (heightInput) heightInput.value = imageHeight;
+        
+        // Update canvas and adjust zoom
+        updateCanvas();
+        setTimeout(adjustZoomForCanvasSize, 100);
+        
+        showToast(`Canvas resized to image dimensions: ${imageWidth}x${imageHeight}`, 'success');
+    };
+    img.onerror = function() {
+        showToast('Failed to load image for auto-resize', 'warning');
+        updateCanvas();
+    };
+    img.src = imageUrl;
+}
+
+// Calculate proportional height for image backgrounds
+function calculateProportionalHeight(newWidth) {
+    if (originalImageDimensions && cardElement.bg_type === 'image') {
+        return Math.round(newWidth / originalImageDimensions.aspectRatio);
+    }
+    return cardElement.height; // Return current height if not image background
+}
+
+// Canvas viewport functions
+function updateCanvasViewport() {
+    const canvas = document.getElementById('canvas');
+    if (!canvas) return;
+    
+    const transform = `translate(${canvasViewport.panX}px, ${canvasViewport.panY}px) scale(${canvasViewport.zoom})`;
+    canvas.style.transform = transform;
+    canvas.style.transformOrigin = '0 0';
+    
+    // Update scroll bars based on zoom level
+    const viewport = document.getElementById('canvas-viewport');
+    if (viewport) {
+        if (canvasViewport.zoom > 1.5) {
+            viewport.style.overflow = 'auto';
+        } else {
+            viewport.style.overflow = 'hidden';
+        }
+    }
+}
+
+function zoomIn() {
+    const zoomSelect = document.getElementById('canvas-zoom');
+    const zoomLevels = Array.from(zoomSelect.options).map(option => parseFloat(option.value));
+    const currentIndex = zoomLevels.indexOf(canvasViewport.zoom);
+    
+    if (currentIndex < zoomLevels.length - 1) {
+        canvasViewport.zoom = zoomLevels[currentIndex + 1];
+        updateCanvasViewport();
+        updateZoomSelect();
+        updateZoomDisplay();
+    }
+}
+
+function zoomOut() {
+    const zoomSelect = document.getElementById('canvas-zoom');
+    const zoomLevels = Array.from(zoomSelect.options).map(option => parseFloat(option.value));
+    const currentIndex = zoomLevels.indexOf(canvasViewport.zoom);
+    
+    if (currentIndex > 0) {
+        canvasViewport.zoom = zoomLevels[currentIndex - 1];
+        updateCanvasViewport();
+        updateZoomSelect();
+        updateZoomDisplay();
+    }
+}
+
+function zoomToFit() {
+    const viewport = document.getElementById('canvas-viewport');
+    const canvas = document.getElementById('canvas');
+    
+    if (!viewport || !canvas) return;
+    
+    const containerWidth = viewport.clientWidth;
+    const containerHeight = viewport.clientHeight;
+    const cardWidth = cardElement.width;
+    const cardHeight = cardElement.height;
+    
+    // Calculate zoom to fit both width and height with some padding
+    const padding = 20; // 20px padding on each side
+    const availableWidth = containerWidth - (padding * 2);
+    const availableHeight = containerHeight - (padding * 2);
+    
+    const zoomX = availableWidth / cardWidth;
+    const zoomY = availableHeight / cardHeight;
+    const fitZoom = Math.min(zoomX, zoomY, 1.0); // Cap at 100% for fit
+    
+    // Center the canvas
+    canvasViewport.zoom = fitZoom;
+    canvasViewport.panX = (containerWidth - cardWidth * fitZoom) / 2;
+    canvasViewport.panY = (containerHeight - cardHeight * fitZoom) / 2;
+    
+    updateCanvasViewport();
+    updateZoomSelect();
+    updateZoomDisplay();
+    showToast(`Zoom to fit: ${Math.round(fitZoom * 100)}%`, 'success');
+}
+
+function updateZoomSelect() {
+    const zoomSelect = document.getElementById('canvas-zoom');
+    if (zoomSelect) {
+        const currentZoom = canvasViewport.zoom;
+        
+        // Check if current zoom matches any existing option
+        const exactMatch = Array.from(zoomSelect.options).find(option => 
+            Math.abs(parseFloat(option.value) - currentZoom) < 0.01
+        );
+        
+        if (exactMatch) {
+            zoomSelect.value = exactMatch.value;
+        } else {
+            // Find closest existing option
+            const options = Array.from(zoomSelect.options);
+            const closestOption = options.reduce((prev, curr) => {
+                const prevDiff = Math.abs(parseFloat(prev.value) - currentZoom);
+                const currDiff = Math.abs(parseFloat(curr.value) - currentZoom);
+                return currDiff < prevDiff ? curr : prev;
+            });
+            zoomSelect.value = closestOption.value;
+        }
+    }
+}
+
+function updateZoomDisplay() {
+    const zoomDisplay = document.getElementById('zoom-display');
+    if (zoomDisplay) {
+        zoomDisplay.textContent = Math.round(canvasViewport.zoom * 100) + '%';
+    }
+}
+
+function initCanvasPan() {
+    const viewport = document.getElementById('canvas-viewport');
+    if (!viewport) return;
+    
+    // Mouse events for panning and drag select
+    viewport.addEventListener('mousedown', function(e) {
+        if (e.button === 0) { // Left mouse button
+            // Check if clicking on empty canvas area for drag select (only with Shift)
+            if (e.shiftKey && (e.target.id === 'canvas' || e.target.classList.contains('canvas-viewport'))) {
+                // Start drag select if not clicking on an element
+                if (!e.target.classList.contains('element')) {
+                    startDragSelect(e);
+                    return;
+                }
+            }
+            
+            // Regular panning (without Shift)
+            if (!e.shiftKey) {
+                canvasViewport.isPanning = true;
+                canvasViewport.startX = e.clientX - canvasViewport.panX;
+                canvasViewport.startY = e.clientY - canvasViewport.panY;
+                viewport.style.cursor = 'grabbing';
+            }
+        } else if (e.button === 1) { // Middle mouse button
+            // Middle mouse panning
+            canvasViewport.isPanning = true;
+            canvasViewport.startX = e.clientX - canvasViewport.panX;
+            canvasViewport.startY = e.clientY - canvasViewport.panY;
+            viewport.style.cursor = 'grabbing';
+            e.preventDefault(); // Prevent middle mouse scroll
+        }
+    });
+    
+    document.addEventListener('mousemove', function(e) {
+        if (canvasViewport.isPanning) {
+            canvasViewport.panX = e.clientX - canvasViewport.startX;
+            canvasViewport.panY = e.clientY - canvasViewport.startY;
+            updateCanvasViewport();
+        }
+    });
+    
+    document.addEventListener('mouseup', function(e) {
+        if (canvasViewport.isPanning) {
+            canvasViewport.isPanning = false;
+            viewport.style.cursor = 'grab';
+        }
+    });
+    
+    // Prevent middle mouse scroll
+    viewport.addEventListener('auxclick', function(e) {
+        if (e.button === 1) { // Middle mouse button
+            e.preventDefault();
+        }
+    });
+    
+    // Scroll wheel zoom
+    viewport.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        
+        // Get zoom levels from HTML select options
+        const zoomSelect = document.getElementById('canvas-zoom');
+        const zoomLevels = Array.from(zoomSelect.options).map(option => parseFloat(option.value));
+        const currentIndex = zoomLevels.indexOf(canvasViewport.zoom);
+        
+        let newZoom;
+        if (e.deltaY < 0) {
+            // Zoom in
+            if (currentIndex < zoomLevels.length - 1) {
+                newZoom = zoomLevels[currentIndex + 1];
+            } else {
+                return; // Already at max zoom
+            }
+        } else {
+            // Zoom out
+            if (currentIndex > 0) {
+                newZoom = zoomLevels[currentIndex - 1];
+            } else {
+                return; // Already at min zoom
+            }
+        }
+        
+        // Zoom to mouse position
+        const rect = viewport.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const zoomRatio = newZoom / canvasViewport.zoom;
+        canvasViewport.panX = mouseX - (mouseX - canvasViewport.panX) * zoomRatio;
+        canvasViewport.panY = mouseY - (mouseY - canvasViewport.panY) * zoomRatio;
+        
+        canvasViewport.zoom = newZoom;
+        updateCanvasViewport();
+        updateZoomSelect();
+        updateZoomDisplay();
+    });
+}
+
 // Update canvas
 function updateCanvas() {
     const canvas = document.getElementById('canvas');
@@ -1251,16 +2217,12 @@ function updateCanvas() {
     
     const width = cardElement.width;
     const height = cardElement.height;
-    const zoom = parseFloat(document.getElementById('canvas-zoom').value);
     
-    const newWidth = (width * zoom) + 'px';
-    const newHeight = (height * zoom) + 'px';
-    
-    // Apply size with constraints
-    canvas.style.width = newWidth;
-    canvas.style.height = newHeight;
-    canvas.style.maxWidth = '100%';
-    canvas.style.maxHeight = '100%';
+    // Set canvas size (actual size, not zoomed)
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    canvas.style.maxWidth = 'none';
+    canvas.style.maxHeight = 'none';
     
     // Handle transparency
     const isTransparent = cardElement.bg_transparent;
@@ -1290,21 +2252,24 @@ function updateCanvas() {
         canvas.appendChild(guide);
     });
     
-    // Render elements
+    // Render elements (no zoom scaling)
     const sortedElements = [...elements].sort((a, b) => a.layer - b.layer);
     sortedElements.forEach(element => {
-        const elementDiv = createElementDiv(element, zoom);
+        const elementDiv = createElementDiv(element, 1); // No zoom scaling
         canvas.appendChild(elementDiv);
     });
     
     // Add multi-select border if multiple elements are selected
     if (selectedElements.length > 1) {
-        addMultiSelectBorder(canvas, zoom);
+        addMultiSelectBorder(canvas, 1); // No zoom scaling
     }
     
     updateLayersPanel();
     updateCanvasStatus();
     ensureResizeHandle();
+    
+    // Apply viewport transform
+    updateCanvasViewport();
     
     // Update JSON live preview
     updateJSON();
@@ -1379,6 +2344,10 @@ function updateQuotas() {
         roblox_profile: elements.filter(e => e.type === 'roblox_profile').length,
         progressbar: elements.filter(e => e.type === 'progressbar').length
     };
+    
+    // Debug: log counts
+    console.log('Element counts:', counts);
+    console.log('Total elements:', elements.length);
     
     Object.keys(counts).forEach(type => {
         const quotaEl = document.getElementById(`quota-${type}`);
@@ -1688,10 +2657,464 @@ function downloadJSON() {
 // Modal Management
 // JSON is now automatically updated in sidebar - no modal needed
 
+// Badge tracking system
+const BADGE_VERSION = '1.0'; // Increment this when adding new features
+const STORAGE_KEY = 'cookie-card-builder-badges';
+
+// Get badge data from localStorage
+function getBadgeData() {
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : { 
+            version: '', 
+            readNews: [], 
+            readHelp: false, 
+            readTemplates: false 
+        };
+    } catch (e) {
+        return { version: '', readNews: [], readHelp: false, readTemplates: false };
+    }
+}
+
+// Mark news as read
+function markNewsAsRead(newsId) {
+    const data = getBadgeData();
+    if (!data.readNews.includes(newsId)) {
+        data.readNews.push(newsId);
+        data.version = BADGE_VERSION;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        updateAllBadges();
+    }
+}
+
+// Mark help as read
+function markHelpAsRead() {
+    const data = getBadgeData();
+    data.readHelp = true;
+    data.version = BADGE_VERSION;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    updateAllBadges();
+}
+
+// Mark templates as read
+function markTemplatesAsRead() {
+    const data = getBadgeData();
+    data.readTemplates = true;
+    data.version = BADGE_VERSION;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    updateAllBadges();
+}
+
+// Check if there are unread news
+function hasUnreadNews() {
+    const data = getBadgeData();
+    const allNewsIds = Object.keys(NEWS_DATA);
+    const unreadNews = allNewsIds.filter(id => !data.readNews.includes(id));
+    return unreadNews.length > 0;
+}
+
+// Check if help is unread
+function hasUnreadHelp() {
+    const data = getBadgeData();
+    return !data.readHelp;
+}
+
+// Check if templates are unread
+function hasUnreadTemplates() {
+    const data = getBadgeData();
+    return !data.readTemplates;
+}
+
+// Update all badges visibility
+function updateAllBadges() {
+    // News badge with count
+    const newsBadge = document.getElementById('news-badge');
+    const unreadNewsCount = getUnreadNewsCount();
+    if (unreadNewsCount > 0) {
+        // Show count, but limit display for very large numbers
+        if (unreadNewsCount > 9) {
+            newsBadge.textContent = '9+';
+            newsBadge.classList.add('large-count');
+        } else {
+            newsBadge.textContent = unreadNewsCount;
+            newsBadge.classList.remove('large-count');
+        }
+        newsBadge.setAttribute('data-count', unreadNewsCount);
+        newsBadge.style.display = 'flex';
+    } else {
+        newsBadge.style.display = 'none';
+        newsBadge.classList.remove('large-count');
+    }
+    
+    // Help badge
+    const helpBadge = document.getElementById('help-badge');
+    if (hasUnreadHelp()) {
+        helpBadge.style.display = 'flex';
+    } else {
+        helpBadge.style.display = 'none';
+    }
+    
+    // Templates badge
+    const templatesBadge = document.getElementById('templates-badge');
+    if (hasUnreadTemplates()) {
+        templatesBadge.style.display = 'inline-flex';
+    } else {
+        templatesBadge.style.display = 'none';
+    }
+    
+    // Update individual news item badges
+    updateNewsItemBadges();
+}
+
+function getUnreadNewsCount() {
+    const data = getBadgeData();
+    const allNewsIds = Object.keys(NEWS_DATA);
+    const unreadNews = allNewsIds.filter(newsId => !data.readNews.includes(newsId));
+    return unreadNews.length;
+}
+
+// Update individual news item badges
+function updateNewsItemBadges() {
+    const data = getBadgeData();
+    const allNewsIds = Object.keys(NEWS_DATA);
+    
+    allNewsIds.forEach(newsId => {
+        const badge = document.getElementById(`news-item-badge-${newsId}`);
+        if (badge) {
+            if (data.readNews.includes(newsId)) {
+                badge.style.display = 'none';
+            } else {
+                badge.style.display = 'inline-block';
+            }
+        }
+    });
+}
+
+// News data
+const NEWS_DATA = {
+    'zoom-fixes': {
+        title: '🔧 Zoom System Fixes & Improvements',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🔧 Zoom System Fixes & Improvements</h3>
+                <p>We've fixed several important issues with the zoom system to make it work perfectly:</p>
+                <ul>
+                    <li><strong>All Zoom Levels:</strong> Fixed zoom levels above 150% (200%, 300%, 400%, 500%) now work correctly</li>
+                    <li><strong>Scroll Wheel Sync:</strong> Scroll wheel zoom now uses the same levels as the dropdown menu</li>
+                    <li><strong>Fit to Screen:</strong> Improved fit-to-screen with proper 20px padding for better visibility</li>
+                    <li><strong>Zoom Display:</strong> Live zoom percentage now shows the correct value at all levels</li>
+                    <li><strong>Dropdown Sync:</strong> Zoom dropdown always shows the current zoom level accurately</li>
+                </ul>
+                <p>Now you can zoom from 25% to 500% smoothly with scroll wheel, buttons, or dropdown - everything stays perfectly synchronized!</p>
+            </div>
+        `
+    },
+    'cyberpunk': {
+        title: '🎨 New Cyberpunk Template',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🎨 New Cyberpunk Template</h3>
+                <p>We've added a stunning cyberpunk template that brings the futuristic aesthetic to your cards! This template features:</p>
+                <ul>
+                    <li><strong>Rajdhani Font:</strong> Authentic cyberpunk typography for that tech-noir feel</li>
+                    <li><strong>Neon Colors:</strong> Electric cyan and magenta accents</li>
+                    <li><strong>Futuristic Layout:</strong> Perfect for gaming profiles and tech-themed cards</li>
+                    <li><strong>Progress Bars:</strong> System integrity indicators with cyberpunk styling</li>
+                </ul>
+                <p>Perfect for Discord bots, gaming communities, and anyone who loves the cyberpunk aesthetic!</p>
+            </div>
+        `
+    },
+    'properties': {
+        title: '⚡ Improved Card Properties',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>⚡ Improved Card Properties</h3>
+                <p>We've completely redesigned the card properties section for a much better user experience:</p>
+                <ul>
+                    <li><strong>Vertical Layout:</strong> Labels now appear above controls, just like quick actions</li>
+                    <li><strong>Better Organization:</strong> All properties in one clean row</li>
+                    <li><strong>Consistent Design:</strong> Matches the rest of the interface perfectly</li>
+                    <li><strong>Improved Usability:</strong> Much easier to find and use controls</li>
+                </ul>
+                <p>This makes the interface more intuitive and professional-looking!</p>
+            </div>
+        `
+    },
+    'ui': {
+        title: '🔧 Enhanced UI Layout',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🔧 Enhanced UI Layout</h3>
+                <p>We've made several improvements to the overall user interface:</p>
+                <ul>
+                    <li><strong>Fixed Alignment:</strong> All elements now properly aligned</li>
+                    <li><strong>Consistent Spacing:</strong> Better visual hierarchy throughout</li>
+                    <li><strong>Improved Navigation:</strong> News dropdown for better information access</li>
+                    <li><strong>Better Mobile Support:</strong> Enhanced responsive design</li>
+                </ul>
+                <p>These changes make the entire application feel more polished and professional!</p>
+            </div>
+        `
+    },
+    'new-templates': {
+        title: '🎮 New Multi-Progress Templates',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🎮 New Multi-Progress Templates</h3>
+                <p>We've added 4 amazing new templates that showcase the power of multiple progress bars:</p>
+                <ul>
+                    <li><strong>📊 Gaming Stats Dashboard:</strong> HP, Mana, XP, Stamina, Skills, Reputation (6 progress bars)</li>
+                    <li><strong>🏆 Achievement Progress:</strong> Quests, Bosses, Items, Levels, Achievements (5 progress bars)</li>
+                    <li><strong>💼 Professional Skills:</strong> Programming, Design, Marketing, Leadership, Communication (5 progress bars)</li>
+                    <li><strong>⚔️ Character Stats:</strong> Strength, Agility, Intelligence, Charisma, Luck (5 progress bars)</li>
+                </ul>
+                <p><strong>✨ Auto-Selection Feature:</strong> When you add a template, all elements (except backgrounds) are automatically selected for easy repositioning!</p>
+                <p>Perfect for creating detailed dashboards, skill assessments, and comprehensive data displays!</p>
+            </div>
+        `
+    },
+    'progress-bars-limit': {
+        title: '📊 Increased Progress Bar Limit',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>📊 Increased Progress Bar Limit</h3>
+                <p>Great news! Cookie API has increased the limit for progress bars, giving you much more flexibility:</p>
+                <ul>
+                    <li><strong>New Limit:</strong> 20 progress bars per card (increased from 1)</li>
+                    <li><strong>More Creative Freedom:</strong> Create complex progress tracking systems</li>
+                    <li><strong>Better Data Visualization:</strong> Show multiple metrics and statistics</li>
+                    <li><strong>Enhanced Cards:</strong> More detailed and informative card designs</li>
+                </ul>
+                <p>Perfect for creating detailed user profiles, game statistics, or any multi-metric displays!</p>
+            </div>
+        `
+    },
+    'help-improvements': {
+        title: '❓ Enhanced Help System',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>❓ Enhanced Help System</h3>
+                <p>We've completely redesigned the Help section to make it much more user-friendly and organized:</p>
+                <ul>
+                    <li><strong>Sidebar Navigation:</strong> Quick jump to any section with organized categories</li>
+                    <li><strong>8 Main Sections:</strong> Getting Started, Elements, Quick Actions, Canvas Controls, Properties, Mobile Usage, Shortcuts, Bot Config</li>
+                    <li><strong>Smooth Scrolling:</strong> Click any section to instantly jump there</li>
+                    <li><strong>Mobile Warning:</strong> Clear notice about mobile version development status</li>
+                    <li><strong>Better Organization:</strong> Information is now logically grouped and easy to find</li>
+                    <li><strong>Active States:</strong> Visual feedback showing which section you're currently viewing</li>
+                </ul>
+                <p>No more scrolling through long help text - find exactly what you need instantly!</p>
+            </div>
+        `
+    },
+    'zoom-pan-system': {
+        title: '🔍 Professional Zoom & Pan System',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🔍 Professional Zoom & Pan System</h3>
+                <p>We've implemented a complete zoom and pan system that works just like professional graphic design software:</p>
+                <ul>
+                    <li><strong>Deep Zoom:</strong> Zoom from 25% to 500% for precise editing</li>
+                    <li><strong>Pan & Drag:</strong> Click and drag to move around the canvas at any zoom level</li>
+                    <li><strong>Zoom Controls:</strong> Dedicated zoom in/out buttons and dropdown selector</li>
+                    <li><strong>Zoom to Fit:</strong> Instantly fit your entire card in view</li>
+                    <li><strong>Live Zoom Display:</strong> See current zoom percentage in the top-left corner</li>
+                    <li><strong>Scroll Wheel Zoom:</strong> Use mouse wheel to zoom in and out smoothly</li>
+                </ul>
+                <p>Perfect for detailed editing, precise positioning, and working with complex card designs!</p>
+            </div>
+        `
+    },
+    'canvas-image-handling': {
+        title: '🖼️ Smart Canvas Image Handling',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🖼️ Smart Canvas Image Handling</h3>
+                <p>We've made canvas image handling much smarter and more intuitive:</p>
+                <ul>
+                    <li><strong>Auto-Resize:</strong> Canvas automatically resizes to match your background image dimensions</li>
+                    <li><strong>Proportional Scaling:</strong> When you change canvas size with an image background, it scales proportionally</li>
+                    <li><strong>Perfect Fit:</strong> No more cropping or stretching - images display exactly as intended</li>
+                    <li><strong>Object-fit Fill:</strong> Canvas now uses fill mode for consistent image display</li>
+                    <li><strong>Smart Detection:</strong> Automatically detects when you add a background image</li>
+                </ul>
+                <p>No more manual resizing - the canvas adapts perfectly to your background images!</p>
+            </div>
+        `
+    },
+    'drag-select-system': {
+        title: '🖱️ Professional Drag & Select System',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🖱️ Professional Drag & Select System</h3>
+                <p>We've implemented a complete selection system that works just like professional graphic design software:</p>
+                <ul>
+                    <li><strong>Shift + Drag:</strong> Select multiple elements by dragging a selection box</li>
+                    <li><strong>Shift + Click:</strong> Add/remove elements from selection</li>
+                    <li><strong>Ctrl/Cmd + Click:</strong> Toggle individual elements in/out of selection</li>
+                    <li><strong>Visual Feedback:</strong> Red dashed selection box shows exactly what you're selecting</li>
+                    <li><strong>Smart Detection:</strong> Works perfectly with zoom and pan - no more missed selections!</li>
+                    <li><strong>Multi-Selection Actions:</strong> Move, resize, or delete multiple elements at once</li>
+                </ul>
+                <p>Perfect for complex layouts, bulk editing, and professional workflow efficiency!</p>
+            </div>
+        `
+    },
+    'mobile-development-status': {
+        title: '📱 Mobile Development Status Update',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>📱 Mobile Development Status Update</h3>
+                <p>We want to be transparent about the current state of mobile support:</p>
+                <ul>
+                    <li><strong>Under Development:</strong> Mobile version is currently being built</li>
+                    <li><strong>Limited Functionality:</strong> Some features may not work properly on mobile devices</li>
+                    <li><strong>Touch Controls:</strong> We're working on better touch support for mobile users</li>
+                    <li><strong>Responsive Design:</strong> Mobile-optimized interface is in progress</li>
+                    <li><strong>Desktop Recommended:</strong> For best experience, use desktop or tablet</li>
+                </ul>
+                <p>We're committed to making the mobile experience as good as desktop - stay tuned for updates!</p>
+            </div>
+        `
+    },
+    'coming-soon': {
+        title: '🚀 New Features Coming Soon',
+        date: 'Coming Soon',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">Coming Soon</div>
+                <h3>🚀 New Features Coming Soon</h3>
+                <p>We're working hard on exciting new features for the Cookie Card Builder:</p>
+                <ul>
+                    <li><strong>More Templates:</strong> Additional themed templates for different use cases</li>
+                    <li><strong>Advanced Customization:</strong> More control over element styling and positioning</li>
+                    <li><strong>Improved Mobile Experience:</strong> Better touch controls and responsive design</li>
+                    <li><strong>Export Options:</strong> More formats and sharing options</li>
+                    <li><strong>Collaboration Features:</strong> Share and collaborate on card designs</li>
+                </ul>
+                <p>Stay tuned for these amazing updates! We're constantly working to make the Card Builder even better.</p>
+            </div>
+        `
+    }
+};
+
+function showNewsModal() {
+    const modal = document.getElementById('news-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Update visual state of news items
+    updateNewsItemsVisualState();
+    
+    // Update individual news item badges
+    updateNewsItemBadges();
+}
+
+function updateNewsItemsVisualState() {
+    const data = getBadgeData();
+    const newsItems = document.querySelectorAll('.news-list-item');
+    
+    newsItems.forEach(item => {
+        const newsId = item.getAttribute('onclick').match(/showNewsDetail\('([^']+)'\)/)[1];
+        if (data.readNews.includes(newsId)) {
+            item.style.opacity = '0.6';
+            item.style.borderLeft = '3px solid #666';
+        } else {
+            item.style.opacity = '1';
+            item.style.borderLeft = '3px solid var(--accent-color)';
+        }
+    });
+}
+
+function closeNewsModal() {
+    const modal = document.getElementById('news-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function showNewsDetail(newsId) {
+    const newsData = NEWS_DATA[newsId];
+    if (!newsData) return;
+    
+    // Mark news as read
+    markNewsAsRead(newsId);
+    
+    // Close main news modal
+    closeNewsModal();
+    
+    // Update detail modal content
+    document.getElementById('news-detail-title').textContent = newsData.title;
+    document.getElementById('news-detail-content').innerHTML = newsData.content;
+    
+    // Show detail modal
+    const detailModal = document.getElementById('news-detail-modal');
+    detailModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNewsDetailModal() {
+    const modal = document.getElementById('news-detail-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function backToNewsList() {
+    // Close detail modal
+    closeNewsDetailModal();
+    
+    // Show main news modal
+    showNewsModal();
+}
+
+function scrollToHelpSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+        
+        // Update active nav link
+        const navLinks = document.querySelectorAll('.help-nav-link');
+        navLinks.forEach(link => link.classList.remove('active'));
+        
+        const activeLink = document.querySelector(`[onclick="scrollToHelpSection('${sectionId}')"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+}
+
 function showHelpModal() {
     const modal = document.getElementById('help-modal');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    
+    // Mark help as read
+    markHelpAsRead();
 }
 
 function closeHelpModal() {
@@ -1723,6 +3146,16 @@ function resetCanvas() {
 
 // Toast notifications
 function showToast(message, type = 'info') {
+    // Clear existing toast and timeout
+    if (currentToast) {
+        currentToast.remove();
+        currentToast = null;
+    }
+    if (toastTimeout) {
+        clearTimeout(toastTimeout);
+        toastTimeout = null;
+    }
+    
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `
@@ -1731,9 +3164,14 @@ function showToast(message, type = 'info') {
     `;
     
     document.body.appendChild(toast);
+    currentToast = toast;
     
-    setTimeout(() => {
-        toast.remove();
+    toastTimeout = setTimeout(() => {
+        if (toast && toast.parentNode) {
+            toast.remove();
+        }
+        currentToast = null;
+        toastTimeout = null;
     }, 3000);
 }
 
@@ -1746,6 +3184,7 @@ function getToastIcon(type) {
     };
     return icons[type] || 'ℹ️';
 }
+
 
 // Update quick actions buttons state
 function updateQuickActionsState() {

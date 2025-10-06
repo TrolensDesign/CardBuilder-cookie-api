@@ -329,28 +329,36 @@ function renderRobloxProfileElement(element, zoom) {
             width: 100%;
             height: 100%;
             border-radius: ${borderRadiusPx}px;
-            background: linear-gradient(135deg, #00a2ff, #0066cc);
+            background: #00a2ff;
             display: none;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
             font-size: 12px;
-        ">🎮</div>`;
+        ">R</div>`;
     } else {
-        return `<div style="
+        return `<img src="https://static.wikia.nocookie.net/logopedia/images/d/d6/Roblox_app_icon_2022.svg/revision/latest/scale-to-width-down/250?cb=20220319140506" 
+            style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: ${borderRadiusPx}px;
+            " 
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+        <div style="
             width: 100%;
             height: 100%;
             border-radius: ${borderRadiusPx}px;
-            background: linear-gradient(135deg, #00a2ff, #0066cc);
-            display: flex;
+            background: #00a2ff;
+            display: none;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 16px;
-            text-align: center;
-        ">🎮<br><span style="font-size: 10px;">Roblox</span></div>`;
+            font-size: 12px;
+        ">R</div>`;
     }
 }
 
@@ -439,8 +447,8 @@ function setupElementEventListeners(div, element) {
 
 // Select element with multi-selection support
 function selectElement(id, event = null) {
-    // Handle multi-selection with Ctrl/Cmd key
-    if (event && (event.ctrlKey || event.metaKey)) {
+    // Handle multi-selection with Ctrl/Cmd key or Shift key
+    if (event && (event.ctrlKey || event.metaKey || event.shiftKey)) {
         if (id === 'card') return; // Don't multi-select card
         
         if (selectedElements.includes(id)) {
@@ -496,6 +504,173 @@ function selectElement(id, event = null) {
     }, 100);
 }
 
+// Global variables for drag and select
+let isDragSelecting = false;
+let dragSelectStartX = 0;
+let dragSelectStartY = 0;
+let dragSelectBox = null;
+
+// Start drag and select
+function startDragSelect(e) {
+    // Only start drag select if Shift key is pressed
+    if (!e.shiftKey) {
+        return;
+    }
+    
+    // Only start drag select if clicking on empty canvas area
+    if (e.target.id !== 'canvas' && !e.target.classList.contains('canvas-viewport')) {
+        return;
+    }
+    
+    // Don't start if clicking on an element
+    if (e.target.classList.contains('element')) {
+        return;
+    }
+    
+    isDragSelecting = true;
+    dragSelectStartX = e.clientX;
+    dragSelectStartY = e.clientY;
+    
+    // Create selection box
+    dragSelectBox = document.createElement('div');
+    dragSelectBox.className = 'drag-select-box';
+    dragSelectBox.style.position = 'absolute';
+    dragSelectBox.style.border = '2px dashed #ff6b6b';
+    dragSelectBox.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+    dragSelectBox.style.pointerEvents = 'none';
+    dragSelectBox.style.zIndex = '1000';
+    dragSelectBox.style.left = dragSelectStartX + 'px';
+    dragSelectBox.style.top = dragSelectStartY + 'px';
+    dragSelectBox.style.width = '0px';
+    dragSelectBox.style.height = '0px';
+    
+    document.body.appendChild(dragSelectBox);
+    
+    // Add event listeners
+    document.addEventListener('mousemove', handleDragSelectMove);
+    document.addEventListener('mouseup', handleDragSelectEnd);
+}
+
+// Handle drag select move
+function handleDragSelectMove(e) {
+    if (!isDragSelecting || !dragSelectBox) return;
+    
+    // Cancel drag select if Shift key is released
+    if (!e.shiftKey) {
+        handleDragSelectEnd(e);
+        return;
+    }
+    
+    const currentX = e.clientX;
+    const currentY = e.clientY;
+    
+    const left = Math.min(dragSelectStartX, currentX);
+    const top = Math.min(dragSelectStartY, currentY);
+    const width = Math.abs(currentX - dragSelectStartX);
+    const height = Math.abs(currentY - dragSelectStartY);
+    
+    dragSelectBox.style.left = left + 'px';
+    dragSelectBox.style.top = top + 'px';
+    dragSelectBox.style.width = width + 'px';
+    dragSelectBox.style.height = height + 'px';
+}
+
+// Handle drag select end
+function handleDragSelectEnd(e) {
+    if (!isDragSelecting || !dragSelectBox) return;
+    
+    isDragSelecting = false;
+    
+    // Only process selection if Shift key is still pressed
+    if (!e.shiftKey) {
+        // Clean up without processing selection
+        if (dragSelectBox) {
+            document.body.removeChild(dragSelectBox);
+            dragSelectBox = null;
+        }
+        
+        document.removeEventListener('mousemove', handleDragSelectMove);
+        document.removeEventListener('mouseup', handleDragSelectEnd);
+        return;
+    }
+    
+    // Get selection box bounds
+    const boxRect = dragSelectBox.getBoundingClientRect();
+    
+    // Find elements that intersect with selection box
+    const canvas = document.getElementById('canvas');
+    const canvasRect = canvas.getBoundingClientRect();
+    
+    const selectedIds = [];
+    const elementDivs = canvas.querySelectorAll('.canvas-element');
+    
+    // Get current zoom and pan from canvasViewport
+    const zoom = window.canvasViewport ? window.canvasViewport.zoom : 1;
+    const panX = window.canvasViewport ? window.canvasViewport.panX : 0;
+    const panY = window.canvasViewport ? window.canvasViewport.panY : 0;
+    
+    elementDivs.forEach(div => {
+        const elementRect = div.getBoundingClientRect();
+        const elementId = parseInt(div.dataset.id);
+        
+        // Transform selection box coordinates to canvas coordinates
+        const canvasLeft = canvasRect.left;
+        const canvasTop = canvasRect.top;
+        
+        // Convert selection box to canvas coordinates
+        const boxLeft = (boxRect.left - canvasLeft - panX) / zoom;
+        const boxTop = (boxRect.top - canvasTop - panY) / zoom;
+        const boxRight = (boxRect.right - canvasLeft - panX) / zoom;
+        const boxBottom = (boxRect.bottom - canvasTop - panY) / zoom;
+        
+        // Convert element position to canvas coordinates
+        const elementLeft = (elementRect.left - canvasLeft - panX) / zoom;
+        const elementTop = (elementRect.top - canvasTop - panY) / zoom;
+        const elementRight = (elementRect.right - canvasLeft - panX) / zoom;
+        const elementBottom = (elementRect.bottom - canvasTop - panY) / zoom;
+        
+        // Check if element intersects with selection box
+        const intersects = elementLeft < boxRight &&
+            elementRight > boxLeft &&
+            elementTop < boxBottom &&
+            elementBottom > boxTop;
+        
+        if (intersects) {
+            if (elementId && elementId !== 'card') {
+                selectedIds.push(elementId);
+            }
+        }
+    });
+    
+    
+    // Update selection
+    if (selectedIds.length > 0) {
+        selectedElements = selectedIds;
+        selectedElement = selectedIds[0];
+        updateCanvas();
+        updateCanvasStatus();
+        updateElementProperties();
+        
+        showToast(`${selectedIds.length} elements selected`, 'info');
+    } else {
+        // Clear selection if no elements found
+        selectedElement = 'card';
+        selectedElements = [];
+        updateCanvas();
+        updateCanvasStatus();
+        updateElementProperties();
+    }
+    
+    // Clean up
+    if (dragSelectBox) {
+        document.body.removeChild(dragSelectBox);
+        dragSelectBox = null;
+    }
+    
+    document.removeEventListener('mousemove', handleDragSelectMove);
+    document.removeEventListener('mouseup', handleDragSelectEnd);
+}
+
 // Start drag with improved UX and multi-selection support
 function startDrag(id, e) {
     const element = elements.find(el => el.id === id);
@@ -503,7 +678,7 @@ function startDrag(id, e) {
     
     const startX = e.clientX || (e.touches && e.touches[0].clientX);
     const startY = e.clientY || (e.touches && e.touches[0].clientY);
-    const zoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const zoom = window.canvasViewport ? window.canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
     
     // Check if Shift key is pressed for axis locking
     const isShiftPressed = e.shiftKey || (e.touches && e.touches.length > 1);
@@ -642,7 +817,7 @@ function startResize(id, direction) {
     const startElementY = element.y;
     const startWidth = element.width;
     const startHeight = element.height;
-    const zoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const zoom = window.canvasViewport ? window.canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
     
     function onMouseMove(e) {
         const deltaX = (e.clientX - startX) / zoom;
@@ -694,6 +869,25 @@ function startResize(id, direction) {
 
 // Delete element with confirmation
 function deleteElement() {
+    // Handle multi-selection
+    if (selectedElements.length > 1) {
+        if (confirm(`Are you sure you want to delete ${selectedElements.length} selected elements?`)) {
+            elements = elements.filter(el => !selectedElements.includes(el.id));
+            selectedElements = [];
+            selectedElement = 'card';
+            updateCanvas();
+            updateQuotas();
+            updateJSON();
+            updateCanvasStatus();
+            updateElementProperties();
+            updateQuickActionsState();
+            updateTemplateButtons();
+            showToast(`${selectedElements.length} elements deleted! 🗑️`, 'success');
+        }
+        return;
+    }
+    
+    // Handle single selection
     if (!selectedElement || selectedElement === 'card') {
         showToast('Please select an element to delete!', 'warning');
         return;
@@ -714,7 +908,7 @@ function deleteElement() {
         updateCanvasStatus();
         updateElementProperties();
         updateQuickActionsState();
-        updateTemplateButtons(); // Update template button states
+        updateTemplateButtons();
         showToast('Element deleted! 🗑️', 'success');
     }
 }
@@ -1200,7 +1394,9 @@ function showAxisLockIndicator(lockedAxis, elementId, deltaX = 0, deltaY = 0) {
     const element = elements.find(e => e.id === elementId);
     if (!element) return;
     
-    const zoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const zoom = window.canvasViewport ? window.canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
+    const panX = window.canvasViewport ? window.canvasViewport.panX : 0;
+    const panY = window.canvasViewport ? window.canvasViewport.panY : 0;
     const elementCenterX = element.x + (getElementActualWidth(element) / 2);
     const elementCenterY = element.y + (getElementActualHeight(element) / 2);
     
@@ -1236,12 +1432,13 @@ function showAxisLockIndicator(lockedAxis, elementId, deltaX = 0, deltaY = 0) {
         indicator.textContent = 'X-axis locked (Y movement only)';
         indicator.style.borderLeft = '3px solid #ff6b35';
         
-        // Get canvas position relative to viewport
-        const canvasRect = canvas.getBoundingClientRect();
+        // Get viewport position (not canvas, as canvas has transform)
+        const viewport = document.getElementById('canvas-viewport');
+        const viewportRect = viewport.getBoundingClientRect();
         
-        lineIndicator.style.left = `${canvasRect.left}px`;
-        lineIndicator.style.width = `${canvasRect.width}px`;
-        lineIndicator.style.top = `${canvasRect.top + elementCenterY * zoom}px`;
+        lineIndicator.style.left = `${viewportRect.left}px`;
+        lineIndicator.style.width = `${viewportRect.width}px`;
+        lineIndicator.style.top = `${viewportRect.top + (elementCenterY * zoom + panY)}px`;
         lineIndicator.style.height = '3px';
         
     } else if (lockedAxis === 'y') {
@@ -1249,12 +1446,13 @@ function showAxisLockIndicator(lockedAxis, elementId, deltaX = 0, deltaY = 0) {
         indicator.textContent = 'Y-axis locked (X movement only)';
         indicator.style.borderLeft = '3px solid #34a853';
         
-        // Get canvas position relative to viewport
-        const canvasRect = canvas.getBoundingClientRect();
+        // Get viewport position (not canvas, as canvas has transform)
+        const viewport = document.getElementById('canvas-viewport');
+        const viewportRect = viewport.getBoundingClientRect();
         
-        lineIndicator.style.top = `${canvasRect.top}px`;
-        lineIndicator.style.height = `${canvasRect.height}px`;
-        lineIndicator.style.left = `${canvasRect.left + elementCenterX * zoom}px`;
+        lineIndicator.style.top = `${viewportRect.top}px`;
+        lineIndicator.style.height = `${viewportRect.height}px`;
+        lineIndicator.style.left = `${viewportRect.left + (elementCenterX * zoom + panX)}px`;
         lineIndicator.style.width = '3px';
         
     } else {
@@ -1286,9 +1484,11 @@ function showAxisLockIndicator(lockedAxis, elementId, deltaX = 0, deltaY = 0) {
 // Show snap guide line
 function showSnapGuide(orientation, position, type, strength, permanent = false) {
     const canvas = document.getElementById('canvas');
-    const zoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const zoom = window.canvasViewport ? window.canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
+    const panX = window.canvasViewport ? window.canvasViewport.panX : 0;
+    const panY = window.canvasViewport ? window.canvasViewport.panY : 0;
     
-    // Scale position by zoom
+    // Scale position by zoom and add pan offset
     const scaledPosition = position * zoom;
     
     
@@ -1299,7 +1499,13 @@ function showSnapGuide(orientation, position, type, strength, permanent = false)
         guide = document.createElement('div');
         guide.id = guideId;
         guide.className = `snap-guide snap-guide-${orientation} snap-guide-${strength}`;
-        canvas.appendChild(guide);
+        // Add to viewport instead of canvas to avoid transform issues
+        const viewport = document.getElementById('canvas-viewport');
+        if (viewport) {
+            viewport.appendChild(guide);
+        } else {
+            canvas.appendChild(guide);
+        }
     }
     
     // Determine color based on type
@@ -1314,9 +1520,9 @@ function showSnapGuide(orientation, position, type, strength, permanent = false)
         backgroundColor = 'rgba(52, 168, 83, 0.4)'; // Green for vertical lines
     }
     
-    // Position the guide with zoom scaling
+    // Position the guide with zoom scaling and pan offset
     if (orientation === 'horizontal') {
-        guide.style.top = scaledPosition + 'px';
+        guide.style.top = (scaledPosition + panY) + 'px';
         guide.style.left = '0';
         guide.style.width = '100%';
         guide.style.height = (type === 'canvas-center' || type.includes('center-')) ? '2px' : '1px'; // Thicker for center guides
@@ -1336,7 +1542,7 @@ function showSnapGuide(orientation, position, type, strength, permanent = false)
             )`;
         }
     } else {
-        guide.style.left = scaledPosition + 'px';
+        guide.style.left = (scaledPosition + panX) + 'px';
         guide.style.top = '0';
         guide.style.width = (type === 'canvas-center' || type.includes('center-')) ? '2px' : '1px'; // Thicker for center guides
         guide.style.height = '100%';
@@ -1427,8 +1633,17 @@ function toggleSnapGuides() {
     snapGuidesEnabled = !snapGuidesEnabled;
     const button = document.getElementById('snap-guides-toggle');
     if (button) {
-        button.innerHTML = snapGuidesEnabled ? '<span>🧲</span><span>Snap: On</span>' : '<span>🧲</span><span>Snap: Off</span>';
+        // Update icon and visual state
+        const icon = button.querySelector('i');
+        if (icon) {
+            icon.setAttribute('data-lucide', snapGuidesEnabled ? 'grid-3x3' : 'grid-3x3');
+        }
         button.classList.toggle('active', snapGuidesEnabled);
+        
+        // Re-initialize Lucide icons for the updated icon
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     }
     
     if (!snapGuidesEnabled) {
@@ -1492,36 +1707,46 @@ function testRedCanvasCenter() {
     hideAllSnapGuides();
     
     const canvas = document.getElementById('canvas');
-    const canvasWidth = parseInt(document.getElementById('card-width').value);
-    const canvasHeight = parseInt(document.getElementById('card-height').value);
-    const zoom = parseFloat(document.getElementById('canvas-zoom').value);
+    const canvasWidth = window.cardElement ? window.cardElement.width : 800;
+    const canvasHeight = window.cardElement ? window.cardElement.height : 400;
+    const zoom = window.canvasViewport ? window.canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
+    const panX = window.canvasViewport ? window.canvasViewport.panX : 0;
+    const panY = window.canvasViewport ? window.canvasViewport.panY : 0;
     
-    // Create direct red lines without using showSnapGuide
+    // Get viewport position (not canvas, as canvas has transform)
+    const viewport = document.getElementById('canvas-viewport');
+    const viewportRect = viewport.getBoundingClientRect();
+    
+    // Calculate the actual center position considering zoom and pan
+    const centerX = viewportRect.left + (canvasWidth / 2 * zoom) + panX;
+    const centerY = viewportRect.top + (canvasHeight / 2 * zoom) + panY;
+    
+    // Create direct red lines positioned at the actual center, added to viewport
     const hLine = document.createElement('div');
     hLine.id = 'test-red-horizontal';
     hLine.style.position = 'absolute';
-    hLine.style.top = (canvasHeight / 2 * zoom) + 'px';
-    hLine.style.left = '0';
+    hLine.style.top = (centerY - viewportRect.top) + 'px';
+    hLine.style.left = '0px';
     hLine.style.width = '100%';
     hLine.style.height = '3px';
     hLine.style.backgroundColor = '#ef4444';
     hLine.style.zIndex = '2000';
     hLine.style.display = 'block';
     hLine.style.boxShadow = '0 0 8px rgba(239, 68, 68, 0.6)';
-    canvas.appendChild(hLine);
+    viewport.appendChild(hLine);
     
     const vLine = document.createElement('div');
     vLine.id = 'test-red-vertical';
     vLine.style.position = 'absolute';
-    vLine.style.left = (canvasWidth / 2 * zoom) + 'px';
-    vLine.style.top = '0';
+    vLine.style.left = (centerX - viewportRect.left) + 'px';
+    vLine.style.top = '0px';
     vLine.style.width = '3px';
     vLine.style.height = '100%';
     vLine.style.backgroundColor = '#ef4444';
     vLine.style.zIndex = '2000';
     vLine.style.display = 'block';
     vLine.style.boxShadow = '0 0 8px rgba(239, 68, 68, 0.6)';
-    canvas.appendChild(vLine);
+    viewport.appendChild(vLine);
     
     console.log('Direct red lines created - should be clearly visible');
     
