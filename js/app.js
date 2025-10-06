@@ -1878,15 +1878,18 @@ function toggleTemplatesExpanded() {
         // Collapse
         templatesGrid.classList.remove('expanded');
         moreText.textContent = 'Show More';
-        moreIcon.textContent = '▼';
+        moreIcon.setAttribute('data-lucide', 'chevron-down');
         moreBtn.classList.remove('expanded');
     } else {
         // Expand
         templatesGrid.classList.add('expanded');
         moreText.textContent = 'Show Less';
-        moreIcon.textContent = '▲';
+        moreIcon.setAttribute('data-lucide', 'chevron-up');
         moreBtn.classList.add('expanded');
     }
+    
+    // Re-initialize Lucide icons
+    lucide.createIcons();
 }
 
 // Handle background type change
