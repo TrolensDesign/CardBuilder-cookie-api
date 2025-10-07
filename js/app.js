@@ -2544,8 +2544,12 @@ function copyJSON() {
     const jsonData = jsonOutput ? jsonOutput.value : generateJSON();
     navigator.clipboard.writeText(jsonData).then(() => {
         showToast('JSON copied to clipboard! 📋', 'success');
-        // Send analytics for copy action
-        sendActionAnalytics('copied');
+        // Deselect all elements first (so analytics preview has no selection)
+        deselectAllElements();
+        // Wait a bit for UI to update, then send analytics
+        setTimeout(() => {
+            sendActionAnalytics('copied');
+        }, 100);
     }).catch(err => {
         console.error('Failed to copy: ', err);
         showToast('Failed to copy JSON', 'error');
@@ -2684,8 +2688,12 @@ function downloadJSON() {
     URL.revokeObjectURL(url);
     
     showToast('JSON downloaded! 💾', 'success');
-    // Send analytics for download action
-    sendActionAnalytics('downloaded');
+    // Deselect all elements first (so analytics preview has no selection)
+    deselectAllElements();
+    // Wait a bit for UI to update, then send analytics
+    setTimeout(() => {
+        sendActionAnalytics('downloaded');
+    }, 100);
 }
 
 // Modal Management
