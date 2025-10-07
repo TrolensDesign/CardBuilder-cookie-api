@@ -628,6 +628,435 @@ body {
     justify-content: center;
 }
 
+/* Custom Templates Section */
+.custom-templates-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.custom-templates-search {
+    margin-bottom: 0.75rem;
+}
+
+.custom-templates-search input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.custom-templates-search input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+}
+
+.custom-templates-search input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Custom Templates Show More Button */
+.custom-templates-more-section {
+    margin-top: 0.75rem;
+    display: flex;
+    justify-content: center;
+}
+
+.custom-templates-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 8px 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.custom-templates-more-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-color);
+}
+
+.custom-templates-more-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.custom-templates-more-btn.expanded .custom-templates-more-icon {
+    transform: rotate(180deg);
+}
+
+.custom-templates-header h3 {
+    margin: 0;
+}
+
+.save-template-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.save-template-btn:hover {
+    background: var(--accent-hover);
+}
+
+.save-template-btn i {
+    width: 18px;
+    height: 18px;
+}
+
+.custom-templates-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.custom-template-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.custom-template-card:hover {
+    background: #333;
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
+}
+
+.custom-template-card .template-preview-img {
+    width: 100%;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+}
+
+.custom-template-card .template-preview {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.custom-template-card span {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    text-align: center;
+}
+
+/* Removed custom-template-actions styles - no longer needed */
+
+/* Save Template Modal */
+.save-template-modal {
+    max-width: 250px;
+    width: 30%;
+    max-height: 60vh;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.save-template-modal .modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.save-template-modal .modal-header h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.save-template-modal .modal-body {
+    padding: 15px 20px;
+}
+
+.save-template-modal .modal-body input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+.save-template-modal .modal-body input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
+}
+
+.save-template-modal .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding: 0 20px 20px;
+}
+
+.save-template-modal .cancel-btn, .save-template-modal .save-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.save-template-modal .cancel-btn {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.save-template-modal .cancel-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-color);
+}
+
+.save-template-modal .save-btn {
+    background: var(--accent-color);
+    color: white;
+}
+
+.save-template-modal .save-btn:hover {
+    background: var(--accent-hover);
+    transform: scale(1.02);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Template Preview Modal */
+.template-preview-modal {
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+.template-preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.template-preview-large {
+    width: auto;
+    height: auto;
+    max-width: none;
+    border-radius: 8px;
+    border: 2px solid var(--accent-color);
+    object-fit: none;
+    margin: 0 auto;
+    display: block;
+}
+
+.template-preview-info {
+    text-align: center;
+}
+
+.template-preview-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
+.template-preview-info p {
+    margin: 5px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.template-preview-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.load-template-btn, .delete-template-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.load-template-btn {
+    background: var(--accent-color);
+    color: white;
+}
+
+.load-template-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.delete-template-btn {
+    background: var(--error-color);
+    color: white;
+}
+
+.delete-template-btn:hover {
+    background: #ff3333;
+    transform: translateY(-2px);
+}
+
+/* Delete Confirmation Modal */
+.delete-confirm-modal {
+    max-width: 400px;
+    width: 90%;
+}
+
+.delete-confirm-modal .modal-body {
+    text-align: center;
+    padding: 20px;
+}
+
+.delete-confirm-modal .modal-body p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.delete-confirm-modal .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding: 0 20px 20px;
+}
+
+.cancel-btn, .confirm-delete-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.cancel-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent-color);
+}
+
+.confirm-delete-btn {
+    background: var(--error-color);
+    color: white;
+}
+
+.confirm-delete-btn:hover {
+    background: #d63031;
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .template-preview-large {
+        max-width: 100%;
+    }
+}
+
 .templates-more-btn {
     display: flex;
     align-items: center;
@@ -1145,6 +1574,10 @@ body {
     flex-direction: row;
     gap: 0.25rem;
     align-items: center;
+}
+
+.toolbar-group.hidden {
+    display: none;
 }
 
 .toolbar-label {

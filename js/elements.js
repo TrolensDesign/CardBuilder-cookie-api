@@ -447,9 +447,19 @@ function setupElementEventListeners(div, element) {
 
 // Select element with multi-selection support
 function selectElement(id, event = null) {
+    // Allow selection of locked elements (for editing properties)
+    // Only prevent dragging, not selection
+    
     // Handle multi-selection with Ctrl/Cmd key or Shift key
     if (event && (event.ctrlKey || event.metaKey || event.shiftKey)) {
         if (id === 'card') return; // Don't multi-select card
+        
+        // Check if element is locked (for multi-selection)
+        const element = elements.find(el => el.id === id);
+        if (element && element.locked) {
+            showToast('Cannot select locked element! 🔒', 'warning');
+            return;
+        }
         
         if (selectedElements.includes(id)) {
             // Remove from selection
@@ -474,6 +484,7 @@ function selectElement(id, event = null) {
     updateCanvasStatus();
     updateElementProperties();
     updateQuickActionsState();
+    updateElementVisualState();
     
     // If selecting card, update card properties
     if (id === 'card') {
@@ -643,15 +654,27 @@ function handleDragSelectEnd(e) {
     });
     
     
+    // Filter out locked elements from selection
+    const unlockedIds = selectedIds.filter(id => {
+        const element = elements.find(el => el.id === id);
+        return !element || !element.locked;
+    });
+    
+    const lockedCount = selectedIds.length - unlockedIds.length;
+    
     // Update selection
-    if (selectedIds.length > 0) {
-        selectedElements = selectedIds;
-        selectedElement = selectedIds[0];
+    if (unlockedIds.length > 0) {
+        selectedElements = unlockedIds;
+        selectedElement = unlockedIds[0];
         updateCanvas();
         updateCanvasStatus();
         updateElementProperties();
         
-        showToast(`${selectedIds.length} elements selected`, 'info');
+        let message = `${unlockedIds.length} elements selected`;
+        if (lockedCount > 0) {
+            message += ` (${lockedCount} locked elements ignored)`;
+        }
+        showToast(message, 'info');
     } else {
         // Clear selection if no elements found
         selectedElement = 'card';
@@ -676,6 +699,8 @@ function startDrag(id, e) {
     const element = elements.find(el => el.id === id);
     if (!element) return;
     
+    // Lock check is done later for multi-selection support
+    
     const startX = e.clientX || (e.touches && e.touches[0].clientX);
     const startY = e.clientY || (e.touches && e.touches[0].clientY);
     const zoom = window.canvasViewport ? window.canvasViewport.zoom : parseFloat(document.getElementById('canvas-zoom').value);
@@ -688,6 +713,17 @@ function startDrag(id, e) {
     const elementsToMove = selectedElements.length > 1 && selectedElements.includes(id) 
         ? selectedElements.map(elId => elements.find(el => el.id === elId)).filter(Boolean)
         : [element];
+    
+    // Check if any of the elements to move are locked
+    const lockedElements = elementsToMove.filter(el => el.locked);
+    if (lockedElements.length > 0) {
+        if (lockedElements.length === 1) {
+            showToast('Element is locked! 🔒', 'warning');
+        } else {
+            showToast(`${lockedElements.length} elements are locked! 🔒`, 'warning');
+        }
+        return;
+    }
     
     // Store initial positions for all elements
     const initialPositions = elementsToMove.map(el => ({
@@ -871,19 +907,7 @@ function startResize(id, direction) {
 function deleteElement() {
     // Handle multi-selection
     if (selectedElements.length > 1) {
-        if (confirm(`Are you sure you want to delete ${selectedElements.length} selected elements?`)) {
-            elements = elements.filter(el => !selectedElements.includes(el.id));
-            selectedElements = [];
-            selectedElement = 'card';
-            updateCanvas();
-            updateQuotas();
-            updateJSON();
-            updateCanvasStatus();
-            updateElementProperties();
-            updateQuickActionsState();
-            updateTemplateButtons();
-            showToast(`${selectedElements.length} elements deleted! 🗑️`, 'success');
-        }
+        showDeleteElementConfirmModal(`${selectedElements.length} selected elements`);
         return;
     }
     
@@ -899,18 +923,7 @@ function deleteElement() {
         return;
     }
     
-    if (confirm(`Are you sure you want to delete this ${getElementDisplayName(element)}?`)) {
-        elements = elements.filter(e => e.id !== selectedElement);
-        selectedElement = 'card';
-        updateCanvas();
-        updateQuotas();
-        updateJSON();
-        updateCanvasStatus();
-        updateElementProperties();
-        updateQuickActionsState();
-        updateTemplateButtons();
-        showToast('Element deleted! 🗑️', 'success');
-    }
+    showDeleteElementConfirmModal(`this ${getElementDisplayName(element)}`);
 }
 
 // Get element display name

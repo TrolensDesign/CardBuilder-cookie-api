@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Oleo+Script:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/mobile.css">
@@ -186,6 +187,30 @@
                         <span class="templates-more-text">Show More</span>
                     </button>
                 </div>
+
+            <!-- Custom Templates Section -->
+            <div class="sidebar-section">
+                <div class="custom-templates-header">
+                    <h3>💾 My Templates</h3>
+                    <button class="save-template-btn" onclick="showSaveTemplateModal()" title="Save current canvas as template">
+                        <i data-lucide="save"></i>
+                    </button>
+                </div>
+                <div class="custom-templates-search">
+                    <input type="text" id="custom-templates-search" placeholder="🔍 Search templates..." oninput="filterCustomTemplates()">
+                </div>
+                <div id="custom-templates-container" class="custom-templates-grid">
+                    <p style="color: #999; text-align: center; padding: 20px;">No custom templates yet</p>
+                </div>
+                
+                <!-- Show More Custom Templates Button -->
+                <div class="custom-templates-more-section" id="custom-templates-more-section" style="display: none;">
+                    <button class="custom-templates-more-btn" id="custom-templates-more-btn" onclick="toggleCustomTemplatesExpanded()">
+                        <i data-lucide="chevron-down" class="custom-templates-more-icon"></i>
+                        <span class="custom-templates-more-text">Show More</span>
+                    </button>
+                </div>
+            </div>
                 
                 <!-- Clear Canvas Button -->
                 <div class="clear-canvas-section">
@@ -324,6 +349,16 @@
                                     </button>
                                     <button class="toolbar-btn" onclick="testRedCanvasCenter()" title="Show Center Crosshair">
                                         <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Lock Tools -->
+                            <div class="toolbar-group hidden" id="lock-toolbar-group">
+                                <div class="toolbar-label">Lock</div>
+                                <div class="toolbar-buttons">
+                                    <button class="toolbar-btn" id="lock-element-btn" onclick="toggleElementLock()" title="Lock/Unlock Element">
+                                        <i data-lucide="lock" id="lock-element-icon"></i>
                                     </button>
                                 </div>
                             </div>
@@ -717,6 +752,33 @@
             </div>
             <div class="modal-body">
                 <div class="news-list">
+                    <div class="news-list-item" onclick="showNewsDetail('template-management')">
+                        <div class="news-item-icon">🔍</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Enhanced Template Management <span class="news-item-badge" id="news-item-badge-template-management" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Search functionality, collapsible sections, better previews, and improved layout. Click any template card to open preview modal!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('smart-template-saving')">
+                        <div class="news-item-icon">🎯</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Smart Template Saving <span class="news-item-badge" id="news-item-badge-smart-template-saving" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">All elements are automatically deselected when saving templates for a cleaner view. No more manual deselection needed!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-list-item" onclick="showNewsDetail('lock-elements')">
+                        <div class="news-item-icon">🔒</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Lock Elements Feature <span class="news-item-badge" id="news-item-badge-lock-elements" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Lock elements to prevent accidental movement while still allowing parameter editing. Locked elements show blue dashed border and lock icon!</div>
+                        </div>
+                    </div>
+                    
                     <div class="news-list-item" onclick="showNewsDetail('collapsible-templates')">
                         <div class="news-item-icon">📋</div>
                         <div class="news-item-content">
@@ -1318,6 +1380,88 @@
                     </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Template Modal -->
+    <div id="save-template-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content save-template-modal">
+            <div class="modal-header">
+                <h2>💾 Save Template</h2>
+                <button class="modal-close" onclick="closeSaveTemplateModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>Enter a name for your template:</p>
+                <input type="text" id="template-name-input" placeholder="Template name..." maxlength="50">
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeSaveTemplateModal()" class="cancel-btn">Cancel</button>
+                <button onclick="handleSaveTemplate()" class="save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Preview Modal -->
+    <div id="template-preview-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content template-preview-modal">
+            <div class="modal-header">
+                <h2>👁️ Template Preview</h2>
+                <button class="modal-close" onclick="closeTemplatePreviewModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-preview-content">
+                    <img id="template-preview-modal-img" src="" alt="Preview" class="template-preview-large">
+                    <div class="template-preview-info">
+                        <h3 id="template-preview-modal-title">Template Name</h3>
+                        <p id="template-preview-modal-size">Size</p>
+                        <p id="template-preview-modal-elements">Elements</p>
+                    </div>
+                </div>
+                <div class="template-preview-actions">
+                    <button onclick="loadTemplateFromPreview()" class="load-template-btn">
+                        <span>▶️</span> Load Template
+                    </button>
+                    <button onclick="showDeleteConfirmModal()" class="delete-template-btn">
+                        <span>🗑️</span> Delete Template
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-confirm-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content delete-confirm-modal">
+            <div class="modal-header">
+                <h2>🗑️ Delete Template</h2>
+                <button class="modal-close" onclick="closeDeleteConfirmModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="delete-template-name"></strong>?</p>
+                <p style="color: #ff6b35; font-size: 0.9rem;">This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeDeleteConfirmModal()" class="cancel-btn">Cancel</button>
+                <button onclick="confirmDeleteTemplate()" class="confirm-delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Element Confirmation Modal -->
+    <div id="delete-element-confirm-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content delete-confirm-modal">
+            <div class="modal-header">
+                <h2>🗑️ Delete Element</h2>
+                <button class="modal-close" onclick="closeDeleteElementConfirmModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="delete-element-message">Are you sure you want to delete this element?</p>
+                <p style="color: #ff6b35; font-size: 0.9rem;">This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeDeleteElementConfirmModal()" class="cancel-btn">Cancel</button>
+                <button onclick="confirmDeleteElement()" class="confirm-delete-btn">Delete</button>
             </div>
         </div>
     </div>

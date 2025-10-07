@@ -1311,6 +1311,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners
     setupEventListeners();
     
+    // Load custom templates
+    updateCustomTemplatesUI();
+    
     // Show welcome message
     showToast('Welcome to Cookie Card Builder! 🍪', 'success');
     
@@ -2293,6 +2296,7 @@ function updateCanvas() {
     updateLayersPanel();
     updateCanvasStatus();
     ensureResizeHandle();
+    updateElementVisualState();
     
     // Apply viewport transform
     updateCanvasViewport();
@@ -2540,6 +2544,8 @@ function copyJSON() {
     const jsonData = jsonOutput ? jsonOutput.value : generateJSON();
     navigator.clipboard.writeText(jsonData).then(() => {
         showToast('JSON copied to clipboard! 📋', 'success');
+        // Send analytics for copy action
+        sendActionAnalytics('copied');
     }).catch(err => {
         console.error('Failed to copy: ', err);
         showToast('Failed to copy JSON', 'error');
@@ -2678,13 +2684,15 @@ function downloadJSON() {
     URL.revokeObjectURL(url);
     
     showToast('JSON downloaded! 💾', 'success');
+    // Send analytics for download action
+    sendActionAnalytics('downloaded');
 }
 
 // Modal Management
 // JSON is now automatically updated in sidebar - no modal needed
 
 // Badge tracking system
-const BADGE_VERSION = '1.0'; // Increment this when adding new features
+const BADGE_VERSION = '1.1'; // Increment this when adding new features (updated for custom templates)
 const STORAGE_KEY = 'cookie-card-builder-badges';
 
 // Get badge data from localStorage
@@ -2818,6 +2826,81 @@ function updateNewsItemBadges() {
 
 // News data
 const NEWS_DATA = {
+    'template-management': {
+        title: '🔍 Enhanced Template Management',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🔍 Enhanced Template Management</h3>
+                <p>We've completely redesigned the template management system for a much better experience:</p>
+                <ul>
+                    <li><strong>Search Functionality:</strong> Quickly find templates by name or element types</li>
+                    <li><strong>Show More/Less:</strong> Collapsible template sections to save space</li>
+                    <li><strong>Better Previews:</strong> Larger, clearer template previews in the sidebar</li>
+                    <li><strong>Improved Layout:</strong> Template cards now show name above preview for better visibility</li>
+                    <li><strong>Click to Open:</strong> Click any template card to open a preview modal with load/delete options</li>
+                </ul>
+                <p>Managing your templates is now much more intuitive and efficient!</p>
+            </div>
+        `
+    },
+    'smart-template-saving': {
+        title: '🎯 Smart Template Saving',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🎯 Smart Template Saving</h3>
+                <p>Template saving is now smarter and more user-friendly:</p>
+                <ul>
+                    <li><strong>Auto-Deselect:</strong> All elements are automatically deselected when saving templates</li>
+                    <li><strong>Cleaner View:</strong> No more manual deselection needed for a clean save</li>
+                    <li><strong>Better Focus:</strong> You can focus on naming your template without distractions</li>
+                    <li><strong>Improved UX:</strong> Smoother workflow when creating multiple templates</li>
+                </ul>
+                <p>Save templates faster and with a cleaner interface!</p>
+            </div>
+        `
+    },
+    'lock-elements': {
+        title: '🔒 Lock Elements Feature',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🔒 Lock Elements Feature</h3>
+                <p>New lock functionality to prevent accidental element movement:</p>
+                <ul>
+                    <li><strong>Lock Button:</strong> Lock/unlock button appears in quick actions when element is selected</li>
+                    <li><strong>Visual Indicators:</strong> Locked elements show blue dashed border and lock icon</li>
+                    <li><strong>Smart Behavior:</strong> Locked elements can't be dragged but can still be edited</li>
+                    <li><strong>Multi-Selection:</strong> Locked elements are excluded from multi-selection</li>
+                    <li><strong>Easy Toggle:</strong> Click the lock button to quickly lock/unlock elements</li>
+                </ul>
+                <p>Perfect for protecting important elements while still allowing parameter editing!</p>
+            </div>
+        `
+    },
+    'custom-templates': {
+        title: '💾 Save Custom Templates',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>💾 Save Custom Templates</h3>
+                <p>You can now save your canvas designs as reusable custom templates!</p>
+                <ul>
+                    <li><strong>Save Templates:</strong> Click the save icon (💾) in the "My Templates" section to save your current canvas</li>
+                    <li><strong>Local Storage:</strong> Templates are saved in your browser and persist across sessions</li>
+                    <li><strong>Load Anytime:</strong> Click the folder icon (📂) to load a saved template instantly</li>
+                    <li><strong>Easy Management:</strong> Delete unwanted templates with the trash icon (🗑️)</li>
+                    <li><strong>Complete Saves:</strong> Saves all elements, canvas size, and background settings</li>
+                </ul>
+                <p>Perfect for creating consistent card designs and reusing your favorite layouts!</p>
+            </div>
+        `
+    },
     'collapsible-templates': {
         title: '📋 Collapsible Templates Section',
         date: 'October 2025',
@@ -3242,6 +3325,632 @@ function updateQuickActionsState() {
             btn.disabled = !selectedElement;
         }
     });
+    
+    // Update lock button state
+    updateLockButtonState();
+}
+
+function updateLockButtonState() {
+    const lockBtn = document.getElementById('lock-element-btn');
+    const lockIcon = document.getElementById('lock-element-icon');
+    const lockGroup = document.getElementById('lock-toolbar-group');
+    
+    if (!lockBtn || !lockIcon) return;
+    
+    if (selectedElement && selectedElement !== 'card') {
+        const element = elements.find(e => e.id === selectedElement);
+        if (element) {
+            // Show lock group
+            if (lockGroup) {
+                lockGroup.classList.remove('hidden');
+            }
+            
+            if (element.locked) {
+                lockBtn.classList.add('active');
+                lockIcon.setAttribute('data-lucide', 'lock');
+            } else {
+                lockBtn.classList.remove('active');
+                lockIcon.setAttribute('data-lucide', 'unlock');
+            }
+        } else {
+            // Hide lock group
+            if (lockGroup) {
+                lockGroup.classList.add('hidden');
+            }
+        }
+    } else {
+        // Hide lock group when no element selected
+        if (lockGroup) {
+            lockGroup.classList.add('hidden');
+        }
+    }
+    
+    // Re-initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+function toggleElementLock() {
+    if (!selectedElement || selectedElement === 'card') {
+        showToast('Please select an element to lock/unlock!', 'warning');
+        return;
+    }
+    
+    const element = elements.find(e => e.id === selectedElement);
+    if (!element) {
+        showToast('Element not found!', 'error');
+        return;
+    }
+    
+    // Toggle lock state
+    element.locked = !element.locked;
+    
+    // Update visual state
+    updateLockButtonState();
+    updateElementVisualState();
+    
+    // Show feedback
+    const action = element.locked ? 'locked' : 'unlocked';
+    showToast(`Element ${action}! 🔒`, 'success');
+}
+
+function updateElementVisualState() {
+    // Update all element visual states
+    elements.forEach(element => {
+        const elementDiv = document.querySelector(`[data-id="${element.id}"]`);
+        if (elementDiv) {
+            if (element.locked) {
+                elementDiv.classList.add('locked');
+                console.log(`Element ${element.id} locked - class added`);
+                // Don't set opacity via JavaScript - let CSS handle it
+            } else {
+                elementDiv.classList.remove('locked');
+                elementDiv.style.opacity = ''; // Reset to default
+                console.log(`Element ${element.id} unlocked - class removed`);
+            }
+        }
+    });
+}
+
+// Custom templates management
+const CUSTOM_TEMPLATES_KEY = 'cookie-card-custom-templates';
+const ANALYTICS_KEY = 'template-analytics-data';
+const ACTION_ANALYTICS_KEY = 'action-analytics-data';
+
+function getCustomTemplates() {
+    try {
+        return JSON.parse(localStorage.getItem(CUSTOM_TEMPLATES_KEY) || '{}');
+    } catch (error) {
+        console.error('Error loading custom templates:', error);
+        return {};
+    }
+}
+
+async function saveCustomTemplate(templateName) {
+    if (!templateName || templateName.trim() === '') {
+        showToast('Please enter a template name', 'error');
+        return;
+    }
+
+    const templates = getCustomTemplates();
+    
+    // Check if template name already exists
+    if (templates[templateName]) {
+        if (!confirm(`Template "${templateName}" already exists. Overwrite?`)) {
+            return;
+        }
+    }
+
+    // Generate preview
+    const canvas = document.getElementById('canvas');
+    let previewImage = null;
+    
+    try {
+        if (typeof html2canvas !== 'undefined') {
+            console.log('html2canvas is available, generating preview...');
+            const canvasCapture = await html2canvas(canvas, {
+                backgroundColor: null, // Transparent background for thumbnails
+                scale: 1.0, // Use 1:1 scale to match canvas exactly
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            });
+            previewImage = canvasCapture.toDataURL('image/png', 1.0); // PNG for better quality
+            console.log('Preview generated successfully');
+        } else {
+            console.log('html2canvas is not available');
+        }
+    } catch (e) {
+        console.log('Preview generation failed:', e);
+    }
+
+    // Save template
+    const templateData = {
+        elements: elements.map(el => ({...el})), // Deep copy elements
+        canvasSize: {
+            width: cardElement.width,
+            height: cardElement.height,
+            bg: cardElement.bg,
+            bg_type: cardElement.bg_type,
+            bg_image: cardElement.bg_image,
+            bg_transparent: cardElement.bg_transparent
+        },
+        preview: previewImage
+    };
+
+    templates[templateName] = templateData;
+    localStorage.setItem(CUSTOM_TEMPLATES_KEY, JSON.stringify(templates));
+
+    // Send analytics (async)
+    await sendTemplateAnalytics(templateName, templateData);
+
+    showToast(`Template "${templateName}" saved!`, 'success');
+    updateCustomTemplatesUI();
+    
+    // Close save modal if exists
+    const modal = document.getElementById('save-template-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function deleteCustomTemplate(templateName) {
+    const templates = getCustomTemplates();
+    delete templates[templateName];
+    localStorage.setItem(CUSTOM_TEMPLATES_KEY, JSON.stringify(templates));
+    
+    showToast(`Template "${templateName}" deleted`, 'info');
+    updateCustomTemplatesUI();
+}
+
+function loadCustomTemplate(templateName) {
+    const templates = getCustomTemplates();
+    const template = templates[templateName];
+
+    if (!template) {
+        showToast('Template not found', 'error');
+        return;
+    }
+
+    // Clear current elements
+    elements = [];
+    document.getElementById('canvas').innerHTML = '';
+
+    // Load canvas settings
+    cardElement.width = template.canvasSize.width;
+    cardElement.height = template.canvasSize.height;
+    cardElement.bg = template.canvasSize.bg;
+    cardElement.bg_type = template.canvasSize.bg_type;
+    cardElement.bg_image = template.canvasSize.bg_image || '';
+    cardElement.bg_transparent = template.canvasSize.bg_transparent || false;
+
+    // Update canvas inputs
+    document.getElementById('card-width').value = cardElement.width;
+    document.getElementById('card-height').value = cardElement.height;
+    document.getElementById('bg-type').value = cardElement.bg_type;
+    document.getElementById('bg-color').value = cardElement.bg;
+    document.getElementById('bg-transparent').checked = cardElement.bg_transparent;
+
+    updateCanvas();
+
+    // Load elements
+    elementIdCounter = 1;
+    template.elements.forEach(elData => {
+        const el = {...elData, id: elementIdCounter++};
+        elements.push(el);
+        createElementDiv(el, window.canvasViewport ? window.canvasViewport.zoom : 1);
+    });
+
+    // Force canvas refresh to show elements
+    updateCanvas();
+    
+    showToast(`Template "${templateName}" loaded!`, 'success');
+    updateElementCounts();
+    updateLayersPanel();
+}
+
+async function sendTemplateAnalytics(templateName, templateData) {
+    try {
+        const existingData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
+        
+        // Generate canvas preview image
+        const canvas = document.getElementById('canvas');
+        let previewImage = null;
+        
+        try {
+            // Use html2canvas to capture the canvas as image
+            if (typeof html2canvas !== 'undefined') {
+                const canvasCapture = await html2canvas(canvas, {
+                    backgroundColor: cardElement.bg_transparent ? null : cardElement.bg,
+                    scale: 1.0, // High quality for analytics
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                previewImage = canvasCapture.toDataURL('image/png', 1.0); // PNG for better quality
+            }
+        } catch (e) {
+            console.log('Preview generation skipped:', e);
+        }
+        
+        const analyticsData = {
+            templateName: templateName,
+            // Full JSON data
+            fullJSON: {
+                card: {
+                    width: templateData.canvasSize.width,
+                    height: templateData.canvasSize.height,
+                    bg: templateData.canvasSize.bg,
+                    bg_type: templateData.canvasSize.bg_type,
+                    bg_image: templateData.canvasSize.bg_image,
+                    bg_transparent: templateData.canvasSize.bg_transparent
+                },
+                layers: templateData.elements.map(el => ({...el})) // Complete element data
+            },
+            // Quick stats
+            elements: templateData.elements.map(el => ({
+                type: el.type,
+                fontSize: el.fontSize,
+                fontFamily: el.fontFamily,
+                textColor: el.textColor,
+                width: el.width,
+                height: el.height,
+                x: el.x,
+                y: el.y,
+            })),
+            canvasSize: {
+                width: templateData.canvasSize.width,
+                height: templateData.canvasSize.height
+            },
+            elementCount: templateData.elements.length,
+            timestamp: new Date().toISOString(),
+            preview: previewImage // Base64 image
+        };
+        
+        existingData.push(analyticsData);
+        localStorage.setItem(ANALYTICS_KEY, JSON.stringify(existingData));
+        
+        console.log('📊 Template analytics saved with full JSON and preview');
+    } catch (error) {
+        console.error('Analytics save failed:', error);
+    }
+}
+
+function updateCustomTemplatesUI() {
+    const container = document.getElementById('custom-templates-container');
+    if (!container) return;
+
+    const templates = getCustomTemplates();
+    const templateNames = Object.keys(templates);
+
+    if (templateNames.length === 0) {
+        container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">No custom templates yet</p>';
+        document.getElementById('custom-templates-more-section').style.display = 'none';
+        return;
+    }
+
+    // Store all templates for filtering
+    window.allCustomTemplates = templateNames;
+    
+    // Show "Show More" button if more than 2 templates
+    const moreSection = document.getElementById('custom-templates-more-section');
+    if (templateNames.length > 2) {
+        moreSection.style.display = 'flex';
+        // Show only first 2 templates initially
+        renderCustomTemplates(templateNames.slice(0, 2));
+    } else {
+        moreSection.style.display = 'none';
+        renderCustomTemplates(templateNames);
+    }
+}
+
+function renderCustomTemplates(templateNames) {
+    const container = document.getElementById('custom-templates-container');
+    const templates = getCustomTemplates();
+    
+    if (templateNames.length === 0) {
+        container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">No templates found</p>';
+        return;
+    }
+
+    container.innerHTML = '';
+    templateNames.forEach(name => {
+        const template = templates[name];
+        const card = document.createElement('div');
+        card.className = 'template-card custom-template-card';
+        
+        const previewHTML = template.preview 
+            ? `<img src="${template.preview}" alt="${name}" class="template-preview-img">` 
+            : '<div class="template-preview">💾</div>';
+        
+        card.innerHTML = `
+            <span>${name}</span>
+            ${previewHTML}
+        `;
+        
+        // Make entire card clickable
+        card.onclick = () => showTemplatePreviewModal(name);
+        container.appendChild(card);
+    });
+}
+
+function filterCustomTemplates() {
+    const searchInput = document.getElementById('custom-templates-search');
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    
+    if (!window.allCustomTemplates) return;
+    
+    if (searchTerm === '') {
+        // Show all templates with "Show More" logic
+        updateCustomTemplatesUI();
+    } else {
+        // Filter templates by name and show all results
+        const filteredTemplates = window.allCustomTemplates.filter(name => 
+            name.toLowerCase().includes(searchTerm)
+        );
+        renderCustomTemplates(filteredTemplates);
+        // Hide "Show More" button when searching
+        document.getElementById('custom-templates-more-section').style.display = 'none';
+    }
+}
+
+function toggleCustomTemplatesExpanded() {
+    const btn = document.getElementById('custom-templates-more-btn');
+    const icon = btn.querySelector('.custom-templates-more-icon');
+    const text = btn.querySelector('.custom-templates-more-text');
+    
+    if (btn.classList.contains('expanded')) {
+        // Collapse - show only first 2
+        btn.classList.remove('expanded');
+        text.textContent = 'Show More';
+        renderCustomTemplates(window.allCustomTemplates.slice(0, 2));
+    } else {
+        // Expand - show all
+        btn.classList.add('expanded');
+        text.textContent = 'Show Less';
+        renderCustomTemplates(window.allCustomTemplates);
+    }
+}
+
+function showSaveTemplateModal() {
+    // Deselect all elements before showing modal
+    deselectAllElements();
+    
+    const modal = document.getElementById('save-template-modal');
+    const input = document.getElementById('template-name-input');
+    
+    if (modal && input) {
+        modal.style.display = 'flex';
+        input.value = '';
+        input.focus();
+    }
+}
+
+function deselectAllElements() {
+    selectedElement = 'card';
+    selectedElements = [];
+    updateCanvas();
+    updateCanvasStatus();
+    updateElementProperties();
+    updateQuickActionsState();
+    updateElementVisualState();
+}
+
+// Send action analytics (copy/download)
+async function sendActionAnalytics(actionType) {
+    try {
+        const actionData = {
+            action: actionType, // 'copied' or 'downloaded'
+            timestamp: new Date().toISOString(),
+            canvasSize: {
+                width: cardElement.width,
+                height: cardElement.height
+            },
+            elementCount: elements.length,
+            elements: elements.map(el => ({
+                type: el.type,
+                x: el.x,
+                y: el.y,
+                width: el.width,
+                height: el.height
+            })),
+            // Capture current canvas as preview
+            preview: null
+        };
+
+        // Generate preview image
+        try {
+            if (typeof html2canvas !== 'undefined') {
+                const canvas = document.getElementById('canvas');
+                const canvasCapture = await html2canvas(canvas, {
+                    backgroundColor: cardElement.bg_transparent ? null : cardElement.bg,
+                    scale: 1.0,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                actionData.preview = canvasCapture.toDataURL('image/png', 1.0);
+            }
+        } catch (e) {
+            console.log('Preview generation skipped for action analytics:', e);
+        }
+
+        // Save to localStorage
+        const existingData = JSON.parse(localStorage.getItem(ACTION_ANALYTICS_KEY) || '[]');
+        existingData.push(actionData);
+        localStorage.setItem(ACTION_ANALYTICS_KEY, JSON.stringify(existingData));
+        
+        console.log(`Action analytics saved: ${actionType}`);
+    } catch (error) {
+        console.error('Action analytics save failed:', error);
+    }
+}
+
+function closeSaveTemplateModal() {
+    const modal = document.getElementById('save-template-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const saveModal = document.getElementById('save-template-modal');
+    const previewModal = document.getElementById('template-preview-modal');
+    
+    if (saveModal && saveModal.style.display === 'flex' && event.target === saveModal) {
+        closeSaveTemplateModal();
+    }
+    
+    if (previewModal && previewModal.style.display === 'flex' && event.target === previewModal) {
+        closeTemplatePreviewModal();
+    }
+});
+
+function handleSaveTemplate() {
+    const input = document.getElementById('template-name-input');
+    if (input) {
+        saveCustomTemplate(input.value.trim());
+    }
+}
+
+function showTemplatePreviewModal(templateName) {
+    const templates = getCustomTemplates();
+    const template = templates[templateName];
+    
+    if (!template) {
+        showToast('Template not found', 'error');
+        return;
+    }
+
+    const modal = document.getElementById('template-preview-modal');
+    const img = document.getElementById('template-preview-modal-img');
+    const title = document.getElementById('template-preview-modal-title');
+    const size = document.getElementById('template-preview-modal-size');
+    const elements = document.getElementById('template-preview-modal-elements');
+    
+    if (template.preview) {
+        img.src = template.preview;
+        img.style.display = 'block';
+    } else {
+        img.style.display = 'none';
+    }
+    
+    // Generate better description
+    const elementTypes = {};
+    template.elements.forEach(el => {
+        elementTypes[el.type] = (elementTypes[el.type] || 0) + 1;
+    });
+    const typeDescription = Object.entries(elementTypes)
+        .map(([type, count]) => `${count} ${type}${count > 1 ? 's' : ''}`)
+        .join(', ');
+    
+    title.textContent = templateName;
+    size.textContent = `${template.canvasSize.width}×${template.canvasSize.height}px`;
+    elements.textContent = `${template.elements.length} elements (${typeDescription})`;
+    
+    // Store template name for load/delete actions
+    modal.dataset.templateName = templateName;
+    
+    modal.style.display = 'flex';
+}
+
+function closeTemplatePreviewModal() {
+    const modal = document.getElementById('template-preview-modal');
+    modal.style.display = 'none';
+}
+
+function loadTemplateFromPreview() {
+    const modal = document.getElementById('template-preview-modal');
+    const templateName = modal.dataset.templateName;
+    closeTemplatePreviewModal();
+    loadCustomTemplate(templateName);
+}
+
+function deleteTemplateFromPreview() {
+    // This function is no longer used - replaced by showDeleteConfirmModal
+}
+
+function showDeleteConfirmModal() {
+    const previewModal = document.getElementById('template-preview-modal');
+    const templateName = previewModal.dataset.templateName;
+    
+    // Close preview modal
+    closeTemplatePreviewModal();
+    
+    // Show delete confirmation modal
+    const deleteModal = document.getElementById('delete-confirm-modal');
+    const templateNameElement = document.getElementById('delete-template-name');
+    
+    templateNameElement.textContent = templateName;
+    deleteModal.dataset.templateName = templateName;
+    deleteModal.style.display = 'flex';
+}
+
+function closeDeleteConfirmModal() {
+    const modal = document.getElementById('delete-confirm-modal');
+    modal.style.display = 'none';
+}
+
+function confirmDeleteTemplate() {
+    const modal = document.getElementById('delete-confirm-modal');
+    const templateName = modal.dataset.templateName;
+    
+    deleteCustomTemplate(templateName);
+    closeDeleteConfirmModal();
+    showToast(`Template "${templateName}" deleted!`, 'success');
+}
+
+// Element deletion modal functions
+function showDeleteElementConfirmModal(elementDescription) {
+    const modal = document.getElementById('delete-element-confirm-modal');
+    const messageElement = document.getElementById('delete-element-message');
+    
+    messageElement.textContent = `Are you sure you want to delete ${elementDescription}?`;
+    modal.style.display = 'flex';
+}
+
+function closeDeleteElementConfirmModal() {
+    const modal = document.getElementById('delete-element-confirm-modal');
+    modal.style.display = 'none';
+}
+
+function confirmDeleteElement() {
+    // Handle multi-selection
+    if (selectedElements.length > 1) {
+        const count = selectedElements.length;
+        elements = elements.filter(el => !selectedElements.includes(el.id));
+        selectedElements = [];
+        selectedElement = 'card';
+        updateCanvas();
+        updateQuotas();
+        updateJSON();
+        updateCanvasStatus();
+        updateElementProperties();
+        updateQuickActionsState();
+        updateTemplateButtons();
+        updateLayersPanel();
+        showToast(`${count} elements deleted! 🗑️`, 'success');
+    } else {
+        // Single element deletion
+        const element = elements.find(e => e.id === selectedElement);
+        if (element) {
+            elements = elements.filter(e => e.id !== selectedElement);
+            selectedElement = 'card';
+            updateCanvas();
+            updateQuotas();
+            updateJSON();
+            updateCanvasStatus();
+            updateElementProperties();
+            updateQuickActionsState();
+            updateTemplateButtons();
+            updateLayersPanel();
+            showToast('Element deleted! 🗑️', 'success');
+        }
+    }
+    
+    closeDeleteElementConfirmModal();
 }
 
 // Update canvas status in sidebar

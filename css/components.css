@@ -63,17 +63,55 @@
     justify-content: flex-start;
 }
 
-.canvas-element:hover {
+.canvas-element:hover:not(.locked) {
     border-color: var(--accent-color);
 }
 
-.canvas-element.selected {
+.canvas-element.selected:not(.locked) {
     border-color: var(--accent-color);
 }
 
-.canvas-element.multi-selected {
+.canvas-element.multi-selected:not(.locked) {
     border-color: #ff6b35;
     box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.3);
+}
+
+.canvas-element.locked {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.canvas-element.locked.selected {
+    border-color: #3b82f6;
+    border-style: dashed;
+}
+
+.canvas-element.locked::after {
+    content: '🔒';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 16px;
+    z-index: 10001;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    opacity: 0.4;
+}
+
+/* Locked element when selected - add shadow */
+.canvas-element.locked.selected {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Locked element when multi-selected */
+.canvas-element.locked.multi-selected {
+    border-color: #3b82f6;
+    border-style: dashed;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
 }
 
 .canvas-element .resize-handle {

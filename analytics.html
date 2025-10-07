@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Analytics - Cookie Card Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a; 
+            color: #ffffff; 
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .login-form { 
+            max-width: 400px; 
+            margin: 100px auto; 
+            padding: 30px; 
+            background: #2a2a2a; 
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-form h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ff6b35;
+        }
+
+        .analytics-dashboard { 
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        .dashboard-header h1 {
+            color: #ff6b35;
+        }
+
+        .analytics-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: #999;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0;
+            width: auto;
+        }
+
+        .tab-btn:hover {
+            color: #ff6b35;
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .tab-btn.active {
+            color: #ff6b35;
+            border-bottom-color: #ff6b35;
+            background: transparent;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .element-type {
+            display: inline-block;
+            background: #3a3a3a;
+            color: #ff6b35;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin: 2px;
+            font-weight: 500;
+        }
+
+        .template-item {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .template-item:hover {
+            border-color: #ff6b35;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+        }
+
+        .template-item h3 {
+            color: #ff6b35;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .template-meta {
+            margin-bottom: 15px;
+        }
+
+        .template-meta p {
+            margin: 5px 0;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .element-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .element-tag {
+            background: #3a3a3a;
+            color: #ff6b35;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .template-item details {
+            margin-top: 15px;
+        }
+
+        .template-item summary {
+            cursor: pointer;
+            color: #ff6b35;
+            font-weight: 500;
+            padding: 8px 0;
+        }
+
+        .template-item pre {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+            overflow-x: auto;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        input, button { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: none; 
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            background: #1a1a1a;
+            color: white;
+            border: 1px solid #444;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        button { 
+            background: #ff6b35; 
+            color: white; 
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #ff8555;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
+        .template-item { 
+            background: #2a2a2a; 
+            margin: 15px 0; 
+            padding: 20px; 
+            border-radius: 8px;
+            border-left: 4px solid #ff6b35;
+        }
+
+        .template-item h3 {
+            color: #ff6b35;
+            margin-bottom: 10px;
+        }
+
+        .template-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .template-meta p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .template-meta strong {
+            color: #fff;
+        }
+
+        details {
+            margin-top: 15px;
+        }
+
+        summary {
+            cursor: pointer;
+            color: #ff6b35;
+            padding: 10px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            user-select: none;
+        }
+
+        summary:hover {
+            background: #333;
+        }
+
+        pre {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-data p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .element-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .element-tag {
+            background: #1a1a1a;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #ff6b35;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form" id="login-form">
+        <h2>🔐 Template Analytics Login</h2>
+        <p style="text-align: center; color: #999; margin-bottom: 20px;">Protected access for administrators only</p>
+        <input type="password" id="password" placeholder="Enter password" onkeypress="if(event.key==='Enter') checkPassword()">
+        <button onclick="checkPassword()">Login</button>
+    </div>
+    
+    <div class="analytics-dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <h1>📊 Template Analytics Dashboard</h1>
+            <button onclick="logout()" style="width: auto; padding: 10px 20px;">🚪 Logout</button>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="analytics-tabs">
+            <button class="tab-btn active" onclick="switchTab('templates')">💾 Saved Templates</button>
+            <button class="tab-btn" onclick="switchTab('copied')">📋 Copied JSON</button>
+            <button class="tab-btn" onclick="switchTab('downloaded')">⬇️ Downloaded JSON</button>
+        </div>
+
+        <!-- Templates Tab -->
+        <div id="tab-templates" class="tab-content active">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Total Templates Saved</h3>
+                    <div class="stat-value" id="total-templates">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Elements</h3>
+                    <div class="stat-value" id="total-elements">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Elements/Template</h3>
+                    <div class="stat-value" id="avg-elements">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Most Common Size</h3>
+                    <div class="stat-value" id="common-size" style="font-size: 20px;">-</div>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="search" placeholder="🔍 Search templates..." oninput="filterTemplates()">
+            </div>
+
+            <div class="button-group">
+                <button onclick="exportData()">📥 Export JSON</button>
+                <button onclick="exportCSV()">📊 Export CSV</button>
+                <button onclick="clearData()" style="background: #dc3545;">🗑️ Clear All Data</button>
+            </div>
+            
+            <div id="analytics-data"></div>
+        </div>
+
+        <!-- Copied Tab -->
+        <div id="tab-copied" class="tab-content">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Total Copies</h3>
+                    <div class="stat-value" id="total-copies">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Recent Copies (24h)</h3>
+                    <div class="stat-value" id="recent-copies">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Elements</h3>
+                    <div class="stat-value" id="avg-elements-copied">0</div>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="search-copied" placeholder="🔍 Search copied..." oninput="filterCopied()">
+            </div>
+            
+            <div id="copied-analytics-data"></div>
+        </div>
+
+        <!-- Downloaded Tab -->
+        <div id="tab-downloaded" class="tab-content">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Total Downloads</h3>
+                    <div class="stat-value" id="total-downloads">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Recent Downloads (24h)</h3>
+                    <div class="stat-value" id="recent-downloads">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Elements</h3>
+                    <div class="stat-value" id="avg-elements-downloaded">0</div>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="search-downloaded" placeholder="🔍 Search downloaded..." oninput="filterDownloaded()">
+            </div>
+            
+            <div id="downloaded-analytics-data"></div>
+        </div>
+    </div>
+    
+    <script>
+        const ANALYTICS_PASSWORD = 'CookieBuilder2025!@#';
+        const ANALYTICS_KEY = 'template-analytics-data';
+        const ACTION_ANALYTICS_KEY = 'action-analytics-data';
+        let allTemplatesData = [];
+        let allActionData = [];
+        
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === ANALYTICS_PASSWORD) {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                loadAnalyticsData();
+            } else {
+                alert('❌ Wrong password!');
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }
+        }
+
+        function logout() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('password').value = '';
+        }
+        
+        function loadAnalyticsData() {
+            allTemplatesData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
+            
+            // Sort by timestamp - newest first
+            allTemplatesData.sort((a, b) => {
+                const dateA = new Date(a.timestamp || 0);
+                const dateB = new Date(b.timestamp || 0);
+                return dateB - dateA; // Newest first
+            });
+            
+            displayTemplates(allTemplatesData);
+            updateStats(allTemplatesData);
+            
+            // Load action analytics
+            loadActionAnalytics();
+        }
+
+        function loadActionAnalytics() {
+            allActionData = JSON.parse(localStorage.getItem(ACTION_ANALYTICS_KEY) || '[]');
+            
+            // Sort by timestamp - newest first
+            allActionData.sort((a, b) => {
+                const dateA = new Date(a.timestamp || 0);
+                const dateB = new Date(b.timestamp || 0);
+                return dateB - dateA; // Newest first
+            });
+            
+            updateActionStats(allActionData);
+            displayCopiedData();
+            displayDownloadedData();
+        }
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        function updateActionStats(data) {
+            const copiedData = data.filter(item => item.action === 'copied');
+            const downloadedData = data.filter(item => item.action === 'downloaded');
+            
+            const totalCopies = copiedData.length;
+            const totalDownloads = downloadedData.length;
+            
+            const recentCopies = copiedData.filter(item => {
+                const actionDate = new Date(item.timestamp);
+                const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+                return actionDate > oneDayAgo;
+            }).length;
+            
+            const recentDownloads = downloadedData.filter(item => {
+                const actionDate = new Date(item.timestamp);
+                const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+                return actionDate > oneDayAgo;
+            }).length;
+
+            const avgElementsCopied = totalCopies > 0 
+                ? Math.round(copiedData.reduce((sum, item) => sum + item.elementCount, 0) / totalCopies) 
+                : 0;
+            
+            const avgElementsDownloaded = totalDownloads > 0 
+                ? Math.round(downloadedData.reduce((sum, item) => sum + item.elementCount, 0) / totalDownloads) 
+                : 0;
+
+            document.getElementById('total-copies').textContent = totalCopies;
+            document.getElementById('total-downloads').textContent = totalDownloads;
+            document.getElementById('recent-copies').textContent = recentCopies;
+            document.getElementById('recent-downloads').textContent = recentDownloads;
+            document.getElementById('avg-elements-copied').textContent = avgElementsCopied;
+            document.getElementById('avg-elements-downloaded').textContent = avgElementsDownloaded;
+        }
+
+        function displayCopiedData() {
+            const copiedData = allActionData.filter(item => item.action === 'copied');
+            const container = document.getElementById('copied-analytics-data');
+            
+            if (copiedData.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div style="font-size: 48px;">📋</div>
+                        <p>No copied data yet</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Copied actions will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            copiedData.forEach((item, index) => {
+                const date = new Date(item.timestamp).toLocaleString();
+                const card = createActionCard(item, date, index, '📋 Copied JSON', copiedData.length);
+                container.appendChild(card);
+            });
+        }
+
+        function displayDownloadedData() {
+            const downloadedData = allActionData.filter(item => item.action === 'downloaded');
+            const container = document.getElementById('downloaded-analytics-data');
+            
+            if (downloadedData.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div style="font-size: 48px;">⬇️</div>
+                        <p>No downloaded data yet</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Downloaded actions will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            downloadedData.forEach((item, index) => {
+                const date = new Date(item.timestamp).toLocaleString();
+                const card = createActionCard(item, date, index, '⬇️ Downloaded JSON', downloadedData.length);
+                container.appendChild(card);
+            });
+        }
+
+        function createActionCard(item, date, index, title, totalCount) {
+            const elementTypes = {};
+            item.elements.forEach(el => {
+                elementTypes[el.type] = (elementTypes[el.type] || 0) + 1;
+            });
+
+            const card = document.createElement('div');
+            card.className = 'template-item';
+            card.innerHTML = `
+                <div style="display: flex; gap: 20px; align-items: start;">
+                    ${item.preview ? `
+                        <div style="flex-shrink: 0;">
+                            <img src="${item.preview}" alt="Preview" 
+                                 style="width: 200px; height: auto; border-radius: 8px; border: 2px solid #ff6b35; cursor: pointer;" 
+                                 onclick="showPreviewModal('${item.preview.replace(/'/g, "\\'")}', '#${totalCount - index}', ${item.canvasSize.width}, ${item.canvasSize.height})"
+                                 title="Click to enlarge">
+                        </div>
+                    ` : ''}
+                    <div style="flex: 1; min-width: 0;">
+                        <h3>#${totalCount - index} - ${title}</h3>
+                        <div class="template-meta">
+                            <p><strong>Elements:</strong> ${item.elementCount}</p>
+                            <p><strong>Canvas:</strong> ${item.canvasSize.width}×${item.canvasSize.height}px</p>
+                            <p><strong>Date:</strong> ${date}</p>
+                        </div>
+                        <div class="element-tags">
+                            ${Object.entries(elementTypes).map(([type, count]) => 
+                                `<span class="element-tag">${type}: ${count}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+                <details style="margin-top: 15px;">
+                    <summary>📋 View Full JSON (Card + Layers)</summary>
+                    <pre>${JSON.stringify({
+                        action: item.action,
+                        timestamp: item.timestamp,
+                        canvasSize: item.canvasSize,
+                        elementCount: item.elementCount,
+                        elements: item.elements
+                    }, null, 2)}</pre>
+                </details>
+            `;
+            return card;
+        }
+
+
+        function updateStats(data) {
+            const totalTemplates = data.length;
+            const totalElements = data.reduce((sum, item) => sum + item.elementCount, 0);
+            const avgElements = totalTemplates > 0 ? Math.round(totalElements / totalTemplates) : 0;
+
+            // Find most common canvas size
+            const sizes = {};
+            data.forEach(item => {
+                const size = `${item.canvasSize.width}×${item.canvasSize.height}`;
+                sizes[size] = (sizes[size] || 0) + 1;
+            });
+            const commonSize = Object.keys(sizes).length > 0 
+                ? Object.keys(sizes).reduce((a, b) => sizes[a] > sizes[b] ? a : b) 
+                : '-';
+
+            document.getElementById('total-templates').textContent = totalTemplates;
+            document.getElementById('total-elements').textContent = totalElements;
+            document.getElementById('avg-elements').textContent = avgElements;
+            document.getElementById('common-size').textContent = commonSize;
+        }
+
+        function displayTemplates(data) {
+            const container = document.getElementById('analytics-data');
+            
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div style="font-size: 48px;">📭</div>
+                        <p>No template data yet</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Templates will appear here when users save them</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            data.forEach((item, index) => {
+                const elementTypes = {};
+                item.elements.forEach(el => {
+                    elementTypes[el.type] = (elementTypes[el.type] || 0) + 1;
+                });
+
+                const div = document.createElement('div');
+                div.className = 'template-item';
+                div.innerHTML = `
+                    <div style="display: flex; gap: 20px; align-items: start;">
+                        ${item.preview ? `
+                            <div style="flex-shrink: 0;">
+                                <img src="${item.preview}" alt="Preview" 
+                                     style="width: 200px; height: auto; border-radius: 8px; border: 2px solid #ff6b35; cursor: pointer;" 
+                                     onclick="showPreviewModal('${item.preview.replace(/'/g, "\\'")}', '${item.templateName.replace(/'/g, "\\'")}', ${item.canvasSize.width}, ${item.canvasSize.height})"
+                                     title="Click to enlarge">
+                            </div>
+                        ` : ''}
+                        <div style="flex: 1; min-width: 0;">
+                            <h3>#${data.length - index} - ${item.templateName}</h3>
+                            <div class="template-meta">
+                                <p><strong>Elements:</strong> ${item.elementCount}</p>
+                                <p><strong>Canvas:</strong> ${item.canvasSize.width}×${item.canvasSize.height}px</p>
+                                <p><strong>Date:</strong> ${new Date(item.timestamp).toLocaleString()}</p>
+                            </div>
+                            <div class="element-tags">
+                                ${Object.entries(elementTypes).map(([type, count]) => 
+                                    `<span class="element-tag">${type}: ${count}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    ${item.fullJSON ? `
+                        <details style="margin-top: 15px;">
+                            <summary>📋 View Full JSON (Card + Layers)</summary>
+                            <pre>${JSON.stringify(item.fullJSON, null, 2)}</pre>
+                        </details>
+                    ` : `
+                        <details style="margin-top: 15px;">
+                            <summary>📋 View Element Data</summary>
+                            <pre>${JSON.stringify(item.elements, null, 2)}</pre>
+                        </details>
+                    `}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function filterTemplates() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const filtered = allTemplatesData.filter(item => 
+                item.templateName.toLowerCase().includes(search) ||
+                item.elements.some(el => el.type.toLowerCase().includes(search))
+            );
+            
+            // Sort filtered results by timestamp - newest first
+            const sortedFiltered = [...filtered].sort((a, b) => {
+                const dateA = new Date(a.timestamp || 0);
+                const dateB = new Date(b.timestamp || 0);
+                return dateB - dateA; // Newest first
+            });
+            
+            displayTemplates(sortedFiltered);
+        }
+
+        function filterCopied() {
+            const search = document.getElementById('search-copied').value.toLowerCase();
+            const copiedData = allActionData.filter(item => item.action === 'copied');
+            const filtered = copiedData.filter(item => 
+                item.elements.some(el => el.type.toLowerCase().includes(search)) ||
+                new Date(item.timestamp).toLocaleString().toLowerCase().includes(search)
+            );
+            
+            const container = document.getElementById('copied-analytics-data');
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div style="font-size: 48px;">🔍</div>
+                        <p>No results found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            filtered.forEach((item, index) => {
+                const date = new Date(item.timestamp).toLocaleString();
+                const card = createActionCard(item, date, index, '📋 Copied JSON', filtered.length);
+                container.appendChild(card);
+            });
+        }
+
+        function filterDownloaded() {
+            const search = document.getElementById('search-downloaded').value.toLowerCase();
+            const downloadedData = allActionData.filter(item => item.action === 'downloaded');
+            const filtered = downloadedData.filter(item => 
+                item.elements.some(el => el.type.toLowerCase().includes(search)) ||
+                new Date(item.timestamp).toLocaleString().toLowerCase().includes(search)
+            );
+            
+            const container = document.getElementById('downloaded-analytics-data');
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <div style="font-size: 48px;">🔍</div>
+                        <p>No results found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            filtered.forEach((item, index) => {
+                const date = new Date(item.timestamp).toLocaleString();
+                const card = createActionCard(item, date, index, '⬇️ Downloaded JSON', filtered.length);
+                container.appendChild(card);
+            });
+        }
+        
+        function exportData() {
+            const data = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `template-analytics-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportCSV() {
+            const data = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
+            let csv = 'Template Name,Element Count,Canvas Width,Canvas Height,Date,Element Types\n';
+            
+            data.forEach(item => {
+                const elementTypes = {};
+                item.elements.forEach(el => {
+                    elementTypes[el.type] = (elementTypes[el.type] || 0) + 1;
+                });
+                const typesStr = Object.entries(elementTypes).map(([type, count]) => `${type}:${count}`).join('; ');
+                
+                csv += `"${item.templateName}",${item.elementCount},${item.canvasSize.width},${item.canvasSize.height},"${new Date(item.timestamp).toLocaleString()}","${typesStr}"\n`;
+            });
+
+            const blob = new Blob([csv], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `template-analytics-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function clearData() {
+            if (confirm('⚠️ Are you sure you want to clear all analytics data? This action cannot be undone!')) {
+                if (confirm('🔴 FINAL WARNING: This will permanently delete all template analytics data!')) {
+                    localStorage.removeItem(ANALYTICS_KEY);
+                    localStorage.removeItem(ACTION_ANALYTICS_KEY);
+                    localStorage.removeItem('template-analytics-data');
+                    localStorage.removeItem('action-analytics-data');
+                    allTemplatesData = [];
+                    allActionData = [];
+                    loadAnalyticsData();
+                    alert('✅ All analytics data has been cleared.');
+                }
+            }
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function showPreviewModal(imageSrc, templateName, width, height) {
+            const modal = document.getElementById('preview-modal');
+            const img = document.getElementById('preview-modal-img');
+            const title = document.getElementById('preview-modal-title');
+            const size = document.getElementById('preview-modal-size');
+            
+            img.src = imageSrc;
+            title.textContent = templateName;
+            size.textContent = `${width}×${height}px`;
+            modal.style.display = 'flex';
+        }
+
+        function closePreviewModal() {
+            const modal = document.getElementById('preview-modal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('preview-modal');
+            if (event.target === modal) {
+                closePreviewModal();
+            }
+        }
+
+        // Focus password input on load
+        document.getElementById('password').focus();
+    </script>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center;">
+        <div style="position: relative; max-width: 90%; max-height: 90%; display: flex; flex-direction: column; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; color: white;">
+                <div>
+                    <h2 id="preview-modal-title" style="margin: 0; color: #ff6b35;">Template Preview</h2>
+                    <p id="preview-modal-size" style="margin: 5px 0 0 0; color: #999;">-</p>
+                </div>
+                <button onclick="closePreviewModal()" style="background: none; border: 2px solid #ff6b35; color: #ff6b35; font-size: 24px; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">✕</button>
+            </div>
+            <img id="preview-modal-img" src="" alt="Preview" style="max-width: 100%; max-height: calc(90vh - 100px); border: 3px solid #ff6b35; border-radius: 8px; box-shadow: 0 10px 50px rgba(255, 107, 53, 0.5);">
+            <p style="margin-top: 15px; color: #999; font-size: 14px;">Click outside to close</p>
+        </div>
+    </div>
+</body>
+</html>
+
