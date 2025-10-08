@@ -3648,6 +3648,12 @@ function updateCustomTemplatesUI() {
     const templates = getCustomTemplates();
     const templateNames = Object.keys(templates);
 
+    // Update counter
+    const counter = document.getElementById('my-templates-counter');
+    if (counter) {
+        counter.textContent = `(${templateNames.length})`;
+    }
+
     if (templateNames.length === 0) {
         container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">No custom templates yet</p>';
         document.getElementById('custom-templates-more-section').style.display = 'none';

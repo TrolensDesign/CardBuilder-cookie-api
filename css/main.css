@@ -8,13 +8,14 @@
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 107, 53, 0.2);
     border-radius: var(--radius-md);
-    padding: 6px 12px;
+    padding: 0.375rem 0.75rem;
     margin-right: 15px;
+    height: fit-content;
 }
 
 .widget-title {
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 0.75rem;
     font-weight: 600;
     margin-right: 4px;
 }
@@ -22,18 +23,18 @@
 .stat-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 14px;
+    gap: 4px;
+    font-size: 0.75rem;
 }
 
 .stat-icon {
-    font-size: 18px;
+    font-size: 0.875rem;
 }
 
 .stat-value {
     color: var(--accent-color);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 0.875rem;
 }
 
 @media (max-width: 768px) {
@@ -741,6 +742,13 @@ body {
 
 .custom-templates-header h3 {
     margin: 0;
+}
+
+.templates-counter {
+    color: var(--accent-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-left: 4px;
 }
 
 .save-template-btn {
