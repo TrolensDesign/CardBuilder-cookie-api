@@ -3,14 +3,20 @@
 /* Analytics Widget Styles */
 .analytics-widget {
     display: flex;
-    gap: 20px;
+    gap: 12px;
     align-items: center;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 107, 53, 0.2);
     border-radius: var(--radius-md);
-    padding: 8px 16px;
+    padding: 6px 12px;
     margin-right: 15px;
-    box-shadow: var(--shadow-sm);
+}
+
+.widget-title {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 4px;
 }
 
 .stat-item {
@@ -21,12 +27,7 @@
 }
 
 .stat-icon {
-    font-size: 16px;
-}
-
-.stat-label {
-    color: var(--text-muted);
-    font-weight: 500;
+    font-size: 18px;
 }
 
 .stat-value {
