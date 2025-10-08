@@ -2814,23 +2814,21 @@ function updateNewsItemBadges() {
 // News data
 const NEWS_DATA = {
     'global-analytics-counters': {
-        title: '📊 Global Analytics Counters',
+        title: '📊 Global Usage Statistics',
         date: 'October 2025',
         content: `
             <div class="news-detail-item">
                 <div class="news-detail-date">October 2025</div>
-                <h3>📊 Global Analytics Counters</h3>
-                <p>New global analytics system for real-time statistics across all users:</p>
+                <h3>📊 Global Usage Statistics</h3>
+                <p>New statistics widget in the header shows real-time usage across all users:</p>
                 <ul>
-                    <li><strong>Global Sync:</strong> Analytics data now syncs globally across all users</li>
-                    <li><strong>Persistent Counters:</strong> Global counters for total templates, copies, and downloads</li>
-                    <li><strong>Analytics Widget:</strong> Real-time stats displayed in header widget</li>
-                    <li><strong>Reliable Storage:</strong> Data saved both locally and globally for reliability</li>
-                    <li><strong>Global Dashboard:</strong> Analytics dashboard shows both global and stored statistics</li>
-                    <li><strong>Bulk Operations:</strong> Select multiple items for batch deletion with checkboxes</li>
-                    <li><strong>Compact Design:</strong> All statistics in one compact 2x3 grid layout</li>
+                    <li><strong>Total Templates:</strong> See how many templates have been saved globally</li>
+                    <li><strong>Total Copies:</strong> Track how many times cards were copied to clipboard</li>
+                    <li><strong>Total Downloads:</strong> View how many cards were downloaded as JSON files</li>
+                    <li><strong>Real-Time Updates:</strong> Statistics update automatically as users interact with the builder</li>
+                    <li><strong>Community Insights:</strong> Get a sense of how popular the card builder is!</li>
                 </ul>
-                <p>Track usage across all users and get insights into how your templates are being used!</p>
+                <p>Check the header widget to see the global statistics!</p>
             </div>
         `
     },
