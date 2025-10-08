@@ -582,7 +582,7 @@ const TEMPLATES = {
     },
     glassmorphism_advanced: {
         name: 'Advanced Glassmorphism',
-        background: 'https://img.freepik.com/premium-vector/black-background-with-square-glass-frame-black-3d-spheres-glass-morphism-style_206325-2814.jpg',
+        background: 'https://i.ibb.co/7JNFkM2Q/black-background-with-square-glass-frame-black-3d-spheres-glass-morphism-style-206325-2814.jpg',
         elements: [
             {
                 type: 'text',
@@ -2468,8 +2468,8 @@ function updateJSON() {
                             y: variablesMode && element.yVariable ? element.yVariable : Number(element.y)
                         },
                         size: {
-                            width: Number(element.widthAuto || element.width === 'auto' ? getElementActualWidth(element) : (variablesMode && element.widthVariable ? element.widthVariable : Number(element.width))),
-                            height: Number(element.heightAuto || element.height === 'auto' ? getElementActualHeight(element) : (variablesMode && element.heightVariable ? element.heightVariable : Number(element.height)))
+                            width: element.widthAuto || element.width === 'auto' ? 'auto' : (variablesMode && element.widthVariable ? element.widthVariable : Number(element.width)),
+                            height: element.heightAuto || element.height === 'auto' ? 'auto' : (variablesMode && element.heightVariable ? element.heightVariable : Number(element.height))
                         }
                     };
                 } else if (element.type === 'roblox_profile') {
@@ -2485,8 +2485,8 @@ function updateJSON() {
                             y: Number(element.y)
                         },
                         size: {
-                            width: Number(element.widthAuto || element.width === 'auto' ? getElementActualWidth(element) : element.width),
-                            height: Number(element.heightAuto || element.height === 'auto' ? getElementActualHeight(element) : element.height)
+                            width: element.widthAuto || element.width === 'auto' ? 'auto' : Number(element.width),
+                            height: element.heightAuto || element.height === 'auto' ? 'auto' : Number(element.height)
                         }
                     };
                 } else if (element.type === 'progressbar') {
@@ -2616,8 +2616,8 @@ function generateJSON() {
                         y: element.yVariable || Number(element.y)
                     },
                     size: {
-                        width: Number(element.widthAuto || element.width === 'auto' ? getElementActualWidth(element) : (element.widthVariable || Number(element.width))),
-                        height: Number(element.heightAuto || element.height === 'auto' ? getElementActualHeight(element) : (element.heightVariable || Number(element.height)))
+                        width: element.widthAuto || element.width === 'auto' ? 'auto' : (element.widthVariable || Number(element.width)),
+                        height: element.heightAuto || element.height === 'auto' ? 'auto' : (element.heightVariable || Number(element.height))
                     }
                 };
             } else if (element.type === 'roblox_profile') {
@@ -2633,8 +2633,8 @@ function generateJSON() {
                         y: Number(element.y)
                     },
                     size: {
-                        width: Number(element.widthAuto || element.width === 'auto' ? getElementActualWidth(element) : element.width),
-                        height: Number(element.heightAuto || element.height === 'auto' ? getElementActualHeight(element) : element.height)
+                        width: element.widthAuto || element.width === 'auto' ? 'auto' : Number(element.width),
+                        height: element.heightAuto || element.height === 'auto' ? 'auto' : Number(element.height)
                     }
                 };
             } else if (element.type === 'progressbar') {
@@ -2813,6 +2813,26 @@ function updateNewsItemBadges() {
 
 // News data
 const NEWS_DATA = {
+    'duplicate-elements': {
+        title: '📋 Duplicate Elements',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>📋 Duplicate Elements</h3>
+                <p>New duplication feature makes it easy to create repeated designs and lists:</p>
+                <ul>
+                    <li><strong>Quick Duplicate:</strong> Press Ctrl/Cmd + D to duplicate selected element(s)</li>
+                    <li><strong>Duplicate Button:</strong> Click the duplicate icon in Quick Actions toolbar when element is selected</li>
+                    <li><strong>Single & Multi:</strong> Duplicate one element or multiple selected elements at once</li>
+                    <li><strong>Smart Positioning:</strong> Duplicated elements are automatically offset by 20px for easy visibility</li>
+                    <li><strong>Auto-Selection:</strong> All duplicated elements are automatically selected for immediate editing</li>
+                    <li><strong>Perfect for Lists:</strong> Ideal for creating user lists, repeated patterns, and consistent layouts</li>
+                </ul>
+                <p>Select any element(s) and press Ctrl+D or click the duplicate button to try it out!</p>
+            </div>
+        `
+    },
     'global-analytics-counters': {
         title: '📊 Global Usage Statistics',
         date: 'October 2025',
@@ -3339,16 +3359,16 @@ function updateQuickActionsState() {
 function updateLockButtonState() {
     const lockBtn = document.getElementById('lock-element-btn');
     const lockIcon = document.getElementById('lock-element-icon');
-    const lockGroup = document.getElementById('lock-toolbar-group');
+    const quickActionsGroup = document.getElementById('quick-actions-toolbar-group');
     
     if (!lockBtn || !lockIcon) return;
     
     if (selectedElement && selectedElement !== 'card') {
         const element = elements.find(e => e.id === selectedElement);
         if (element) {
-            // Show lock group
-            if (lockGroup) {
-                lockGroup.classList.remove('hidden');
+            // Show quick actions group
+            if (quickActionsGroup) {
+                quickActionsGroup.classList.remove('hidden');
             }
             
             if (element.locked) {
@@ -3359,15 +3379,15 @@ function updateLockButtonState() {
                 lockIcon.setAttribute('data-lucide', 'unlock');
             }
         } else {
-            // Hide lock group
-            if (lockGroup) {
-                lockGroup.classList.add('hidden');
+            // Hide quick actions group
+            if (quickActionsGroup) {
+                quickActionsGroup.classList.add('hidden');
             }
         }
     } else {
-        // Hide lock group when no element selected
-        if (lockGroup) {
-            lockGroup.classList.add('hidden');
+        // Hide quick actions group when no element selected
+        if (quickActionsGroup) {
+            quickActionsGroup.classList.add('hidden');
         }
     }
     
@@ -3375,6 +3395,91 @@ function updateLockButtonState() {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
+}
+
+function duplicateElement() {
+    // Handle multi-selection
+    if (selectedElements && selectedElements.length > 0) {
+        const newIds = [];
+        let idCounter = 0;
+        
+        selectedElements.forEach(elementId => {
+            const element = elements.find(e => e.id === elementId);
+            if (!element) return;
+            
+            // Create a deep copy of the element
+            const duplicate = JSON.parse(JSON.stringify(element));
+            
+            // Generate new unique ID
+            duplicate.id = Date.now() + idCounter++;
+            
+            // Offset position slightly so it's visible
+            duplicate.x = (duplicate.x || 0) + 20;
+            duplicate.y = (duplicate.y || 0) + 20;
+            
+            // Remove locked state from duplicate
+            duplicate.locked = false;
+            
+            // Add to elements array
+            elements.push(duplicate);
+            newIds.push(duplicate.id);
+        });
+        
+        // Refresh canvas and UI
+        updateCanvas();
+        updateQuotas();
+        updateJSON();
+        updateCanvasStatus();
+        
+        // Select all new duplicates
+        selectedElements = [...newIds];
+        selectedElement = null;
+        
+        // Trigger canvas update to show selection
+        updateCanvas();
+        
+        showToast(`${newIds.length} elements duplicated! 📋`, 'success');
+        return;
+    }
+    
+    // Handle single selection
+    if (!selectedElement || selectedElement === 'card') {
+        showToast('Please select an element to duplicate!', 'warning');
+        return;
+    }
+    
+    const element = elements.find(e => e.id === selectedElement);
+    if (!element) {
+        showToast('Element not found!', 'error');
+        return;
+    }
+    
+    // Create a deep copy of the element
+    const duplicate = JSON.parse(JSON.stringify(element));
+    
+    // Generate new ID
+    duplicate.id = Date.now();
+    
+    // Offset position slightly so it's visible
+    duplicate.x = (duplicate.x || 0) + 20;
+    duplicate.y = (duplicate.y || 0) + 20;
+    
+    // Remove locked state from duplicate
+    duplicate.locked = false;
+    
+    // Add to elements array
+    elements.push(duplicate);
+    
+    // Refresh canvas and UI
+    updateCanvas();
+    updateQuotas();
+    updateJSON();
+    updateCanvasStatus();
+    
+    // Select the new element
+    selectElement(duplicate.id);
+    
+    showToast('Element duplicated! 📋', 'success');
 }
 
 function toggleElementLock() {
@@ -3573,27 +3678,8 @@ async function sendTemplateAnalytics(templateName, templateData) {
         
         const analyticsData = {
             templateName: templateName,
-            // Full JSON data
-            fullJSON: {
-                card: {
-                    width: templateData.canvasSize.width,
-                    height: templateData.canvasSize.height,
-                    bg: templateData.canvasSize.bg || '#ffffff',
-                    bg_type: templateData.canvasSize.bg_type || 'solid',
-                    bg_image: templateData.canvasSize.bg_image || '',
-                    bg_transparent: templateData.canvasSize.bg_transparent || false
-                },
-                layers: templateData.elements.map(el => {
-                    // Clean element data - remove undefined values
-                    const cleanEl = {};
-                    Object.keys(el).forEach(key => {
-                        if (el[key] !== undefined && el[key] !== null) {
-                            cleanEl[key] = el[key];
-                        }
-                    });
-                    return cleanEl;
-                })
-            },
+            // Clean API JSON (same as what user exports)
+            apiJSON: JSON.parse(generateJSON()),
             // Quick stats
             elements: templateData.elements.map(el => ({
                 type: el.type || 'unknown',
@@ -3824,18 +3910,9 @@ async function sendActionAnalytics(actionType) {
         const actionData = {
             action: actionType, // 'copied' or 'downloaded'
             timestamp: new Date().toISOString(),
-            canvasSize: {
-                width: cardElement.width || 800,
-                height: cardElement.height || 600
-            },
+            // Clean API JSON (same as what user exports)
+            apiJSON: JSON.parse(generateJSON()),
             elementCount: elements.length || 0,
-            elements: elements.map(el => ({
-                type: el.type || 'unknown',
-                x: el.x || 0,
-                y: el.y || 0,
-                width: el.width || 100,
-                height: el.height || 20
-            })),
             // Capture current canvas as preview
             preview: null
         };

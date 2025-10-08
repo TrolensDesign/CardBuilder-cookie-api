@@ -399,10 +399,13 @@
                                 </div>
                             </div>
                             
-                            <!-- Lock Tools -->
-                            <div class="toolbar-group hidden" id="lock-toolbar-group">
-                                <div class="toolbar-label">Lock</div>
+                            <!-- Quick Actions -->
+                            <div class="toolbar-group hidden" id="quick-actions-toolbar-group">
+                                <div class="toolbar-label">Quick Actions</div>
                                 <div class="toolbar-buttons">
+                                    <button class="toolbar-btn" id="duplicate-element-btn" onclick="duplicateElement()" title="Duplicate Element (Ctrl+D)">
+                                        <i data-lucide="copy"></i>
+                                    </button>
                                     <button class="toolbar-btn" id="lock-element-btn" onclick="toggleElementLock()" title="Lock/Unlock Element">
                                         <i data-lucide="lock" id="lock-element-icon"></i>
                                     </button>
@@ -798,6 +801,15 @@
             </div>
             <div class="modal-body">
                 <div class="news-list">
+                    <div class="news-list-item" onclick="showNewsDetail('duplicate-elements')">
+                        <div class="news-item-icon">📋</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Duplicate Elements <span class="news-item-badge" id="news-item-badge-duplicate-elements" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Quickly duplicate single or multiple elements! Use Ctrl+D or the duplicate button. Perfect for creating lists and repeated designs!</div>
+                        </div>
+                    </div>
+                    
                     <div class="news-list-item" onclick="showNewsDetail('global-analytics-counters')">
                         <div class="news-item-icon">📊</div>
                         <div class="news-item-content">
@@ -1055,21 +1067,60 @@
 
                     <div class="help-section" id="quick-actions">
                         <h3>⚡ Quick Actions</h3>
+                        
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Align (Horizontal)</h4>
                         <div class="action-list">
                             <div class="action-item">
-                                <strong>🎯 Center</strong> - Center selected element on canvas
+                                <strong><i data-lucide="align-horizontal-justify-start" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Align Left</strong> - Align element to left edge
                             </div>
                             <div class="action-item">
-                                <strong>⬆️ Top / ⬇️ Bottom / ⬅️ Left / ➡️ Right</strong> - Align element to edges
+                                <strong><i data-lucide="align-center-vertical" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Align Center Horizontally</strong> - Center element horizontally
                             </div>
                             <div class="action-item">
-                                <strong>📐 Fit</strong> - Resize element to fit canvas
+                                <strong><i data-lucide="align-horizontal-justify-end" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Align Right</strong> - Align element to right edge
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Vertical</h4>
+                        <div class="action-list">
+                            <div class="action-item">
+                                <strong><i data-lucide="align-vertical-justify-start" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Align Top</strong> - Align element to top edge
                             </div>
                             <div class="action-item">
-                                <strong>🧲 Snap</strong> - Enable/disable grid snapping for precise positioning
+                                <strong><i data-lucide="align-center-horizontal" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Align Center Vertically</strong> - Center element vertically
                             </div>
                             <div class="action-item">
-                                <strong>🎯 Show Center</strong> - Toggle center crosshair visibility
+                                <strong><i data-lucide="align-vertical-justify-end" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Align Bottom</strong> - Align element to bottom edge
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Tools</h4>
+                        <div class="action-list">
+                            <div class="action-item">
+                                <strong><i data-lucide="crosshair" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Center Element</strong> - Center element on canvas
+                            </div>
+                            <div class="action-item">
+                                <strong><i data-lucide="fullscreen" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Fit to Canvas</strong> - Resize element to fit canvas
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Toggle</h4>
+                        <div class="action-list">
+                            <div class="action-item">
+                                <strong><i data-lucide="magnet" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Toggle Snap Guides</strong> - Enable/disable grid snapping for precise positioning
+                            </div>
+                            <div class="action-item">
+                                <strong><i data-lucide="eye" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Show Center Crosshair</strong> - Toggle center crosshair visibility
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Quick Actions (shown when element selected)</h4>
+                        <div class="action-list">
+                            <div class="action-item">
+                                <strong><i data-lucide="copy" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Duplicate</strong> - Duplicate selected element(s) (Ctrl/Cmd + D)
+                            </div>
+                            <div class="action-item">
+                                <strong><i data-lucide="lock" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; color: #ffffff; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 4px; margin-right: 8px;"></i> Lock/Unlock</strong> - Lock element to prevent accidental movement
                             </div>
                         </div>
                     </div>
@@ -1158,6 +1209,9 @@
                     <div class="help-section" id="shortcuts">
                         <h3>⌨️ Keyboard Shortcuts</h3>
                         <div class="shortcut-list">
+                            <div class="shortcut-item">
+                                <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>D</kbd> - Duplicate selected element(s)
+                            </div>
                             <div class="shortcut-item">
                                 <kbd>Backspace</kbd> or <kbd>Delete</kbd> - Delete selected element(s)
                             </div>

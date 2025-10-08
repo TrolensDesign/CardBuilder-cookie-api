@@ -381,6 +381,12 @@ document.addEventListener('keydown', function(e) {
         showToast('Undo feature coming soon! ↩️', 'info');
     }
     
+    // Ctrl/Cmd + D for duplicate
+    if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+        e.preventDefault();
+        duplicateElement();
+    }
+    
     // Ctrl/Cmd + Plus for scaling up selected elements
     if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=')) {
         e.preventDefault();
