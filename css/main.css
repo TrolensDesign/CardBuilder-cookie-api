@@ -1,5 +1,46 @@
 /* Modern Cookie API Card Builder - Main Styles */
 
+/* Analytics Widget Styles */
+.analytics-widget {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 8px 16px;
+    margin-right: 15px;
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.stat-icon {
+    font-size: 16px;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.stat-value {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .analytics-widget {
+        display: none; /* Hide on mobile to save space */
+    }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;

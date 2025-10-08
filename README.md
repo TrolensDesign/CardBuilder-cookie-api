@@ -21,23 +21,27 @@ A modular, responsive web application for creating Discord cards using the Cooki
 - **Layer Management**: Organize elements with layer controls
 - **Quick Actions**: Professional toolbar with align, center, and fit tools
 - **News System**: Stay updated with latest features and improvements
+- **📊 Analytics Dashboard**: Track all user-created templates with Firebase integration (optional)
 
 ## File Structure
 
 ```
 cookie-card-builder/
 ├── index.html              # Main HTML file
+├── analytics.html          # Analytics dashboard (password protected)
 ├── css/
 │   ├── main.css            # Main styles
 │   ├── components.css      # Component styles
 │   └── mobile.css          # Mobile responsive styles
 ├── js/
-│   ├── app.js             # Main application logic
-│   ├── canvas.js          # Canvas and quick actions
-│   ├── elements.js        # Element management
-│   ├── properties.js      # Properties panel
-│   └── mobile.js          # Mobile functionality
-└── README.md              # This file
+│   ├── app.js              # Main application logic
+│   ├── canvas.js           # Canvas and quick actions
+│   ├── elements.js         # Element management
+│   ├── properties.js       # Properties panel
+│   ├── mobile.js           # Mobile functionality
+│   └── firebase-config.js  # Firebase configuration (needs setup)
+├── README.md               # This file
+└── FIREBASE_SETUP.md       # Firebase setup instructions
 ```
 
 ## Getting Started
@@ -122,6 +126,31 @@ On mobile devices, use the bottom navigation bar to access:
 2. Use the generated JSON in your Discord bot
 3. Send HTTP POST request to Cookie API with the JSON payload
 
+## Analytics Dashboard (Optional)
+
+The app includes a built-in analytics system to track user-created templates. By default, it uses `localStorage` (data only visible to individual users).
+
+### **Firebase Integration** (Recommended for Production)
+
+To see **all templates created by all users**:
+
+1. Follow the step-by-step guide in **[FIREBASE_SETUP.md](FIREBASE_SETUP.md)**
+2. Setup takes ~10 minutes
+3. **100% FREE** for most use cases (Firebase Spark plan)
+4. Works perfectly with GitHub Pages (no backend required)
+
+**Features:**
+- 📊 View all user-created templates
+- 📈 Track copy/download actions
+- 📸 Preview images of all templates
+- 📁 Export data as JSON or CSV
+- 🔒 Secure with Firebase Security Rules
+
+**Access Analytics:**
+- Open `analytics.html` in your browser
+- Login with password (default: `CookieBuilder2025!@#`)
+- View comprehensive statistics and all user data
+
 ## Limits
 
 - **Text**: 100 text fields with up to 100 unique fonts
@@ -151,7 +180,16 @@ This project is open source and available under the MIT License.
 
 ## Changelog
 
-### v3.2.0 (Latest)
+### v3.3.0 (Latest)
+- **📊 Firebase Analytics Integration**: Track all user-created templates globally with Firebase Realtime Database
+- **🔥 Analytics Dashboard**: View all templates, copy/download actions with preview images
+- **📈 Global Statistics**: See template counts, element usage, canvas sizes across all users
+- **🔒 Secure by Default**: Firebase Security Rules ensure data privacy
+- **💾 localStorage Fallback**: Works without Firebase configuration (local-only analytics)
+- **📁 Export Functions**: Export analytics data as JSON or CSV
+- **🆓 Free Tier**: Complete setup guide for Firebase free tier (1GB data, 10GB transfer/month)
+
+### v3.2.0
 - **🔍 Professional Zoom & Pan System**: Deep zoom (25%-500%) with pan controls, scroll wheel zoom, and fit-to-screen
 - **🖱️ Multi-Selection System**: Shift+Drag for multi-select, Shift+Click for adding elements, professional selection tools
 - **🎨 Smart Templates**: 4 new multi-progress bar templates with auto-selection for easy customization
@@ -179,5 +217,5 @@ This project is open source and available under the MIT License.
 
 ## Credits
 
-Designed by Trolens - Cookie API Card Builder v3.2.0
+Designed by Trolens - Cookie API Card Builder v3.3.0
 

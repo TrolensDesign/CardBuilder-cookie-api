@@ -32,6 +32,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Ubuntu:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Oleo+Script:wght@400;700&family=Pacifico&family=Dancing+Script:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Fredoka:wght@300;400;500;600&family=Quicksand:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/mobile.css">
@@ -67,6 +73,25 @@
                 </div>
             </div>
             <div class="header-actions">
+                <!-- Analytics Stats Widget -->
+                <div class="analytics-widget" id="analytics-widget" style="display: none;">
+                    <div class="stat-item">
+                        <span class="stat-icon">💾</span>
+                        <span class="stat-label">Templates:</span>
+                        <span class="stat-value" id="templates-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">📋</span>
+                        <span class="stat-label">Copied:</span>
+                        <span class="stat-value" id="copied-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">⬇️</span>
+                        <span class="stat-label">Downloaded:</span>
+                        <span class="stat-value" id="downloaded-count">0</span>
+                    </div>
+                </div>
+                
                 <button class="news-btn" onclick="showNewsModal()" id="news-btn">
                     <span>📰</span> News
                     <span class="news-badge" id="news-badge" style="display: none;">!</span>
@@ -775,6 +800,15 @@
             </div>
             <div class="modal-body">
                 <div class="news-list">
+                    <div class="news-list-item" onclick="showNewsDetail('global-analytics-counters')">
+                        <div class="news-item-icon">📊</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Global Analytics Counters <span class="news-item-badge" id="news-item-badge-global-analytics-counters" style="display: none;">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">New global analytics system! Persistent counters show total templates, copies, and downloads across all users. Analytics widget in header displays real-time stats!</div>
+                        </div>
+                    </div>
+                    
                     <div class="news-list-item" onclick="showNewsDetail('template-management')">
                         <div class="news-item-icon">🔍</div>
                         <div class="news-item-content">

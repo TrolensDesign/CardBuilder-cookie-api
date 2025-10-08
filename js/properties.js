@@ -1092,10 +1092,9 @@ window.loadGoogleFonts = async function loadGoogleFonts() {
                 fontCount.textContent = data.items.length;
             }
             
-            console.log(`Loaded ${data.items.length} Google Fonts`);
+            console.log(`✅ Loaded ${data.items.length} Google Fonts`);
             
             // Initialize autocomplete
-            console.log('Initializing autocomplete after loading fonts');
             initializeFontAutocomplete();
         }
     } catch (error) {
@@ -1208,7 +1207,6 @@ function loadFallbackFonts() {
     }
     
     // Initialize autocomplete with fallback fonts
-    console.log('Initializing autocomplete with fallback fonts');
     initializeFontAutocomplete();
 }
 
@@ -1238,19 +1236,9 @@ function initializeFontAutocomplete() {
     const fontSearch = document.getElementById('font-search');
     const fontList = document.getElementById('font-list');
     
-    console.log('Initializing font autocomplete...', {
-        fontInput: !!fontInput,
-        fontDropdown: !!fontDropdown,
-        fontSearch: !!fontSearch,
-        fontList: !!fontList,
-        allFonts: allFonts.length
-    });
     
     // Test if dropdown is visible
     if (fontDropdown) {
-        console.log('Dropdown parent:', fontDropdown.parentElement);
-        console.log('Dropdown offsetParent:', fontDropdown.offsetParent);
-        console.log('Dropdown getBoundingClientRect:', fontDropdown.getBoundingClientRect());
     }
     
     if (!fontInput || !fontDropdown || !fontSearch || !fontList) {
@@ -1262,7 +1250,6 @@ function initializeFontAutocomplete() {
     
     // Show dropdown on focus
     fontInput.addEventListener('focus', () => {
-        console.log('Font input focused, showing dropdown');
         showFontDropdown();
     });
     
@@ -1302,17 +1289,12 @@ function initializeFontAutocomplete() {
     });
     
     function showFontDropdown() {
-        console.log('Showing font dropdown');
-        console.log('Dropdown element:', fontDropdown);
-        console.log('Dropdown computed style:', window.getComputedStyle(fontDropdown));
         
         fontDropdown.style.display = 'block';
         fontDropdown.style.visibility = 'visible';
         fontDropdown.style.opacity = '1';
         fontDropdown.style.position = 'absolute';
         fontDropdown.style.zIndex = '1000';
-        
-        console.log('Dropdown after style changes:', fontDropdown.style.display);
         
         fontSearch.value = '';
         filterFonts('');
@@ -1325,15 +1307,12 @@ function initializeFontAutocomplete() {
     }
     
     function filterFonts(query) {
-        console.log('Filtering fonts with query:', query, 'Total fonts:', allFonts.length);
         fontList.innerHTML = '';
         selectedIndex = -1;
         
         const filteredFonts = allFonts.filter(font => 
             font.family.toLowerCase().includes(query)
         ).slice(0, 50); // Limit to 50 results for performance
-        
-        console.log('Filtered fonts:', filteredFonts.length);
         
         filteredFonts.forEach((font, index) => {
             const item = document.createElement('div');
@@ -1348,8 +1327,6 @@ function initializeFontAutocomplete() {
             
             fontList.appendChild(item);
         });
-        
-        console.log('Font list children:', fontList.children.length);
     }
     
     function updateSelection(items) {

@@ -1264,6 +1264,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize badge system
     updateAllBadges();
     
+    // Initialize analytics widget
+    updateAnalyticsWidget();
+    
     // Initialize snap button state
     const snapButton = document.getElementById('snap-guides-toggle');
     if (snapButton && snapGuidesEnabled) {
@@ -1462,19 +1465,12 @@ function initTransparentSwitch() {
     const colorPicker = document.getElementById('bg-color');
     const canvas = document.getElementById('canvas');
     
-    console.log('Elements found:', {
-        transparentSwitch: !!transparentSwitch,
-        colorPicker: !!colorPicker,
-        canvas: !!canvas
-    });
     
     if (transparentSwitch && colorPicker && canvas) {
         transparentSwitch.addEventListener('change', function() {
-            console.log('Switch changed:', this.checked);
             try {
                 if (this.checked) {
                     // Enable transparent mode
-                    console.log('Enabling transparent mode');
                     canvas.classList.add('transparent');
                     colorPicker.disabled = true;
                     if (cardElement) {
@@ -1482,7 +1478,6 @@ function initTransparentSwitch() {
                     }
                 } else {
                     // Disable transparent mode
-                    console.log('Disabling transparent mode');
                     canvas.classList.remove('transparent');
                     colorPicker.disabled = false;
                     if (cardElement) {
@@ -1501,17 +1496,14 @@ function initTransparentSwitch() {
         });
         
         // Force initial state
-        console.log('Initial switch state:', transparentSwitch.checked);
         try {
             if (transparentSwitch.checked) {
-                console.log('Initial: Enabling transparent');
                 canvas.classList.add('transparent');
                 colorPicker.disabled = true;
                 if (cardElement) {
                     cardElement.background = 'transparent';
                 }
             } else {
-                console.log('Initial: Disabling transparent');
                 canvas.classList.remove('transparent');
                 colorPicker.disabled = false;
                 if (cardElement) {
@@ -1528,25 +1520,21 @@ function initTransparentSwitch() {
 // Update layers panel
 function updateLayersPanel() {
     try {
-        console.log('updateLayersPanel called, elements.length:', elements.length);
         const layersList = document.getElementById('layers-list');
         if (!layersList) {
             console.error('layers-list element not found!');
             return;
         }
         
-        console.log('layers-list element found, clearing innerHTML');
         layersList.innerHTML = '';
         
         // Show "no elements" message if canvas is empty
         if (elements.length === 0) {
-            console.log('No elements, showing no-layers message');
             layersList.innerHTML = '<div class="no-layers">No elements added yet</div>';
             updateCanvasStatus();
             return;
         }
         
-        console.log('Elements found, proceeding with layers creation');
     
     // Add card layer
     const cardLayer = document.createElement('div');
@@ -1583,13 +1571,11 @@ function updateLayersPanel() {
     elements.forEach(element => {
         if (!element.layer || element.layer === 0) {
             element.layer = elements.length > 0 ? Math.max(...elements.map(e => e.layer || 0), 0) + 1 : 1;
-            console.log(`Assigned layer ${element.layer} to element ${element.id} (${element.type})`);
         }
     });
     
     // Add element layers (sorted by layer number)
     const sortedElements = [...elements].sort((a, b) => a.layer - b.layer);
-    console.log('Elements with layers:', sortedElements.map(e => ({id: e.id, type: e.type, layer: e.layer, width: e.width, height: e.height})));
     sortedElements.forEach(element => {
         const layerItem = document.createElement('div');
         layerItem.className = 'layer-item';
@@ -1597,7 +1583,6 @@ function updateLayersPanel() {
         const layerNumber = element.layer || 1;
         const elementDetails = window.getElementDetails ? window.getElementDetails(element) : `Layer: ${element.layer || 1}`;
         
-        console.log(`Element ${element.id} (${element.type}): layer=${layerNumber}, details="${elementDetails}"`);
         
         layerItem.innerHTML = `
             <div class="layer-icon">${getElementIcon(element.type)}</div>
@@ -1685,7 +1670,6 @@ function getElementDetails(element) {
 
 // Tab Management
 function switchTab(tab) {
-    console.log('switchTab called with tab:', tab);
     
     // Update tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1713,11 +1697,8 @@ function switchTab(tab) {
         selectedElement = null;
     } else if (tab === 'layers') {
         // Update layers panel when switching to layers tab
-        console.log('Switching to layers tab, elements.length:', elements.length);
-        console.log('Elements:', elements);
         try {
             updateLayersPanel();
-            console.log('updateLayersPanel completed successfully');
         } catch (error) {
             console.error('Error in updateLayersPanel:', error);
         }
@@ -2376,8 +2357,6 @@ function updateQuotas() {
     };
     
     // Debug: log counts
-    console.log('Element counts:', counts);
-    console.log('Total elements:', elements.length);
     
     Object.keys(counts).forEach(type => {
         const quotaEl = document.getElementById(`quota-${type}`);
@@ -2834,6 +2813,27 @@ function updateNewsItemBadges() {
 
 // News data
 const NEWS_DATA = {
+    'global-analytics-counters': {
+        title: '📊 Global Analytics Counters',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>📊 Global Analytics Counters</h3>
+                <p>New global analytics system for real-time statistics across all users:</p>
+                <ul>
+                    <li><strong>Global Sync:</strong> Analytics data now syncs globally across all users</li>
+                    <li><strong>Persistent Counters:</strong> Global counters for total templates, copies, and downloads</li>
+                    <li><strong>Analytics Widget:</strong> Real-time stats displayed in header widget</li>
+                    <li><strong>Reliable Storage:</strong> Data saved both locally and globally for reliability</li>
+                    <li><strong>Global Dashboard:</strong> Analytics dashboard shows both global and stored statistics</li>
+                    <li><strong>Bulk Operations:</strong> Select multiple items for batch deletion with checkboxes</li>
+                    <li><strong>Compact Design:</strong> All statistics in one compact 2x3 grid layout</li>
+                </ul>
+                <p>Track usage across all users and get insights into how your templates are being used!</p>
+            </div>
+        `
+    },
     'template-management': {
         title: '🔍 Enhanced Template Management',
         date: 'October 2025',
@@ -3410,12 +3410,10 @@ function updateElementVisualState() {
         if (elementDiv) {
             if (element.locked) {
                 elementDiv.classList.add('locked');
-                console.log(`Element ${element.id} locked - class added`);
                 // Don't set opacity via JavaScript - let CSS handle it
             } else {
                 elementDiv.classList.remove('locked');
                 elementDiv.style.opacity = ''; // Reset to default
-                console.log(`Element ${element.id} unlocked - class removed`);
             }
         }
     });
@@ -3456,7 +3454,6 @@ async function saveCustomTemplate(templateName) {
     
     try {
         if (typeof html2canvas !== 'undefined') {
-            console.log('html2canvas is available, generating preview...');
             const canvasCapture = await html2canvas(canvas, {
                 backgroundColor: null, // Transparent background for thumbnails
                 scale: 1.0, // Use 1:1 scale to match canvas exactly
@@ -3465,12 +3462,9 @@ async function saveCustomTemplate(templateName) {
                 allowTaint: true
             });
             previewImage = canvasCapture.toDataURL('image/png', 1.0); // PNG for better quality
-            console.log('Preview generated successfully');
         } else {
-            console.log('html2canvas is not available');
         }
     } catch (e) {
-        console.log('Preview generation failed:', e);
     }
 
     // Save template
@@ -3560,8 +3554,6 @@ function loadCustomTemplate(templateName) {
 
 async function sendTemplateAnalytics(templateName, templateData) {
     try {
-        const existingData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
-        
         // Generate canvas preview image
         const canvas = document.getElementById('canvas');
         let previewImage = null;
@@ -3579,7 +3571,6 @@ async function sendTemplateAnalytics(templateName, templateData) {
                 previewImage = canvasCapture.toDataURL('image/png', 1.0); // PNG for better quality
             }
         } catch (e) {
-            console.log('Preview generation skipped:', e);
         }
         
         const analyticsData = {
@@ -3589,37 +3580,64 @@ async function sendTemplateAnalytics(templateName, templateData) {
                 card: {
                     width: templateData.canvasSize.width,
                     height: templateData.canvasSize.height,
-                    bg: templateData.canvasSize.bg,
-                    bg_type: templateData.canvasSize.bg_type,
-                    bg_image: templateData.canvasSize.bg_image,
-                    bg_transparent: templateData.canvasSize.bg_transparent
+                    bg: templateData.canvasSize.bg || '#ffffff',
+                    bg_type: templateData.canvasSize.bg_type || 'solid',
+                    bg_image: templateData.canvasSize.bg_image || '',
+                    bg_transparent: templateData.canvasSize.bg_transparent || false
                 },
-                layers: templateData.elements.map(el => ({...el})) // Complete element data
+                layers: templateData.elements.map(el => {
+                    // Clean element data - remove undefined values
+                    const cleanEl = {};
+                    Object.keys(el).forEach(key => {
+                        if (el[key] !== undefined && el[key] !== null) {
+                            cleanEl[key] = el[key];
+                        }
+                    });
+                    return cleanEl;
+                })
             },
             // Quick stats
             elements: templateData.elements.map(el => ({
-                type: el.type,
-                fontSize: el.fontSize,
-                fontFamily: el.fontFamily,
-                textColor: el.textColor,
-                width: el.width,
-                height: el.height,
-                x: el.x,
-                y: el.y,
+                type: el.type || 'unknown',
+                fontSize: el.fontSize || 16,
+                fontFamily: el.fontFamily || 'Arial',
+                textColor: el.textColor || '#000000',
+                width: el.width || 100,
+                height: el.height || 20,
+                x: el.x || 0,
+                y: el.y || 0,
             })),
             canvasSize: {
-                width: templateData.canvasSize.width,
-                height: templateData.canvasSize.height
+                width: templateData.canvasSize.width || 800,
+                height: templateData.canvasSize.height || 600
             },
-            elementCount: templateData.elements.length,
+            elementCount: templateData.elements.length || 0,
             timestamp: new Date().toISOString(),
-            preview: previewImage // Base64 image
+            preview: previewImage || null // Base64 image or null
         };
         
+        // Always save to localStorage first (for user)
+        const existingData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
         existingData.push(analyticsData);
         localStorage.setItem(ANALYTICS_KEY, JSON.stringify(existingData));
         
-        console.log('📊 Template analytics saved with full JSON and preview');
+        // Also try to save to Firebase (for analytics)
+        if (window.isFirebaseReady && window.isFirebaseReady()) {
+            try {
+                // Save to Firebase Realtime Database
+                await window.firebaseDB.ref('analytics/templates').push(analyticsData);
+                
+                // Increment global counter for templates
+                await incrementGlobalCounter('totalTemplates');
+                // Update analytics widget after incrementing counter
+                await updateAnalyticsWidget();
+            } catch (firebaseError) {
+                console.error('Firebase save failed (localStorage still saved):', firebaseError);
+            }
+        } else {
+            // Update analytics widget with localStorage data
+            await updateAnalyticsWidget();
+        }
     } catch (error) {
         console.error('Analytics save failed:', error);
     }
@@ -3745,6 +3763,57 @@ function deselectAllElements() {
     updateElementVisualState();
 }
 
+// Increment global counter in Firebase
+async function incrementGlobalCounter(counterType) {
+    try {
+        if (window.isFirebaseReady && window.isFirebaseReady()) {
+            const counterRef = window.firebaseDB.ref(`analytics/counters/${counterType}`);
+            await counterRef.transaction(current => (current || 0) + 1);
+        }
+    } catch (error) {
+        console.error('Failed to increment global counter:', error);
+    }
+}
+
+// Update analytics widget on page load
+async function updateAnalyticsWidget() {
+    try {
+        if (window.isFirebaseReady && window.isFirebaseReady()) {
+            // Load global counters from Firebase
+            const countersSnapshot = await window.firebaseDB.ref('analytics/counters').once('value');
+            const counters = countersSnapshot.val() || {};
+            
+            const templatesCount = counters.totalTemplates || 0;
+            const copiedCount = counters.totalCopied || 0;
+            const downloadedCount = counters.totalDownloaded || 0;
+            
+            // Update widget
+            document.getElementById('templates-count').textContent = templatesCount;
+            document.getElementById('copied-count').textContent = copiedCount;
+            document.getElementById('downloaded-count').textContent = downloadedCount;
+            document.getElementById('analytics-widget').style.display = 'flex';
+            
+        } else {
+            // Fallback to localStorage
+            const templatesData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '[]');
+            const actionsData = JSON.parse(localStorage.getItem(ACTION_ANALYTICS_KEY) || '[]');
+            
+            const templatesCount = templatesData.length;
+            const copiedCount = actionsData.filter(item => item.action === 'copied').length;
+            const downloadedCount = actionsData.filter(item => item.action === 'downloaded').length;
+            
+            // Update widget
+            document.getElementById('templates-count').textContent = templatesCount;
+            document.getElementById('copied-count').textContent = copiedCount;
+            document.getElementById('downloaded-count').textContent = downloadedCount;
+            document.getElementById('analytics-widget').style.display = 'flex';
+            
+        }
+    } catch (error) {
+        console.error('Failed to update analytics widget:', error);
+    }
+}
+
 // Send action analytics (copy/download)
 async function sendActionAnalytics(actionType) {
     try {
@@ -3752,16 +3821,16 @@ async function sendActionAnalytics(actionType) {
             action: actionType, // 'copied' or 'downloaded'
             timestamp: new Date().toISOString(),
             canvasSize: {
-                width: cardElement.width,
-                height: cardElement.height
+                width: cardElement.width || 800,
+                height: cardElement.height || 600
             },
-            elementCount: elements.length,
+            elementCount: elements.length || 0,
             elements: elements.map(el => ({
-                type: el.type,
-                x: el.x,
-                y: el.y,
-                width: el.width,
-                height: el.height
+                type: el.type || 'unknown',
+                x: el.x || 0,
+                y: el.y || 0,
+                width: el.width || 100,
+                height: el.height || 20
             })),
             // Capture current canvas as preview
             preview: null
@@ -3781,15 +3850,31 @@ async function sendActionAnalytics(actionType) {
                 actionData.preview = canvasCapture.toDataURL('image/png', 1.0);
             }
         } catch (e) {
-            console.log('Preview generation skipped for action analytics:', e);
         }
 
-        // Save to localStorage
+        // Always save to localStorage first (for user)
         const existingData = JSON.parse(localStorage.getItem(ACTION_ANALYTICS_KEY) || '[]');
         existingData.push(actionData);
         localStorage.setItem(ACTION_ANALYTICS_KEY, JSON.stringify(existingData));
         
-        console.log(`Action analytics saved: ${actionType}`);
+        // Also try to save to Firebase (for analytics)
+        if (window.isFirebaseReady && window.isFirebaseReady()) {
+            try {
+                // Save to Firebase Realtime Database
+                await window.firebaseDB.ref('analytics/actions').push(actionData);
+                
+                // Increment global counter
+                await incrementGlobalCounter(`total${actionType.charAt(0).toUpperCase() + actionType.slice(1)}`);
+                
+                // Update analytics widget
+                await updateAnalyticsWidget();
+            } catch (firebaseError) {
+                console.error('Firebase save failed (localStorage still saved):', firebaseError);
+            }
+        } else {
+            // Update analytics widget with localStorage data
+            await updateAnalyticsWidget();
+        }
     } catch (error) {
         console.error('Action analytics save failed:', error);
     }
