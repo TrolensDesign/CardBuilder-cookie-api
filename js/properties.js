@@ -551,6 +551,35 @@ function setupBasicPropertyListeners(element) {
     }
 }
 
+// Normalize hex color (convert short #09f to full #0099ff)
+function normalizeHexColor(hex) {
+    // Remove any whitespace
+    hex = hex.trim();
+    
+    // If no #, add it
+    if (!hex.startsWith('#')) {
+        hex = '#' + hex;
+    }
+    
+    // Match 3-digit hex (#09f) or 6-digit hex (#0099ff)
+    const shortHexMatch = hex.match(/^#([0-9A-Fa-f]{3})$/);
+    const fullHexMatch = hex.match(/^#([0-9A-Fa-f]{6})$/);
+    
+    if (shortHexMatch) {
+        // Convert 3-digit to 6-digit: #09f -> #0099ff
+        const r = shortHexMatch[1][0];
+        const g = shortHexMatch[1][1];
+        const b = shortHexMatch[1][2];
+        return `#${r}${r}${g}${g}${b}${b}`;
+    } else if (fullHexMatch) {
+        // Already valid 6-digit hex
+        return hex;
+    }
+    
+    // Invalid hex, return as-is
+    return hex;
+}
+
 // Setup text property listeners
 function setupTextPropertyListeners(element) {
     document.getElementById('prop-text').oninput = () => {
@@ -578,19 +607,22 @@ function setupTextPropertyListeners(element) {
     
     document.getElementById('prop-text-color').oninput = () => {
         const colorValue = document.getElementById('prop-text-color').value;
-        element.textColor = colorValue;
+        const normalizedColor = normalizeHexColor(colorValue);
+        element.textColor = normalizedColor;
         // Update hex input to match color picker
-        document.getElementById('prop-text-color-hex').value = colorValue;
+        document.getElementById('prop-text-color-hex').value = normalizedColor;
         updateCanvas();
         updateJSON();
     };
     
     document.getElementById('prop-text-color-hex').oninput = () => {
         const hexValue = document.getElementById('prop-text-color-hex').value;
-        element.textColor = hexValue;
-        // Update color picker if it's a valid hex color
-        if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
-            document.getElementById('prop-text-color').value = hexValue;
+        const normalizedColor = normalizeHexColor(hexValue);
+        element.textColor = normalizedColor;
+        
+        // Update color picker if it's a valid hex color (3 or 6 digits)
+        if (/^#[0-9A-Fa-f]{6}$/.test(normalizedColor)) {
+            document.getElementById('prop-text-color').value = normalizedColor;
         }
         updateCanvas();
         updateJSON();
@@ -810,18 +842,20 @@ function setupProgressBarPropertyListeners(element) {
     
     document.getElementById('prop-progress-color').oninput = () => {
         const colorValue = document.getElementById('prop-progress-color').value;
-        element.progressColor = colorValue;
-        document.getElementById('prop-progress-color-hex').value = colorValue;
+        const normalizedColor = normalizeHexColor(colorValue);
+        element.progressColor = normalizedColor;
+        document.getElementById('prop-progress-color-hex').value = normalizedColor;
         updateCanvas();
         updateJSON();
     };
     
     document.getElementById('prop-progress-color-hex').oninput = () => {
         const hexValue = document.getElementById('prop-progress-color-hex').value;
-        element.progressColor = hexValue;
-        // Update color picker if it's a valid hex color
-        if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
-            document.getElementById('prop-progress-color').value = hexValue;
+        const normalizedColor = normalizeHexColor(hexValue);
+        element.progressColor = normalizedColor;
+        // Update color picker if it's a valid hex color (3 or 6 digits)
+        if (/^#[0-9A-Fa-f]{6}$/.test(normalizedColor)) {
+            document.getElementById('prop-progress-color').value = normalizedColor;
         }
         updateCanvas();
         updateJSON();
@@ -829,18 +863,20 @@ function setupProgressBarPropertyListeners(element) {
     
     document.getElementById('prop-progress-bg-color').oninput = () => {
         const colorValue = document.getElementById('prop-progress-bg-color').value;
-        element.progressBgColor = colorValue;
-        document.getElementById('prop-progress-bg-color-hex').value = colorValue;
+        const normalizedColor = normalizeHexColor(colorValue);
+        element.progressBgColor = normalizedColor;
+        document.getElementById('prop-progress-bg-color-hex').value = normalizedColor;
         updateCanvas();
         updateJSON();
     };
     
     document.getElementById('prop-progress-bg-color-hex').oninput = () => {
         const hexValue = document.getElementById('prop-progress-bg-color-hex').value;
-        element.progressBgColor = hexValue;
-        // Update color picker if it's a valid hex color
-        if (/^#[0-9A-Fa-f]{6}$/.test(hexValue)) {
-            document.getElementById('prop-progress-bg-color').value = hexValue;
+        const normalizedColor = normalizeHexColor(hexValue);
+        element.progressBgColor = normalizedColor;
+        // Update color picker if it's a valid hex color (3 or 6 digits)
+        if (/^#[0-9A-Fa-f]{6}$/.test(normalizedColor)) {
+            document.getElementById('prop-progress-bg-color').value = normalizedColor;
         }
         updateCanvas();
         updateJSON();
