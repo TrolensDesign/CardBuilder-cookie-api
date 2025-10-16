@@ -2423,7 +2423,7 @@ function updateJSON() {
                     return {
                         id: String(element.id),
                         type: element.type,
-                        text: element.text,
+                        text: variablesMode && element.textVariable ? element.textVariable : element.text,
                         text_size: variablesMode && element.fontSizeVariable ? element.fontSizeVariable : String(element.fontSize),
                         font: variablesMode && element.fontFamilyVariable ? element.fontFamilyVariable : element.fontFamily,
                         color: variablesMode && element.textColorVariable ? element.textColorVariable : element.textColor,
@@ -2476,17 +2476,17 @@ function updateJSON() {
                     return {
                         id: String(element.id),
                         type: element.type,
-                        user: element.name || 'Username',
-                        transparency: String(element.opacity),
-                        layer: String(element.layer),
-                        border_radius: String(element.borderRadius || 100),
+                        user: variablesMode && element.nameVariable ? element.nameVariable : (element.name || 'Username'),
+                        transparency: variablesMode && element.opacityVariable ? element.opacityVariable : String(element.opacity),
+                        layer: variablesMode && element.layerVariable ? element.layerVariable : String(element.layer),
+                        border_radius: variablesMode && element.borderRadiusVariable ? element.borderRadiusVariable : String(element.borderRadius || 100),
                         position: {
-                            x: Number(element.x),
-                            y: Number(element.y)
+                            x: variablesMode && element.xVariable ? element.xVariable : Number(element.x),
+                            y: variablesMode && element.yVariable ? element.yVariable : Number(element.y)
                         },
                         size: {
-                            width: element.widthAuto || element.width === 'auto' ? 'auto' : Number(element.width),
-                            height: element.heightAuto || element.height === 'auto' ? 'auto' : Number(element.height)
+                            width: element.widthAuto || element.width === 'auto' ? 'auto' : (variablesMode && element.widthVariable ? element.widthVariable : Number(element.width)),
+                            height: element.heightAuto || element.height === 'auto' ? 'auto' : (variablesMode && element.heightVariable ? element.heightVariable : Number(element.height))
                         }
                     };
                 } else if (element.type === 'progressbar') {
@@ -2679,7 +2679,7 @@ function downloadJSON() {
 // JSON is now automatically updated in sidebar - no modal needed
 
 // Badge tracking system
-const BADGE_VERSION = '1.1'; // Increment this when adding new features (updated for custom templates)
+const BADGE_VERSION = '1.2'; // Increment this when adding new features (updated for Variable Mode v3.4.0)
 const STORAGE_KEY = 'cookie-card-builder-badges';
 
 // Get badge data from localStorage
@@ -2813,6 +2813,45 @@ function updateNewsItemBadges() {
 
 // News data
 const NEWS_DATA = {
+    'variable-mode': {
+        title: '🔤 Variable Mode for Text Field',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🔤 Variable Mode - Now for Text Field!</h3>
+                <p>We've added Variable Mode to the text field to prevent layout issues caused by variable names being longer than actual values!</p>
+                
+                <h4>💡 Why This Matters</h4>
+                <p>Text with curly braces like <code>{username}</code> is often much longer than the actual value (e.g., "Trolens"), which can cause unexpected text height and layout issues on your canvas.</p>
+                
+                <h4>✨ Best Practice Workflow</h4>
+                <ol>
+                    <li><strong>Normal Mode First:</strong> Enter the expected text (e.g., "Trolens", "Level 50", "85%")</li>
+                    <li><strong>Check Layout:</strong> Verify that text size, position, and spacing look perfect on canvas</li>
+                    <li><strong>Switch to Variable Mode:</strong> Toggle the switch and enter your variable (e.g., <code>{username}</code>, <code>{level}</code>, <code>{percent}</code>)</li>
+                    <li><strong>Export:</strong> Use "JSON with Variables" tab to get your dynamic template</li>
+                </ol>
+                
+                <h4>📋 Example Workflow</h4>
+                <ul>
+                    <li><strong>Username:</strong> Type "Trolens" in Normal Mode → Check layout → Switch to Variable Mode → Enter <code>{username}</code></li>
+                    <li><strong>Level:</strong> Type "Level 50" in Normal Mode → Verify positioning → Variable Mode → Enter <code>Level {level}</code></li>
+                    <li><strong>Percentage:</strong> Type "85%" in Normal Mode → Check font size → Variable Mode → Enter <code>{percent}%</code></li>
+                </ul>
+                
+                <h4>🎯 Additional Features</h4>
+                <ul>
+                    <li><strong>Per-Element Toggle:</strong> Each element has independent Variable Mode settings</li>
+                    <li><strong>All Properties:</strong> Variables work for position, size, colors, URLs, and more</li>
+                    <li><strong>Persistent State:</strong> Variable Mode settings are saved - toggle freely without losing data</li>
+                    <li><strong>Smart Export:</strong> Variables appear only in "JSON with Variables", normal values in standard JSON</li>
+                </ul>
+                
+                <p><strong>Pro Tip:</strong> Always design with realistic example text first, then switch to variables. This ensures your card looks perfect when filled with actual user data!</p>
+            </div>
+        `
+    },
     'duplicate-elements': {
         title: '📋 Duplicate Elements',
         date: 'October 2025',

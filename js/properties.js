@@ -136,25 +136,13 @@ function updateBasicProperties(element) {
     if (positionVariableMode) {
         if (element.type === 'text' || element.type === 'image' || element.type === 'discord_profile' || element.type === 'roblox_profile') {
             positionVariableMode.parentElement.parentElement.style.display = 'flex';
-            // Update variable fields if they exist
-            if (element.xVariable) {
-                document.getElementById('prop-x-variable').value = element.xVariable;
-            }
-            if (element.yVariable) {
-                document.getElementById('prop-y-variable').value = element.yVariable;
-            }
-            if (element.opacityVariable) {
-                document.getElementById('prop-opacity-variable').value = element.opacityVariable;
-            }
-            if (element.layerVariable) {
-                document.getElementById('prop-layer-variable').value = element.layerVariable;
-            }
-            if (element.widthVariable) {
-                document.getElementById('prop-width-variable').value = element.widthVariable;
-            }
-            if (element.heightVariable) {
-                document.getElementById('prop-height-variable').value = element.heightVariable;
-            }
+            // Update variable fields (always set, even if empty)
+            document.getElementById('prop-x-variable').value = element.xVariable || '';
+            document.getElementById('prop-y-variable').value = element.yVariable || '';
+            document.getElementById('prop-opacity-variable').value = element.opacityVariable || '';
+            document.getElementById('prop-layer-variable').value = element.layerVariable || '';
+            document.getElementById('prop-width-variable').value = element.widthVariable || '';
+            document.getElementById('prop-height-variable').value = element.heightVariable || '';
         } else {
             positionVariableMode.parentElement.parentElement.style.display = 'none';
             // Reset variable mode for non-text/image elements
@@ -279,16 +267,11 @@ function updateTextProperties(element) {
     if (propTextColor) propTextColor.value = element.textColor;
     if (propTextColorHex) propTextColorHex.value = element.textColor;
     
-    // Update variable fields if they exist
-    if (element.fontSizeVariable) {
-        document.getElementById('prop-font-size-variable').value = element.fontSizeVariable;
-    }
-    if (element.textColorVariable) {
-        document.getElementById('prop-text-color-variable').value = element.textColorVariable;
-    }
-    if (element.fontFamilyVariable) {
-        document.getElementById('prop-font-family-variable').value = element.fontFamilyVariable;
-    }
+    // Update variable fields (always set, even if empty)
+    document.getElementById('prop-text-variable').value = element.textVariable || '';
+    document.getElementById('prop-font-size-variable').value = element.fontSizeVariable || '';
+    document.getElementById('prop-text-color-variable').value = element.textColorVariable || '';
+    document.getElementById('prop-font-family-variable').value = element.fontFamilyVariable || '';
 }
 
 // Update image properties
@@ -300,13 +283,9 @@ function updateImageProperties(element) {
     if (propImageRadius) propImageRadius.value = element.borderRadius || 1;
     if (propImageRadiusInput) propImageRadiusInput.value = element.borderRadius || 1;
     
-    // Update variable fields if they exist
-    if (element.imageUrlVariable) {
-        document.getElementById('prop-image-url-variable').value = element.imageUrlVariable;
-    }
-    if (element.borderRadiusVariable) {
-        document.getElementById('prop-image-radius-variable').value = element.borderRadiusVariable;
-    }
+    // Update variable fields (always set, even if empty)
+    document.getElementById('prop-image-url-variable').value = element.imageUrlVariable || '';
+    document.getElementById('prop-image-radius-variable').value = element.borderRadiusVariable || '';
 }
 
 // Update Discord profile properties
@@ -324,13 +303,9 @@ function updateDiscordProfileProperties(element) {
     if (propSubtitle) propSubtitle.value = element.borderRadius || 1;
     if (propSubtitleSlider) propSubtitleSlider.value = element.borderRadius || 1;
     
-    // Update variable fields if they exist
-    if (element.userIdVariable) {
-        document.getElementById('prop-name-variable').value = element.userIdVariable;
-    }
-    if (element.borderRadiusVariable) {
-        document.getElementById('prop-subtitle-variable').value = element.borderRadiusVariable;
-    }
+    // Update variable fields (always set, even if empty)
+    document.getElementById('prop-name-variable').value = element.userIdVariable || '';
+    document.getElementById('prop-subtitle-variable').value = element.borderRadiusVariable || '';
     
     const profileAutoWidth = document.getElementById('prop-profile-auto-width');
     if (profileAutoWidth) {
@@ -353,6 +328,10 @@ function updateRobloxProfileProperties(element) {
     }
     if (propSubtitle) propSubtitle.value = element.borderRadius || 1;
     if (propSubtitleSlider) propSubtitleSlider.value = element.borderRadius || 1;
+    
+    // Update variable fields (always set, even if empty)
+    document.getElementById('prop-name-variable').value = element.nameVariable || '';
+    document.getElementById('prop-subtitle-variable').value = element.borderRadiusVariable || '';
     
     const profileAutoWidth = document.getElementById('prop-profile-auto-width');
     if (profileAutoWidth) {
@@ -385,22 +364,12 @@ function updateProgressBarProperties(element) {
         document.getElementById('prop-progress-bg-color-hex').value = element.progressBgColor;
     }
     
-    // Update variable fields if they exist
-    if (element.progressValueVariable) {
-        document.getElementById('prop-progress-value-variable').value = element.progressValueVariable;
-    }
-    if (element.progressMaxVariable) {
-        document.getElementById('prop-progress-max-variable').value = element.progressMaxVariable;
-    }
-    if (element.progressColorVariable) {
-        document.getElementById('prop-progress-color-variable').value = element.progressColorVariable;
-    }
-    if (element.progressBgColorVariable) {
-        document.getElementById('prop-progress-bg-color-variable').value = element.progressBgColorVariable;
-    }
-    if (element.progressBorderRadiusVariable) {
-        document.getElementById('prop-progress-border-radius-variable').value = element.progressBorderRadiusVariable;
-    }
+    // Update variable fields (always set, even if empty)
+    document.getElementById('prop-progress-value-variable').value = element.progressValueVariable || '';
+    document.getElementById('prop-progress-max-variable').value = element.progressMaxVariable || '';
+    document.getElementById('prop-progress-color-variable').value = element.progressColorVariable || '';
+    document.getElementById('prop-progress-bg-color-variable').value = element.progressBgColorVariable || '';
+    document.getElementById('prop-progress-border-radius-variable').value = element.progressBorderRadiusVariable || '';
 }
 
 
@@ -491,12 +460,36 @@ function setupBasicPropertyListeners(element) {
     if (element.type === 'text' || element.type === 'image' || element.type === 'discord_profile' || element.type === 'roblox_profile') {
         const positionVariableMode = document.getElementById('position-variable-mode');
         if (positionVariableMode) {
+            // Restore variable mode state for this element
+            positionVariableMode.checked = element.positionVariableMode || false;
+            
+            // Update UI based on saved state
+            const normalPositionFields = document.getElementById('normal-position-fields');
+            const variablePositionFields = document.getElementById('variable-position-fields');
+            const normalSizeFields = document.getElementById('normal-size-fields');
+            const variableSizeFields = document.getElementById('variable-size-fields');
+            
+            if (positionVariableMode.checked) {
+                normalPositionFields.style.display = 'none';
+                variablePositionFields.style.display = 'grid';
+                if (normalSizeFields && variableSizeFields) {
+                    normalSizeFields.style.display = 'none';
+                    variableSizeFields.style.display = 'grid';
+                }
+            } else {
+                normalPositionFields.style.display = 'grid';
+                variablePositionFields.style.display = 'none';
+                if (normalSizeFields && variableSizeFields) {
+                    normalSizeFields.style.display = 'grid';
+                    variableSizeFields.style.display = 'none';
+                }
+            }
+            
             positionVariableMode.onchange = () => {
                 const isVariableMode = positionVariableMode.checked;
-                const normalPositionFields = document.getElementById('normal-position-fields');
-                const variablePositionFields = document.getElementById('variable-position-fields');
-                const normalSizeFields = document.getElementById('normal-size-fields');
-                const variableSizeFields = document.getElementById('variable-size-fields');
+                
+                // Save variable mode state to element
+                element.positionVariableMode = isVariableMode;
                 
                 if (isVariableMode) {
                     normalPositionFields.style.display = 'none';
@@ -598,10 +591,9 @@ function setupTextPropertyListeners(element) {
         const fontFamily = document.getElementById('prop-font-family').value;
         element.fontFamily = fontFamily;
         
-        // Load font dynamically if it's not already loaded
+        // Load font dynamically if it's not already loaded (will update canvas when ready)
         loadFontDynamically(fontFamily);
         
-        updateCanvas();
         updateJSON();
     };
     
@@ -631,15 +623,41 @@ function setupTextPropertyListeners(element) {
     // Text Variable Mode toggle
     const textVariableMode = document.getElementById('text-variable-mode');
     if (textVariableMode) {
+        // Restore variable mode state for this element
+        textVariableMode.checked = element.textVariableMode || false;
+        
+        // Update UI based on saved state
+        const normalTextField = document.getElementById('normal-text-field');
+        const variableTextField = document.getElementById('variable-text-field');
+        const normalFields = document.getElementById('normal-text-fields');
+        const variableFields = document.getElementById('variable-text-fields');
+        
+        if (textVariableMode.checked) {
+            normalTextField.style.display = 'none';
+            variableTextField.style.display = 'block';
+            normalFields.style.display = 'none';
+            variableFields.style.display = 'grid';
+        } else {
+            normalTextField.style.display = 'block';
+            variableTextField.style.display = 'none';
+            normalFields.style.display = 'grid';
+            variableFields.style.display = 'none';
+        }
+        
         textVariableMode.onchange = () => {
             const isVariableMode = textVariableMode.checked;
-            const normalFields = document.getElementById('normal-text-fields');
-            const variableFields = document.getElementById('variable-text-fields');
+            
+            // Save variable mode state to element
+            element.textVariableMode = isVariableMode;
             
             if (isVariableMode) {
+                normalTextField.style.display = 'none';
+                variableTextField.style.display = 'block';
                 normalFields.style.display = 'none';
                 variableFields.style.display = 'grid';
             } else {
+                normalTextField.style.display = 'block';
+                variableTextField.style.display = 'none';
                 normalFields.style.display = 'grid';
                 variableFields.style.display = 'none';
             }
@@ -649,6 +667,11 @@ function setupTextPropertyListeners(element) {
     }
     
     // Variable input listeners
+    document.getElementById('prop-text-variable').oninput = () => {
+        element.textVariable = document.getElementById('prop-text-variable').value;
+        updateJSON();
+    };
+    
     document.getElementById('prop-font-size-variable').oninput = () => {
         element.fontSizeVariable = document.getElementById('prop-font-size-variable').value;
         updateJSON();
@@ -702,10 +725,26 @@ function setupImagePropertyListeners(element) {
     // Image Variable Mode toggle
     const imageVariableMode = document.getElementById('image-variable-mode');
     if (imageVariableMode) {
+        // Restore variable mode state for this element
+        imageVariableMode.checked = element.imageVariableMode || false;
+        
+        // Update UI based on saved state
+        const normalFields = document.getElementById('normal-image-fields');
+        const variableFields = document.getElementById('variable-image-fields');
+        
+        if (imageVariableMode.checked) {
+            normalFields.style.display = 'none';
+            variableFields.style.display = 'block';
+        } else {
+            normalFields.style.display = 'block';
+            variableFields.style.display = 'none';
+        }
+        
         imageVariableMode.onchange = () => {
             const isVariableMode = imageVariableMode.checked;
-            const normalFields = document.getElementById('normal-image-fields');
-            const variableFields = document.getElementById('variable-image-fields');
+            
+            // Save variable mode state to element
+            element.imageVariableMode = isVariableMode;
             
             if (isVariableMode) {
                 normalFields.style.display = 'none';
@@ -759,10 +798,26 @@ function setupDiscordProfilePropertyListeners(element) {
     // Profile Variable Mode toggle
     const profileVariableMode = document.getElementById('profile-variable-mode');
     if (profileVariableMode) {
+        // Restore variable mode state for this element
+        profileVariableMode.checked = element.profileVariableMode || false;
+        
+        // Update UI based on saved state
+        const normalFields = document.getElementById('normal-profile-fields');
+        const variableFields = document.getElementById('variable-profile-fields');
+        
+        if (profileVariableMode.checked) {
+            normalFields.style.display = 'none';
+            variableFields.style.display = 'block';
+        } else {
+            normalFields.style.display = 'block';
+            variableFields.style.display = 'none';
+        }
+        
         profileVariableMode.onchange = () => {
             const isVariableMode = profileVariableMode.checked;
-            const normalFields = document.getElementById('normal-profile-fields');
-            const variableFields = document.getElementById('variable-profile-fields');
+            
+            // Save variable mode state to element
+            element.profileVariableMode = isVariableMode;
             
             if (isVariableMode) {
                 normalFields.style.display = 'none';
@@ -778,6 +833,7 @@ function setupDiscordProfilePropertyListeners(element) {
     
     // Variable input listeners
     document.getElementById('prop-name-variable').oninput = () => {
+        // For Discord, save to userIdVariable
         element.userIdVariable = document.getElementById('prop-name-variable').value;
         updateJSON();
     };
@@ -822,6 +878,54 @@ function setupRobloxProfilePropertyListeners(element) {
             element.width = element.height;
         }
         updateCanvas();
+        updateJSON();
+    };
+    
+    // Profile Variable Mode toggle
+    const profileVariableMode = document.getElementById('profile-variable-mode');
+    if (profileVariableMode) {
+        // Restore variable mode state for this element
+        profileVariableMode.checked = element.profileVariableMode || false;
+        
+        // Update UI based on saved state
+        const normalFields = document.getElementById('normal-profile-fields');
+        const variableFields = document.getElementById('variable-profile-fields');
+        
+        if (profileVariableMode.checked) {
+            normalFields.style.display = 'none';
+            variableFields.style.display = 'block';
+        } else {
+            normalFields.style.display = 'block';
+            variableFields.style.display = 'none';
+        }
+        
+        profileVariableMode.onchange = () => {
+            const isVariableMode = profileVariableMode.checked;
+            
+            // Save variable mode state to element
+            element.profileVariableMode = isVariableMode;
+            
+            if (isVariableMode) {
+                normalFields.style.display = 'none';
+                variableFields.style.display = 'block';
+            } else {
+                normalFields.style.display = 'block';
+                variableFields.style.display = 'none';
+            }
+            
+            updateJSON();
+        };
+    }
+    
+    // Variable input listeners
+    document.getElementById('prop-name-variable').oninput = () => {
+        // For Roblox, save to nameVariable
+        element.nameVariable = document.getElementById('prop-name-variable').value;
+        updateJSON();
+    };
+    
+    document.getElementById('prop-subtitle-variable').oninput = () => {
+        element.borderRadiusVariable = document.getElementById('prop-subtitle-variable').value;
         updateJSON();
     };
 }
@@ -907,10 +1011,26 @@ function setupProgressBarPropertyListeners(element) {
     // Progress Variable Mode toggle
     const progressVariableMode = document.getElementById('progress-variable-mode');
     if (progressVariableMode) {
+        // Restore variable mode state for this element
+        progressVariableMode.checked = element.progressVariableMode || false;
+        
+        // Update UI based on saved state
+        const normalFields = document.getElementById('normal-progress-fields');
+        const variableFields = document.getElementById('variable-progress-fields');
+        
+        if (progressVariableMode.checked) {
+            normalFields.style.display = 'none';
+            variableFields.style.display = 'block';
+        } else {
+            normalFields.style.display = 'block';
+            variableFields.style.display = 'none';
+        }
+        
         progressVariableMode.onchange = () => {
             const isVariableMode = progressVariableMode.checked;
-            const normalFields = document.getElementById('normal-progress-fields');
-            const variableFields = document.getElementById('variable-progress-fields');
+            
+            // Save variable mode state to element
+            element.progressVariableMode = isVariableMode;
             
             if (isVariableMode) {
                 normalFields.style.display = 'none';
@@ -1248,7 +1368,10 @@ function loadFallbackFonts() {
 
 // Load font dynamically
 function loadFontDynamically(fontFamily) {
-    if (!fontFamily || fontFamily.trim() === '') return;
+    if (!fontFamily || fontFamily.trim() === '') {
+        updateCanvas();
+        return;
+    }
     
     // Check if font is already loaded
     const fontName = fontFamily.replace(/\s+/g, '+');
@@ -1262,6 +1385,25 @@ function loadFontDynamically(fontFamily) {
         document.head.appendChild(link);
         
         console.log(`Loaded font dynamically: ${fontFamily}`);
+        
+        // Wait for font to load before updating canvas
+        if (document.fonts && document.fonts.load) {
+            document.fonts.load(`16px ${fontFamily}`).then(() => {
+                console.log(`Font ${fontFamily} loaded successfully`);
+                updateCanvas();
+            }).catch(err => {
+                console.warn(`Failed to load font ${fontFamily}:`, err);
+                updateCanvas(); // Update anyway with fallback
+            });
+        } else {
+            // Fallback for browsers without Font Loading API
+            setTimeout(() => {
+                updateCanvas();
+            }, 300);
+        }
+    } else {
+        // Font already loaded, just update canvas
+        updateCanvas();
     }
 }
 

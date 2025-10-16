@@ -1,0 +1,71 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#000000"/>
+  
+  <!-- Grid lines every 20px - Cycle 1: Cyan -->
+  <g stroke="#00ccff" stroke-width="0.8">
+    <path d="M 20 0 L 20 400 M 120 0 L 120 400 M 220 0 L 220 400 M 320 0 L 320 400 M 420 0 L 420 400 M 520 0 L 520 400 M 620 0 L 620 400 M 720 0 L 720 400"/>
+    <path d="M 0 20 L 800 20 M 0 120 L 800 120 M 0 220 L 800 220 M 0 320 L 800 320"/>
+  </g>
+  
+  <!-- Grid lines every 20px - Cycle 2: Green -->
+  <g stroke="#00ff00" stroke-width="0.8">
+    <path d="M 40 0 L 40 400 M 140 0 L 140 400 M 240 0 L 240 400 M 340 0 L 340 400 M 440 0 L 440 400 M 540 0 L 540 400 M 640 0 L 640 400 M 740 0 L 740 400"/>
+    <path d="M 0 40 L 800 40 M 0 140 L 800 140 M 0 240 L 800 240 M 0 340 L 800 340"/>
+  </g>
+  
+  <!-- Grid lines every 20px - Cycle 3: Yellow -->
+  <g stroke="#ffff00" stroke-width="0.8">
+    <path d="M 60 0 L 60 400 M 160 0 L 160 400 M 260 0 L 260 400 M 360 0 L 360 400 M 460 0 L 460 400 M 560 0 L 560 400 M 660 0 L 660 400 M 760 0 L 760 400"/>
+    <path d="M 0 60 L 800 60 M 0 160 L 800 160 M 0 260 L 800 260 M 0 360 L 800 360"/>
+  </g>
+  
+  <!-- Grid lines every 20px - Cycle 4: Magenta -->
+  <g stroke="#ff00ff" stroke-width="0.8">
+    <path d="M 80 0 L 80 400 M 180 0 L 180 400 M 280 0 L 280 400 M 380 0 L 380 400 M 480 0 L 480 400 M 580 0 L 580 400 M 680 0 L 680 400 M 780 0 L 780 400"/>
+    <path d="M 0 80 L 800 80 M 0 180 L 800 180 M 0 280 L 800 280 M 0 380 L 800 380"/>
+  </g>
+  
+  <!-- Grid lines every 100px - Orange (thicker, main markers) -->
+  <g stroke="#ff6600" stroke-width="1.5">
+    <path d="M 100 0 L 100 400 M 200 0 L 200 400 M 300 0 L 300 400 M 400 0 L 400 400 M 500 0 L 500 400 M 600 0 L 600 400 M 700 0 L 700 400"/>
+    <path d="M 0 100 L 800 100 M 0 200 L 800 200 M 0 300 L 800 300"/>
+  </g>
+  
+  <!-- Center lines (more prominent) -->
+  <g stroke="#ffffff" stroke-width="2" opacity="0.6">
+    <line x1="400" y1="0" x2="400" y2="400"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+  </g>
+  
+  <!-- Border -->
+  <rect width="800" height="400" fill="none" stroke="#333333" stroke-width="2"/>
+  
+  <!-- X-axis labels (every 100px) -->
+  <g font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">
+    <text x="0" y="15">0</text>
+    <text x="100" y="15">100</text>
+    <text x="200" y="15">200</text>
+    <text x="300" y="15">300</text>
+    <text x="400" y="15">400</text>
+    <text x="500" y="15">500</text>
+    <text x="600" y="15">600</text>
+    <text x="700" y="15">700</text>
+    <text x="800" y="15">800</text>
+  </g>
+  
+  <!-- Y-axis labels (every 100px) -->
+  <g font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="start">
+    <text x="5" y="15">0</text>
+    <text x="5" y="104">100</text>
+    <text x="5" y="204">200</text>
+    <text x="5" y="304">300</text>
+    <text x="5" y="400">400</text>
+  </g>
+  
+  <!-- Corner labels for dimensions -->
+  <g font-family="Arial, sans-serif" font-size="14" fill="#ff6600" font-weight="bold">
+    <text x="790" y="395" text-anchor="end">800×400</text>
+  </g>
+</svg>
+

@@ -12,12 +12,13 @@ A modular, responsive web application for creating Discord cards using the Cooki
 
 - **Visual Card Builder**: Drag-and-drop interface for creating Discord cards
 - **Multiple Element Types**: Text, images, Discord profiles, Roblox profiles, progress bars, and shapes
+- **Variable Mode**: Dynamic variables support for text and all element properties (e.g., `{username}`, `{level}`)
 - **Real-time Preview**: See your card as you build it
 - **Professional Zoom & Pan**: Deep zoom (25%-500%) with pan controls like graphic design software
 - **Multi-Selection System**: Shift+Drag for multi-select, professional selection tools
 - **Smart Templates**: Pre-built templates with auto-selection for easy customization
 - **Mobile Responsive**: Optimized for desktop, tablet, and mobile devices
-- **JSON Export**: Generate JSON configuration for Discord bots
+- **JSON Export**: Generate JSON configuration for Discord bots (Normal + With Variables)
 - **Layer Management**: Organize elements with layer controls
 - **Quick Actions**: Professional toolbar with align, center, and fit tools
 - **News System**: Stay updated with latest features and improvements
@@ -74,12 +75,34 @@ To deploy your own version:
 
 ### Element Types
 
-- **Text**: Add text with custom fonts, colors, and alignment
-- **Image**: Add images from URLs
-- **Discord Profile**: Display Discord user avatars
-- **Roblox Profile**: Display Roblox user avatars
-- **Progress Bar**: Create progress indicators
+- **Text**: Add text with custom fonts, colors, and alignment. Supports variable mode for dynamic text (e.g., `{username}`, `{level}`)
+- **Image**: Add images from URLs with variable support
+- **Discord Profile**: Display Discord user avatars with dynamic user IDs
+- **Roblox Profile**: Display Roblox user avatars with dynamic usernames
+- **Progress Bar**: Create progress indicators with variable values
 - **Shape**: Add geometric shapes
+
+### Variable Mode
+
+Enable **Variable Mode** for any element to use dynamic variables instead of static values:
+
+**Recommended Workflow:**
+1. **Design with Real Text First**: Enter actual example text (e.g., "Trolens", "Level 50", "85%")
+2. **Verify Layout**: Check that text size, positioning, and spacing look perfect on canvas
+3. **Switch to Variable Mode**: Toggle the switch in properties panel
+4. **Enter Variables**: Replace with variable names like `{username}`, `{level}`, `{percent}`
+5. **Export**: Use "JSON with Variables" tab to get your dynamic template
+
+**Why This Workflow?**
+- Variable names like `{username}` are often longer than actual values ("Trolens")
+- Designing with real text ensures perfect layout when filled with actual user data
+- Prevents unexpected text height and positioning issues
+
+**Benefits:**
+- Create reusable card templates
+- Use the same design for multiple users
+- Dynamic content without rebuilding cards
+- Perfect for Discord bots with user-specific data
 
 ### Professional Features
 
@@ -180,7 +203,17 @@ This project is open source and available under the MIT License.
 
 ## Changelog
 
-### v3.3.0 (Latest)
+### v3.4.0 (Latest)
+- **🔤 Variable Mode for Text Field**: Added Variable Mode to text input to prevent layout issues from long variable names
+- **📐 Best Practice Workflow**: Design with real text first (e.g., "Trolens", "85%"), then switch to variables ({username}, {percent})
+- **🎯 Per-Element Variable Mode**: Each element has independent Variable Mode toggle - mix static and dynamic content
+- **📋 Smart JSON Export**: Variables appear only in "JSON with Variables" tab, normal JSON shows actual values
+- **💾 Persistent State**: Variable Mode settings and values are saved per element
+- **✨ Clean UI Switching**: Toggle between normal and variable inputs seamlessly without losing data
+- **🔧 Font Loading Fix**: Improved font loading with Font Loading API for proper rendering
+- **🧹 Auto-Clear Fields**: Variable inputs are properly cleared when switching between elements
+
+### v3.3.0
 - **📊 Firebase Analytics Integration**: Track all user-created templates globally with Firebase Realtime Database
 - **🔥 Analytics Dashboard**: View all templates, copy/download actions with preview images
 - **📈 Global Statistics**: See template counts, element usage, canvas sizes across all users
@@ -217,5 +250,5 @@ This project is open source and available under the MIT License.
 
 ## Credits
 
-Designed by Trolens - Cookie API Card Builder v3.3.0
+Designed by Trolens - Cookie API Card Builder v3.4.0
 

@@ -573,8 +573,14 @@
                             </label>
                         </div>
                     </div>
-                    <div class="property-row">
+                    <div class="property-row" id="normal-text-field">
                         <textarea id="prop-text" rows="3" placeholder="Enter text..."></textarea>
+                    </div>
+                    <div class="property-row" id="variable-text-field" style="display: none;">
+                        <div class="property-item" style="width: 100%;">
+                            <label>Text Variable</label>
+                            <input type="text" id="prop-text-variable" placeholder="{username}" class="variable-input">
+                        </div>
                     </div>
                     <div class="property-grid" id="normal-text-fields">
                         <div class="property-item">
@@ -801,6 +807,15 @@
             </div>
             <div class="modal-body">
                 <div class="news-list">
+                    <div class="news-list-item" onclick="showNewsDetail('variable-mode')">
+                        <div class="news-item-icon">🔤</div>
+                        <div class="news-item-content">
+                            <div class="news-item-title">Variable Mode for Text Field <span class="news-item-badge" id="news-item-badge-variable-mode">NEW</span></div>
+                            <div class="news-item-date">October 2025</div>
+                            <div class="news-item-preview">Added Variable Mode to text field! Design with real text (e.g., "Trolens", "85%") to check layout, then switch to variables ({username}, {percent}). Prevents layout issues!</div>
+                        </div>
+                    </div>
+                    
                     <div class="news-list-item" onclick="showNewsDetail('duplicate-elements')">
                         <div class="news-item-icon">📋</div>
                         <div class="news-item-content">
