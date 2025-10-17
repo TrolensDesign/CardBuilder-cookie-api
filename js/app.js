@@ -4237,10 +4237,15 @@ document.addEventListener('click', function(event) {
     }
 });
 
-function handleSaveTemplate() {
-    const input = document.getElementById('template-name-input');
-    if (input) {
-        saveCustomTemplate(input.value.trim());
+async function handleSaveTemplate() {
+    try {
+        const input = document.getElementById('template-name-input');
+        if (input) {
+            await saveCustomTemplate(input.value.trim());
+        }
+    } catch (error) {
+        console.error('Error in handleSaveTemplate [ERR_HANDLE_001]:', error);
+        showToast(`❌ Failed to save template: ${error.message} [ERR_HANDLE_001]`, 'error');
     }
 }
 
