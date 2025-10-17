@@ -2519,20 +2519,49 @@ function updateJSON() {
 
 // Copy JSON to clipboard
 function copyJSON() {
-    const jsonOutput = document.getElementById('json-output');
-    const jsonData = jsonOutput ? jsonOutput.value : generateJSON();
-    navigator.clipboard.writeText(jsonData).then(() => {
-        showToast('JSON copied to clipboard! 📋', 'success');
-        // Deselect all elements first (so analytics preview has no selection)
-        deselectAllElements();
-        // Wait a bit for UI to update, then send analytics
-        setTimeout(() => {
-            sendActionAnalytics('copied');
-        }, 100);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
-        showToast('Failed to copy JSON', 'error');
-    });
+    try {
+        // ERR_COPY_001: No JSON data to copy
+        const jsonOutput = document.getElementById('json-output');
+        const jsonData = jsonOutput ? jsonOutput.value : generateJSON();
+        
+        if (!jsonData || jsonData.trim() === '') {
+            showToast('❌ No JSON data to copy [ERR_COPY_001]', 'error');
+            return;
+        }
+        
+        // ERR_COPY_002: Clipboard API not available
+        if (!navigator.clipboard) {
+            console.error('Clipboard API not available [ERR_COPY_002]');
+            showToast('❌ Copy not supported in this browser. Use Download instead. [ERR_COPY_002]', 'error');
+            return;
+        }
+        
+        navigator.clipboard.writeText(jsonData).then(() => {
+            showToast('✅ JSON copied to clipboard! 📋', 'success');
+            // Deselect all elements first (so analytics preview has no selection)
+            deselectAllElements();
+            // Wait a bit for UI to update, then send analytics
+            setTimeout(() => {
+                try {
+                    sendActionAnalytics('copied');
+                } catch (analyticsError) {
+                    console.error('Analytics failed [ERR_COPY_003]:', analyticsError);
+                }
+            }, 100);
+        }).catch(err => {
+            console.error('Failed to copy [ERR_COPY_004]:', err);
+            
+            // Check specific error types
+            if (err.name === 'NotAllowedError') {
+                showToast('❌ Copy permission denied. Check browser settings. [ERR_COPY_004_PERM]', 'error');
+            } else {
+                showToast(`❌ Failed to copy JSON: ${err.message} [ERR_COPY_004]`, 'error');
+            }
+        });
+    } catch (error) {
+        console.error('Unexpected error in copyJSON [ERR_COPY_000]:', error);
+        showToast(`❌ Unexpected copy error: ${error.message} [ERR_COPY_000]`, 'error');
+    }
 }
 
 // Generate JSON (same as updateJSON but returns string)
@@ -2654,25 +2683,66 @@ function generateJSON() {
 
 // Download JSON
 function downloadJSON() {
-    const jsonOutput = document.getElementById('json-output');
-    const jsonData = jsonOutput ? jsonOutput.value : generateJSON();
-    const blob = new Blob([jsonData], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'card-config.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    showToast('JSON downloaded! 💾', 'success');
-    // Deselect all elements first (so analytics preview has no selection)
-    deselectAllElements();
-    // Wait a bit for UI to update, then send analytics
-    setTimeout(() => {
-        sendActionAnalytics('downloaded');
-    }, 100);
+    try {
+        // ERR_DOWNLOAD_001: No JSON data to download
+        const jsonOutput = document.getElementById('json-output');
+        const jsonData = jsonOutput ? jsonOutput.value : generateJSON();
+        
+        if (!jsonData || jsonData.trim() === '') {
+            showToast('❌ No JSON data to download [ERR_DOWNLOAD_001]', 'error');
+            return;
+        }
+        
+        // ERR_DOWNLOAD_002: Blob creation failed
+        let blob;
+        try {
+            blob = new Blob([jsonData], { type: 'application/json' });
+        } catch (blobError) {
+            console.error('Blob creation failed [ERR_DOWNLOAD_002]:', blobError);
+            showToast('❌ Failed to prepare download file [ERR_DOWNLOAD_002]', 'error');
+            return;
+        }
+        
+        // ERR_DOWNLOAD_003: URL creation failed
+        let url;
+        try {
+            url = URL.createObjectURL(blob);
+        } catch (urlError) {
+            console.error('URL creation failed [ERR_DOWNLOAD_003]:', urlError);
+            showToast('❌ Failed to create download link [ERR_DOWNLOAD_003]', 'error');
+            return;
+        }
+        
+        // ERR_DOWNLOAD_004: Download trigger failed
+        try {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'card-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (downloadError) {
+            console.error('Download trigger failed [ERR_DOWNLOAD_004]:', downloadError);
+            showToast('❌ Failed to start download [ERR_DOWNLOAD_004]', 'error');
+            return;
+        }
+        
+        showToast('✅ JSON downloaded! 💾', 'success');
+        // Deselect all elements first (so analytics preview has no selection)
+        deselectAllElements();
+        // Wait a bit for UI to update, then send analytics
+        setTimeout(() => {
+            try {
+                sendActionAnalytics('downloaded');
+            } catch (analyticsError) {
+                console.error('Analytics failed [ERR_DOWNLOAD_005]:', analyticsError);
+            }
+        }, 100);
+    } catch (error) {
+        console.error('Unexpected error in downloadJSON [ERR_DOWNLOAD_000]:', error);
+        showToast(`❌ Unexpected download error: ${error.message} [ERR_DOWNLOAD_000]`, 'error');
+    }
 }
 
 // Modal Management
@@ -2813,6 +2883,51 @@ function updateNewsItemBadges() {
 
 // News data
 const NEWS_DATA = {
+    'error-handling-system': {
+        title: '🛡️ Advanced Error Handling System',
+        date: 'October 2025',
+        content: `
+            <div class="news-detail-item">
+                <div class="news-detail-date">October 2025</div>
+                <h3>🛡️ Advanced Error Handling with Error Codes</h3>
+                <p>We've implemented a comprehensive error handling system to make troubleshooting easier and faster!</p>
+                
+                <h4>🎯 What's New</h4>
+                <ul>
+                    <li><strong>Error Codes:</strong> Every error now has a unique code like <code>[ERR_SAVE_002]</code> or <code>[ERR_COPY_004]</code></li>
+                    <li><strong>Clear Messages:</strong> User-friendly explanations for what went wrong</li>
+                    <li><strong>Actionable Solutions:</strong> Direct guidance on how to fix the problem</li>
+                    <li><strong>Better Diagnostics:</strong> Detailed console logs for developers</li>
+                    <li><strong>Silent Errors Fixed:</strong> No more "nothing happens" - you'll always know what went wrong!</li>
+                </ul>
+                
+                <h4>🔧 Common Error Codes</h4>
+                <ul>
+                    <li><code>ERR_SAVE_002</code> - Cannot save empty template (add elements first)</li>
+                    <li><code>ERR_SAVE_004_QUOTA</code> - Storage full (delete old templates)</li>
+                    <li><code>ERR_COPY_002</code> - Copy not supported (use Download instead)</li>
+                    <li><code>ERR_LOAD_003</code> - Template data corrupted (recreate template)</li>
+                </ul>
+                
+                <h4>📚 Documentation</h4>
+                <p>For detailed error code explanations and solutions, check:</p>
+                <ul>
+                    <li><strong>User Guide:</strong> <code>USER_ERROR_GUIDE.md</code> - Easy solutions for common problems</li>
+                    <li><strong>Developer Docs:</strong> <code>ERROR_CODES.md</code> - Technical details and error codes</li>
+                </ul>
+                
+                <h4>💡 How It Helps You</h4>
+                <ul>
+                    <li><strong>Faster Support:</strong> Just send us the error code and we know exactly what happened</li>
+                    <li><strong>Self-Service:</strong> Many errors now include solutions you can try immediately</li>
+                    <li><strong>No More Confusion:</strong> Clear feedback instead of silent failures</li>
+                    <li><strong>Better Experience:</strong> You'll always know what's happening with your templates</li>
+                </ul>
+                
+                <p><strong>Example:</strong> If you see <code>[ERR_SAVE_004_QUOTA]</code>, you know your browser storage is full and can delete old templates to make space!</p>
+            </div>
+        `
+    },
     'variable-mode': {
         title: '🔤 Variable Mode for Text Field',
         date: 'October 2025',
@@ -3576,66 +3691,103 @@ function getCustomTemplates() {
 }
 
 async function saveCustomTemplate(templateName) {
-    if (!templateName || templateName.trim() === '') {
-        showToast('Please enter a template name', 'error');
-        return;
-    }
-
-    const templates = getCustomTemplates();
-    
-    // Check if template name already exists
-    if (templates[templateName]) {
-        if (!confirm(`Template "${templateName}" already exists. Overwrite?`)) {
+    try {
+        // ERR_SAVE_001: Empty template name
+        if (!templateName || templateName.trim() === '') {
+            showToast('❌ Please enter a template name [ERR_SAVE_001]', 'error');
             return;
         }
-    }
 
-    // Generate preview
-    const canvas = document.getElementById('canvas');
-    let previewImage = null;
-    
-    try {
-        if (typeof html2canvas !== 'undefined') {
-            const canvasCapture = await html2canvas(canvas, {
-                backgroundColor: null, // Transparent background for thumbnails
-                scale: 1.0, // Use 1:1 scale to match canvas exactly
-                logging: false,
-                useCORS: true,
-                allowTaint: true
-            });
-            previewImage = canvasCapture.toDataURL('image/png', 1.0); // PNG for better quality
-        } else {
+        // ERR_SAVE_002: No elements to save
+        if (!elements || elements.length === 0) {
+            showToast('❌ Cannot save empty template. Add some elements first! [ERR_SAVE_002]', 'error');
+            return;
         }
-    } catch (e) {
-    }
 
-    // Save template
-    const templateData = {
-        elements: elements.map(el => ({...el})), // Deep copy elements
-        canvasSize: {
-            width: cardElement.width,
-            height: cardElement.height,
-            bg: cardElement.bg,
-            bg_type: cardElement.bg_type,
-            bg_image: cardElement.bg_image,
-            bg_transparent: cardElement.bg_transparent
-        },
-        preview: previewImage
-    };
+        const templates = getCustomTemplates();
+        
+        // Check if template name already exists
+        if (templates[templateName]) {
+            if (!confirm(`Template "${templateName}" already exists. Overwrite?`)) {
+                return;
+            }
+        }
 
-    templates[templateName] = templateData;
-    localStorage.setItem(CUSTOM_TEMPLATES_KEY, JSON.stringify(templates));
+        // Generate preview
+        const canvas = document.getElementById('canvas');
+        let previewImage = null;
+        
+        try {
+            if (typeof html2canvas !== 'undefined') {
+                const canvasCapture = await html2canvas(canvas, {
+                    backgroundColor: null,
+                    scale: 1.0,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                previewImage = canvasCapture.toDataURL('image/png', 1.0);
+            } else {
+                console.warn('html2canvas not available - ERR_SAVE_003');
+            }
+        } catch (previewError) {
+            // ERR_SAVE_003: Preview generation failed (non-critical, continue saving)
+            console.error('Preview generation failed [ERR_SAVE_003]:', previewError);
+            showToast('⚠️ Preview generation failed, saving without preview... [ERR_SAVE_003]', 'warning');
+        }
 
-    // Send analytics (async)
-    await sendTemplateAnalytics(templateName, templateData);
+        // Save template
+        const templateData = {
+            elements: elements.map(el => ({...el})),
+            canvasSize: {
+                width: cardElement.width,
+                height: cardElement.height,
+                bg: cardElement.bg,
+                bg_type: cardElement.bg_type,
+                bg_image: cardElement.bg_image,
+                bg_transparent: cardElement.bg_transparent
+            },
+            preview: previewImage,
+            timestamp: Date.now()
+        };
 
-    showToast(`Template "${templateName}" saved!`, 'success');
-    updateCustomTemplatesUI();
-    
-    // Close save modal if exists
-    const modal = document.getElementById('save-template-modal');
-    if (modal) {
-        modal.style.display = 'none';
+        // ERR_SAVE_004: localStorage save failed
+        try {
+            templates[templateName] = templateData;
+            localStorage.setItem(CUSTOM_TEMPLATES_KEY, JSON.stringify(templates));
+        } catch (storageError) {
+            console.error('localStorage save failed [ERR_SAVE_004]:', storageError);
+            
+            // Check if quota exceeded
+            if (storageError.name === 'QuotaExceededError' || storageError.code === 22) {
+                showToast('❌ Storage full! Delete old templates or clear browser data. [ERR_SAVE_004_QUOTA]', 'error');
+            } else {
+                showToast('❌ Failed to save template to storage. Check browser settings. [ERR_SAVE_004]', 'error');
+            }
+            return;
+        }
+
+        // Send analytics (async, non-critical)
+        try {
+            await sendTemplateAnalytics(templateName, templateData);
+        } catch (analyticsError) {
+            // ERR_SAVE_005: Analytics failed (non-critical)
+            console.error('Analytics failed [ERR_SAVE_005]:', analyticsError);
+            // Don't show error to user, it's not critical
+        }
+
+        showToast(`✅ Template "${templateName}" saved successfully!`, 'success');
+        updateCustomTemplatesUI();
+        
+        // Close save modal if exists
+        const modal = document.getElementById('save-template-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    } catch (error) {
+        // ERR_SAVE_000: Unexpected error
+        console.error('Unexpected error in saveCustomTemplate [ERR_SAVE_000]:', error);
+        showToast(`❌ Unexpected error while saving template: ${error.message} [ERR_SAVE_000]`, 'error');
     }
 }
 
@@ -3649,49 +3801,106 @@ function deleteCustomTemplate(templateName) {
 }
 
 function loadCustomTemplate(templateName) {
-    const templates = getCustomTemplates();
-    const template = templates[templateName];
+    try {
+        // ERR_LOAD_001: Empty template name
+        if (!templateName || templateName.trim() === '') {
+            showToast('❌ Invalid template name [ERR_LOAD_001]', 'error');
+            return;
+        }
 
-    if (!template) {
-        showToast('Template not found', 'error');
-        return;
+        const templates = getCustomTemplates();
+        const template = templates[templateName];
+
+        // ERR_LOAD_002: Template not found
+        if (!template) {
+            showToast(`❌ Template "${templateName}" not found [ERR_LOAD_002]`, 'error');
+            return;
+        }
+
+        // ERR_LOAD_003: Invalid template data
+        if (!template.elements || !Array.isArray(template.elements)) {
+            console.error('Invalid template data [ERR_LOAD_003]:', template);
+            showToast('❌ Template data is corrupted [ERR_LOAD_003]', 'error');
+            return;
+        }
+
+        // ERR_LOAD_004: Missing canvas size
+        if (!template.canvasSize) {
+            console.error('Missing canvas size [ERR_LOAD_004]:', template);
+            showToast('❌ Template canvas data is missing [ERR_LOAD_004]', 'error');
+            return;
+        }
+
+        // Clear current elements
+        elements = [];
+        const canvas = document.getElementById('canvas');
+        if (canvas) {
+            canvas.innerHTML = '';
+        }
+
+        // Load canvas settings
+        try {
+            cardElement.width = template.canvasSize.width || 800;
+            cardElement.height = template.canvasSize.height || 400;
+            cardElement.bg = template.canvasSize.bg || '#1a1a2e';
+            cardElement.bg_type = template.canvasSize.bg_type || 'color';
+            cardElement.bg_image = template.canvasSize.bg_image || '';
+            cardElement.bg_transparent = template.canvasSize.bg_transparent || false;
+        } catch (canvasError) {
+            console.error('Canvas settings load failed [ERR_LOAD_005]:', canvasError);
+            showToast('⚠️ Some canvas settings failed to load [ERR_LOAD_005]', 'warning');
+        }
+
+        // Update canvas inputs
+        try {
+            document.getElementById('card-width').value = cardElement.width;
+            document.getElementById('card-height').value = cardElement.height;
+            document.getElementById('bg-type').value = cardElement.bg_type;
+            document.getElementById('bg-color').value = cardElement.bg;
+            document.getElementById('bg-transparent').checked = cardElement.bg_transparent;
+        } catch (inputError) {
+            console.error('Input update failed [ERR_LOAD_006]:', inputError);
+            // Non-critical, continue
+        }
+
+        updateCanvas();
+
+        // Load elements
+        elementIdCounter = 1;
+        let loadedCount = 0;
+        let failedCount = 0;
+        
+        template.elements.forEach((elData, index) => {
+            try {
+                const el = {...elData, id: elementIdCounter++};
+                elements.push(el);
+                createElementDiv(el, window.canvasViewport ? window.canvasViewport.zoom : 1);
+                loadedCount++;
+            } catch (elementError) {
+                console.error(`Element ${index} load failed [ERR_LOAD_007]:`, elementError, elData);
+                failedCount++;
+            }
+        });
+
+        // Force canvas refresh to show elements
+        updateCanvas();
+        updateQuotas();
+        updateJSON();
+        updateCanvasStatus();
+        updateLayersPanel();
+        
+        // Show appropriate success message
+        if (failedCount === 0) {
+            showToast(`✅ Template "${templateName}" loaded! (${loadedCount} elements)`, 'success');
+        } else {
+            showToast(`⚠️ Template "${templateName}" loaded with errors: ${loadedCount} OK, ${failedCount} failed [ERR_LOAD_007]`, 'warning');
+        }
+        
+    } catch (error) {
+        // ERR_LOAD_000: Unexpected error
+        console.error('Unexpected error in loadCustomTemplate [ERR_LOAD_000]:', error);
+        showToast(`❌ Failed to load template: ${error.message} [ERR_LOAD_000]`, 'error');
     }
-
-    // Clear current elements
-    elements = [];
-    document.getElementById('canvas').innerHTML = '';
-
-    // Load canvas settings
-    cardElement.width = template.canvasSize.width;
-    cardElement.height = template.canvasSize.height;
-    cardElement.bg = template.canvasSize.bg;
-    cardElement.bg_type = template.canvasSize.bg_type;
-    cardElement.bg_image = template.canvasSize.bg_image || '';
-    cardElement.bg_transparent = template.canvasSize.bg_transparent || false;
-
-    // Update canvas inputs
-    document.getElementById('card-width').value = cardElement.width;
-    document.getElementById('card-height').value = cardElement.height;
-    document.getElementById('bg-type').value = cardElement.bg_type;
-    document.getElementById('bg-color').value = cardElement.bg;
-    document.getElementById('bg-transparent').checked = cardElement.bg_transparent;
-
-    updateCanvas();
-
-    // Load elements
-    elementIdCounter = 1;
-    template.elements.forEach(elData => {
-        const el = {...elData, id: elementIdCounter++};
-        elements.push(el);
-        createElementDiv(el, window.canvasViewport ? window.canvasViewport.zoom : 1);
-    });
-
-    // Force canvas refresh to show elements
-    updateCanvas();
-    
-    showToast(`Template "${templateName}" loaded!`, 'success');
-    updateElementCounts();
-    updateLayersPanel();
 }
 
 async function sendTemplateAnalytics(templateName, templateData) {
@@ -3773,6 +3982,13 @@ function updateCustomTemplatesUI() {
     const templates = getCustomTemplates();
     const templateNames = Object.keys(templates);
 
+    // Sort templates by timestamp (newest first)
+    templateNames.sort((a, b) => {
+        const timestampA = templates[a].timestamp || 0;
+        const timestampB = templates[b].timestamp || 0;
+        return timestampB - timestampA; // Descending order (newest first)
+    });
+
     // Update counter
     const counter = document.getElementById('my-templates-counter');
     if (counter) {
@@ -3840,7 +4056,7 @@ function filterCustomTemplates() {
         // Show all templates with "Show More" logic
         updateCustomTemplatesUI();
     } else {
-        // Filter templates by name and show all results
+        // Filter templates by name (already sorted by timestamp in window.allCustomTemplates)
         const filteredTemplates = window.allCustomTemplates.filter(name => 
             name.toLowerCase().includes(searchTerm)
         );

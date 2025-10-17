@@ -1,5 +1,7 @@
 # Cookie API Card Builder
 
+> ⚠️ **Error Reporting:** If you encounter an error with a code like `[ERR_SAVE_002]`, check [USER_ERROR_GUIDE.md](USER_ERROR_GUIDE.md) for solutions or report it to the developer with the error code!
+
 A modular, responsive web application for creating Discord cards using the Cookie API. Built with vanilla HTML, CSS, and JavaScript for easy hosting on GitHub Pages.
 
 ## 🚀 Quick Access
@@ -42,7 +44,9 @@ cookie-card-builder/
 │   ├── mobile.js           # Mobile functionality
 │   └── firebase-config.js  # Firebase configuration (needs setup)
 ├── README.md               # This file
-└── FIREBASE_SETUP.md       # Firebase setup instructions
+├── FIREBASE_SETUP.md       # Firebase setup instructions
+├── ERROR_CODES.md          # Developer error codes documentation
+└── USER_ERROR_GUIDE.md     # User-friendly error guide
 ```
 
 ## Getting Started
